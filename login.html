@@ -3,9 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-    
+ <main>
+    <svg viewBox="0 0 566 840" xmlns="http://www.w3.org/2000/svg">
+        <mask id="mask0" mask-type="alpha">
+           <path d="M342.407 73.6315C388.53 56.4007 394.378 17.3643 391.538 
+           0H566V840H0C14.5385 834.991 100.266 804.436 77.2046 707.263C49.6393 
+           591.11 115.306 518.927 176.468 488.873C363.385 397.026 156.98 302.824 
+           167.945 179.32C173.46 117.209 284.755 95.1699 342.407 73.6315Z"/>
+        </mask>
+     
+        <g mask="url(#mask0)">
+           <path d="M342.407 73.6315C388.53 56.4007 394.378 17.3643 391.538 
+           0H566V840H0C14.5385 834.991 100.266 804.436 77.2046 707.263C49.6393 
+           591.11 115.306 518.927 176.468 488.873C363.385 397.026 156.98 302.824 
+           167.945 179.32C173.46 117.209 284.755 95.1699 342.407 73.6315Z"/>
+     
+           <image href="Assets/img/fortnite-battle-royale-uhd-4k-wallpaper.jpg" width="1000" height="1200"/>
+        </g>
+     </svg>
+
+ <section class="Login">
+    <h1 class="Login_Title">Gelieven hier in te loggen</h1>
+
+    <section class="login_area">
+        <form action="login.php" method="POST" class="Login_form">
+            <div class="login_content_grid">
+                <div class="login_box">
+                    <input type="email" id="email" required placeholder=" " class="login_input">
+                    <label for="email" class="login_label">Email</label>
+                    <i class="ri-mail-line login_icon"></i>
+                </div>
+                <div class="login_box">
+                    <input type="password" id="password" required placeholder=" " class="login_input">
+                    <label for="password" class="login_label">Wachtwoord</label>
+                    <i class="ri-eye-off-line login_password" id="loginpassword"></i>
+                </div>
+            </div>
+            <a href="#" class="forgot_login">Wachtwoord vergeten?</a>
+            <button type="submit" class="login_button">Inloggen</button>
+        </form>
+
+        <section class="login_social">
+            <p class="login_social-title">Of login met</p>
+            <div class="login_social-links">
+                <a href="#" class="login_social-link">
+                    <img src="Assets/img/WhatsApp Image 2025-02-19 at 22.32.56.jpeg" alt="Social login" class="login_social-img">
+                </a>
+                <a href="#" class="login_social-link">
+                    <img src="Assets/img/WhatsApp Image 2025-02-19 at 22.32.34 (2).jpeg" alt="Social login" class="login_social-img">
+                </a>
+                <a href="#" class="login_social-link">
+                    <img src="Assets/img/WhatsApp Image 2025-02-19 at 22.32.34.jpeg" alt="Social login" class="login_social-img">
+                </a>
+            </div>
+        </section>
+
+        <p class="login_switch">Nog geen gebruiker?</p>
+        <button id="loginButton_Register">Maak hier uw account</button>
+    </section>
+ </section>   
+ </main>   
+
+<footer>
+    <p>&copy; Alle rechten voorbehouden aan ICONS 2025</p>
+</footer> 
 </body>
 </html>
