@@ -1,15 +1,62 @@
+@import url('satoshi.css');
+
+body {
+    font-family: 'Satoshi-Variable';
+    display: grid;
+}
+
+header {
+    display: flex;
+    margin: 1rem;
+}
+
+header .logo {
+    margin: 0 auto;
+    padding: 2rem 2rem;
+    border: 1px solid black;
+    font-weight: 700;
+}
+
+header .ri-user-fill {
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+    border: 1px solid rgb(131, 131, 131);
+    height: fit-content;
+    width: 3rem;
+    height: 3rem;
+    background: rgb(193, 193, 193);
+    border-radius: 2rem;
+    padding-top: .3rem;
+    cursor: pointer;
+}
+
+main {
+    min-height: calc(100vh - 12rem);
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    padding-block: 1rem;
+}
+
 .cards {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 1.5rem;
     justify-content: space-between;
+    padding-inline: 3rem;
+    margin-block: 2rem 0;
 }
 
 .card {
-    flex: 1 1 calc(33.333% - 20px);
+    flex: 1 1 calc(33.333% - 3rem);
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+    border-radius: 12px;
 }
 
 .card-img {
@@ -24,38 +71,65 @@
 
 .card-overlay {
     position: absolute;
-    bottom: -100%;
+    bottom: 0;
     left: 0;
     width: 100%;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
     color: white;
     padding: 20px;
     box-sizing: border-box;
-    transition: bottom 0.4s ease;
+    transition: bottom 0.4s ease, opacity 0.4s ease;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .card:hover .card-overlay {
+    opacity: 1;
     bottom: 0;
+    pointer-events: auto;
 }
 
 .title {
-    font-size: 1.5rem;
+    font-size: 3rem;
+    font-weight: 900;
     margin: 0;
+    line-height: normal;
 }
 
-.subtitle {
-    font-size: 1rem;
-    margin: 5px 0 0;
+@media (max-width: 1200px) {
+    .title {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
 }
+
 
 @media (max-width: 768px) {
     .card {
         flex: 1 1 calc(50% - 20px);
     }
+
 }
 
 @media (max-width: 480px) {
     .card {
         flex: 1 1 100%;
+    }
+
+}
+
+@media (pointer: coarse) {
+    .card-overlay {
+        opacity: 1;
+        bottom: 0;
+        pointer-events: auto;
+    }
+}
+
+@media (pointer: fine) {
+    .card:hover .card-overlay {
+        opacity: 1;
+        bottom: 0;
+        pointer-events: auto;
     }
 }
