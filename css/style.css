@@ -52,21 +52,34 @@ footer {
 
 .card {
     flex: 1 1 calc(33.333% - 3rem);
+    min-width: 250px;
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
     cursor: pointer;
     border-radius: 12px;
+    transition: all 0.2s ease;
+    transform-origin: center;
 }
 
 .card-img {
     position: relative;
     overflow: hidden;
+    min-height: 300px;
 }
 
 .card-img img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
+    transition: all 0.3s ease;
+    position: absolute;
+    opacity: 0;
+}
+
+.card-img img.visible {
+    opacity: 1;
 }
 
 .card-overlay {
@@ -89,6 +102,15 @@ footer {
     pointer-events: auto;
 }
 
+.card:hover .card-img img {
+    transform: scale(1.05) rotate(1deg);
+}
+
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
 .title {
     font-size: 3rem;
     font-weight: 900;
@@ -101,12 +123,16 @@ footer {
         font-size: 1.5rem;
         line-height: 2rem;
     }
+
+    .card {
+        flex: 1 1 calc(50% - 1.5rem);
+    }
 }
 
 
 @media (max-width: 768px) {
     .card {
-        flex: 1 1 calc(50% - 20px);
+        flex: 1 1 calc(50% - 1rem);
     }
 
 }
