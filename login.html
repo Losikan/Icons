@@ -8,83 +8,76 @@
     <link rel="stylesheet" href="Assets/CSS/Styles.css">
 </head>
 <body>
+    <div class="mode-toggle">
+        <button id="modeSwitch" aria-label="Toggle Dark/Light Mode">
+            <i class="ri-sun-line"></i>
+        </button>
+    </div>
 
- <main>
-
-    <svg class="login_blob" viewBox="0 0 566 840" xmlns="http://www.w3.org/2000/svg">
-        <mask id="mask0" mask-type="alpha">
-           <path d="M342.407 73.6315C388.53 56.4007 394.378 17.3643 391.538 
-           0H566V840H0C14.5385 834.991 100.266 804.436 77.2046 707.263C49.6393 
-           591.11 115.306 518.927 176.468 488.873C363.385 397.026 156.98 302.824 
-           167.945 179.32C173.46 117.209 284.755 95.1699 342.407 73.6315Z"/>
-        </mask>
-     
-        <g mask="url(#mask0)">
-           <path d="M342.407 73.6315C388.53 56.4007 394.378 17.3643 391.538 
-           0H566V840H0C14.5385 834.991 100.266 804.436 77.2046 707.263C49.6393 
-           591.11 115.306 518.927 176.468 488.873C363.385 397.026 156.98 302.824 
-           167.945 179.32C173.46 117.209 284.755 95.1699 342.407 73.6315Z"/>
-     
-           <!-- Insert your image (recommended size: 1000 x 1200) -->
-           <image class="login_img" href="Assets/img/fortnite-battle-royale-uhd-4k-wallpaper.jpg">
-        </g>
-     </svg>
-<main>
-     <div class="login container grid" id="loginAccessRegister">
-        <div class="login_access">
-           <h1 class="login_title">Login</h1>
-           
-           <div class="login_area">
-              <form action="" class="login_form">
-                 <div class="login_content grid">
-                    <div class="login_box">
-                       <input type="email" id="email" required placeholder=" " class="login_input">
-                       <label for="email" class="login_label">Email</label>
-     
-                       <i class="ri-mail-fill login_icon"></i>
-                    </div>
+    <main>
+        <svg class="login_blob" viewBox="0 0 566 840" xmlns="http://www.w3.org/2000/svg">
+            <mask id="mask0" mask-type="alpha">
+                <path d="M342.407 73.6315C388.53 56.4007 394.378 17.3643 391.538 0H566V840H0C14.5385 834.991 100.266 804.436 77.2046 707.263C49.6393 
+                591.11 115.306 518.927 176.468 488.873C363.385 397.026 156.98 302.824 167.945 179.32C173.46 117.209 284.755 95.1699 342.407 73.6315Z"/>
+            </mask>
         
-                    <div class="login_box">
-                       <input type="password" id="password" required placeholder=" " class="login_input">
-                       <label for="password" class="login_label">Wachtwoord</label>
-     
-                       <i class="ri-eye-off-fill login_icon login_password" id="loginPassword"></i>
+            <g mask="url(#mask0)">
+                <!-- Background image that will change -->
+                <image id="backgroundImage" class="login_img" href="Assets/img/light.jpg">
+            </g>
+        </svg>
+
+        <div class="login container grid">
+            <div class="login_access">
+                <h1 class="login_title">Login</h1>
+                <div class="login_area">
+                    <form action="" class="login_form">
+                        <div class="login_content grid">
+                            <div class="login_box">
+                                <input type="email" id="email" required placeholder=" " class="login_input">
+                                <label for="email" class="login_label">Email</label>
+                                <i class="ri-mail-fill login_icon"></i>
+                            </div>
+
+                            <div class="login_box">
+                                <input type="password" id="password" required placeholder=" " class="login_input">
+                                <label for="password" class="login_label">Wachtwoord</label>
+                                <i class="ri-eye-off-fill login_icon login_password" id="loginPassword"></i>
+                            </div>
+                        </div>
+
+                        <a href="#" class="login_forgot">Wachtwoord vergeten?</a>
+
+                        <button type="submit" class="login_button">Login</button>
+                    </form>
+
+                    <div class="login_social">
+                        <p class="login_social-title">Of log in met</p>
+
+                        <div class="login_social-links">
+                            <a href="#" class="login_social-link">
+                                <img src="Assets/img/icon-facebook.svg" alt="image" class="login_social-img">
+                            </a>
+
+                            <a href="#" class="login_social-link">
+                                <img src="Assets/img/icon-google.svg" alt="image" class="login_social-img">
+                            </a>
+
+                            <a href="#" class="login_social-link">
+                                <img src="Assets/img/icon-apple.svg" alt="image" class="login_social-img">
+                            </a>
+                        </div>
                     </div>
-                 </div>
-     
-                 <a href="#" class="login_forgot">Wachtwoord vergeten?</a>
-     
-                 <button type="submit" class="login_button">Login</button>
-              </form>
-     
-              <div class="login_social">
-                 <p class="login_social-title">Of log in met</p>
-     
-                 <div class="login_social-links">
-                    <a href="#" class="login_social-link">
-                       <img src="Assets/img/icon-facebook.svg" alt="image" class="login_social-img">
-                    </a>
-     
-                    <a href="#" class="login_social-link">
-                       <img src="Assets/img/icon-google.svg" alt="image" class="login_social-img">
-                    </a>
-     
-                    <a href="#" class="login_social-link">
-                       <img src="Assets/img/icon-apple.svg" alt="image" class="login_social-img">
-                    </a>
-                 </div>
-              </div>
-     
-              <p class="login_switch">
-                 Nog geen gebruiker?
-                 <button id="loginButtonRegister">Maak hier uw account!</button>
-              </p>
-           </div>
+
+                    <p class="login_switch">
+                        Nog geen gebruiker?
+                        <button id="loginButtonRegister">Maak hier uw account!</button>
+                    </p>
+                </div>
+            </div>
         </div>
-     </div>
+    </main>   
 
- </main>   
-
-
+    <script src="js/script.js"></script>
 </body>
 </html>

@@ -48,6 +48,7 @@ button {
 body {
   background-color: var(--body-color);
   color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 input,
@@ -110,25 +111,21 @@ img {
   border: 3px solid transparent;
   border-radius: 1rem;
   z-index: 1;
-  transition: border-color .4s;
-}
-
-.login_input:autofill {
-  transition: background-color 6000s, color 6000s;
+  transition: border-color 0.3s ease, padding 0.3s ease;
 }
 
 .login_label {
   position: absolute;
   left: 1.25rem;
   font-weight: var(--font-semi-bold);
-  transition: transform .4s, font-size .4s, color .4s;
+  transition: transform 0.3s ease, font-size 0.3s ease, color 0.3s ease;
 }
 
 .login_icon {
   position: absolute;
   right: 1rem;
   font-size: 1.25rem;
-  transition: color .4s;
+  transition: color 0.3s ease;
 }
 
 .login_password {
@@ -143,7 +140,7 @@ img {
   font-size: var(--small-font-size);
   font-weight: var(--font-semi-bold);
   color: var(--text-color);
-  transition: color .4s;
+  transition: color 0.3s ease;
 }
 
 .login_forgot:hover {
@@ -161,12 +158,13 @@ img {
   border-radius: 4rem;
   margin-block: 2rem;
   cursor: pointer;
-  transition: background-color .4s, box-shadow .4s;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .login_button:hover {
   background-color: var(--first-color-alt);
   box-shadow: 0 8px 24px hsla(208, 92%, 32%, .3);
+  transform: translateY(-0.1rem);
 }
 
 .login_social {
@@ -199,11 +197,12 @@ img {
   border-radius: .5rem;
   display: grid;
   place-items: center;
-  transition: transform .4s;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .login_social-link:hover {
-  transform: translateY(-.25rem);
+  transform: translateY(-0.25rem);
+  background-color: var(--first-color-alt);
 }
 
 .login_switch {
@@ -217,70 +216,90 @@ img {
   font-size: var(--small-font-size);
   font-weight: var(--font-semi-bold);
   cursor: pointer;
-  transition: color .4s;
+  transition: color 0.3s ease;
 }
 
 .login_switch button:hover {
   color: var(--first-color-alt);
 }
 
-.login_access, 
-.login_register {
-  position: absolute;
-  left: 0;
-  right: 0;
-  width: 100%;
-  transition: transform .4s, opacity .4s .1s;
+/* Mode Toggle Button */
+.mode-toggle {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
 }
 
-.login_register {
-  transform: translateX(15rem);
-  opacity: 0;
-  pointer-events: none;
+#modeSwitch {
+  background-color: var(--first-color);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--white-color);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.login_input:focus ~ .login_label {
-  transform: translateY(-12px);
-  font-size: var(--tiny-font-size);
+#modeSwitch:hover {
+  background-color: var(--first-color-alt);
+  transform: scale(1.1);
 }
 
-.login_input:focus {
-  padding-block: 2rem 1rem;
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: hsl(220, 100%, 9%);
+  color: var(--white-color);
 }
 
-.login_input:not(:placeholder-shown).login_input:not(:focus) ~ .login_label {
-  transform: translateY(-12px);
-  font-size: var(--tiny-font-size);
+/* Dark Mode Form Styles */
+
+
+body.dark-mode .login_input {
+  background-color: hsl(0, 0%, 100%);
+  color: var(--white-color);
+  border: 3px solid transparent;
 }
 
-.login_input:not(:placeholder-shown).login_input:not(:focus) {
-  padding-block: 2rem 1rem;
+body.dark-mode .login_input:focus {
+  border-color: black;
 }
 
-
-
-
-/* gsm */
-@media screen and (max-width: 320px) {
-  .container {
-    margin-inline: 1rem;
-  }
+body.dark-mode .login_label {
+  color: black;
 }
 
-/* tablets */
-@media screen and (min-width: 540px) {
-  .login_area {
-    width: 380px;
-    margin-inline: auto;
-  }
+body.dark-mode .login_button {
+  background-color: var(--first-color);
 }
 
-@media screen and (min-width: 350px) and (max-height: 600px) {
-  .login {
-    height: 760px;
-  }
+body.dark-mode .login_button:hover {
+  background-color:blue;
 }
 
+body.dark-mode .login_social-link {
+  background-color: hsl(220, 10%, 20%);
+}
+
+body.dark-mode .login_social-link:hover {
+  background-color: var(--white-color);
+  transform: translateY(-0.25rem);
+}
+
+body.dark-mode .login_forgot {
+  color: var(--text-color);
+}
+
+body.dark-mode .login_forgot:hover {
+  color: var(--white-color);
+}
+title.dark-mode{
+  color: var(--white-color);
+}
 /* pc */
 @media screen and (min-width: 1150px) {
   .container {
@@ -313,5 +332,6 @@ img {
     right: 0;
   }
   .login_img {
-    transform: translate(0rem, 0rem);}
+    transform: translate(0rem, 0rem);
+  }
 }
