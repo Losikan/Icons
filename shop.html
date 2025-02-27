@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winkel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+    <link rel="stylesheet" href="Assets/CSS/Styles.css">
+</head>
+<body>
+    <header>
+            <i class="ri-menu-line"></i>
+            <a href="homePage.html" class="logo"><h1>ICONS</h1></a>
+
+            <div class="mode-toggle-right">
+                <label class="switch">
+                    <input type="checkbox" id="modeSwitch">
+                    <span class="slider round">
+                        <i class="ri-sun-line sun-icon"></i>
+                        <i class="ri-moon-line moon-icon"></i>
+                    </span>
+                </label>
+            </div>
+
+            <div class="search-container">
+                <i class="ri-search-2-line" id="search-icon"></i>
+                <input type="text" class="search-input" placeholder="Zoeken...">
+            </div>
+
+            <i class="ri-account-circle-fill user"></i>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container-filter">
+
+        <div class="wrapper">
+           
+            <div class="price-input">
+                
+              <div class="field">
+                <span>Min</span>
+                <input type="number" class="input-min" value="0">
+              </div>
+              <div class="separator">-</div>
+              <div class="field">
+                <span>Max</span>
+                <input type="number" class="input-max" value="999">
+              </div>
+            </div>
+            <div class="price-slider">
+              <div class="progress"></div>
+            </div>
+            <div class="range-input">
+              <input type="range" class="range-min" min="0" max="999" value="0" step="1">
+              <input type="range" class="range-max" min="0" max="999" value="999" step="1">
+              
+            </div>
+            
+          </div>
+          <div class="filter">
+            <div class="filter-container">
+                <input type="checkbox" id="filterCheckbox" class="filter-checkbox">
+                <label for="filterCheckbox" class="filter-label">
+                    <i class="ri-filter-line"></i> 
+                </label>
+            
+                <div class="filter-options" id="filterOptions">
+                    <label class="filter-option">
+                        <input type="radio" name="filter" value="price-asc"> Goedkoopste
+                    </label>
+                    <label class="filter-option">
+                        <input type="radio" name="filter" value="price-desc"> Duurste
+                    </label>
+                    <label class="filter-option">
+                        <input type="radio" name="filter" value="date-desc"> Nieuw naar oud
+                    </label>
+                    <label class="filter-option">
+                        <input type="radio" name="filter" value="date-asc"> Oud naar nieuw
+                    </label>
+                    <label class="filter-option">
+                        <input type="radio" name="filter" value="popular"> Populair
+                    </label>
+                    <label class="filter-option">
+                        <input type="radio" name="filter" value="reviews"> Reviews
+                    </label>
+                </div>
+            </div>          </div>
+          <i class="ri-sort-alphabet-asc"></i>
+          </div>
+
+
+          <div class="row1">
+            <div class="block1">
+                <h2 class="shoptitel">Populair <i class="ri-fire-line"></i></h2>
+                <br>
+                <div class="container-populaire" id="shopcontainer">
+                    <div class="article" id="article1">
+   
+                        <img src="${item.displayAssets[0].full_background}" alt="${item.name}" style="width: 100%; border-radius: 10px;">
+                        <p>${item.name}</p>
+                        <div class="star-rating">
+                          <p><i class="ri-coins-line"></i> ${item.price.finalPrice} V-Bucks</p>
+                        </div>
+                      
+
+                    </div>
+                    
+                    <div class="article" id="article2"><p>${item.name}<br><br>
+                        <img src="${item.displayAssets[0].full_background}" alt="${item.name}" class="img-article" ></p>
+                        <div class="star-rating">
+                            <i class="ri-star-fill" ></i>
+                            <i class="ri-star-fill" ></i>
+                            <i class="ri-star-fill" ></i>
+                            <i class="ri-star-fill" ></i>
+                            <i class="ri-star-fill" ></i>
+                        </div>
+                        <div class="price"><i class="ri-copper-diamond-line"></i> ${item.price.finalPrice}</div>
+
+
+
+
+                    </div>
+                       
+
+
+                </div>
+            </div>
+            <div class="block2">
+                <h2 class="shoptitel">Battlepass <i class="ri-shield-star-line"></i></h2>
+                <br>
+
+                <div class="container-battlepas" id="shopcontainer">
+                    
+                <div class="article-2" id="article1"><p>Lv 1</p>
+                    <div class="star-rating"><p><i class="ri-lock-line"> </i>Locked</p></div>
+
+                </div>     
+                <div class="article-2" id="article1"><p>Lv 5</p>
+                    <div class="star-rating"><p><i class="ri-lock-line"> </i>Locked</p></div>
+
+                </div>  
+                <div class="article-2" id="article1"><p>Lv 10</p>
+                    <div class="star-rating"><p><i class="ri-lock-line"></i> Locked</p></div>
+
+                </div>  
+                <div class="article-2" id="article1"><p>Lv 25</p>
+                    <div class="star-rating"><p><i class="ri-lock-line"></i> Locked</p></div>
+
+                </div>  
+                
+                <div class="article-2" id="article1"><p>Lv 50</p>
+                    
+                    <div class="star-rating"><p><i class="ri-lock-line"></i> Locked</p></div>
+
+                </div> 
+                
+                </div>
+                
+            </div>
+          </div>
+
+          <div class="row2">
+            <div class="block">
+            <h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
+            <br>
+            <div class="container-comming-soon" id="shopcontainer">
+                <div class="article-1" id="article1"><p>Jonesy</p>
+                </div>                   
+                <div class="article-1" id="article1"><p>Peely</p>
+                </div>                   
+                <div class="article-1" id="article1"><p>Raven</p>
+                </div>                   
+                <div class="article-1" id="article1"><p>Lynx</p>
+                </div>                   
+                <div class="article-1" id="article1"><p>Drift</p>
+                </div>                   
+                <div class="article-1" id="article1"><p>Midas</p>
+                </div>                   
+                <div class="article-1" id="article1"><p>Crystal</p>
+                </div>
+                <div class="article-1" id="article1"><p>Suprise</p>
+                </div>
+                
+            </div>
+          </div>
+          <i class="ri-chat-1-line" id="chatIcon"></i>    </main>
+          <div id="chatbotContainer" class="chatbot-container">
+            <div class="chatbot-header">
+                <span>Icon Bot</span>
+                <i class="ri-close-line" id="closeChat"></i>
+            </div>
+            <div class="chatbot-body" id="chatbotBody">
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatInput" placeholder="Typ een bericht...">
+                <i class="ri-send-plane-2-line" id="sendMessage"></i>
+            </div>
+        </div>
+    
+    <footer>
+        <p>&copy; Alle rechten voorbehouden aan ICONS 2025</p>
+        <nav class="footer-nav">
+            <a href="privacybeleid.html" target="_blank">Privacybeleid</a>
+            <a href="algemenevoorwaarden.html" target="_blank">Algemene Voorwaarden</a>
+            <a href="cookiesbeleid.html" target="_blank">Cookiebeleid</a>
+        </nav>
+    </footer>
+    <script src="api.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
