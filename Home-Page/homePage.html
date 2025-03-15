@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/index.js"></script> 
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+            <i class="ri-menu-line"></i>
+            <a href="homePage.html" class="logo"><h1>ICONS</h1></a>
+
+            <label class="switch">
+                <input type="checkbox" id="modeSwitch">
+                <span class="slider"></span>
+            </label>
+            </div>
+
+            <div class="search-container">
+                <i class="ri-search-2-line" id="search-icon"></i>
+                <input type="text" class="search-input" placeholder="Zoeken...">
+            </div>
+
+            <i class="ri-account-circle-fill user"></i>
+        </div>
+    </header>
+
+    <main>
+        <div class="profile-container">
+            <img src="default-avatar.jpg" alt="Profile Avatar" class="profile-avatar">
+            <div class="profile-info">
+                <h2 class="username">UsernameHere</h2>
+                <p class="level">Level: 1</p>
+            </div>
+        </div>
+        <section id="loadout">
+            <h3 class="selection-title">Choose Character</h3>
+                <div class="character-slots">
+                    <div class="character-slot">
+                        <img src="assets/images/assault-loadout.jpg" alt="Character" class="character-image" onclick="toggleSelection(this)">
+                        <div class="character-selection">
+                            <img src="assets/images/engineer-loadout.png" alt="Option 1" class="character-option" onclick="selectCharacter(this)">
+                            <img src="assets/images/sniper-loadout.png" alt="Option 2" class="character-option" onclick="selectCharacter(this)">
+                            <img src="assets/images/stealth-loadout.jpg" alt="Option 3" class="character-option" onclick="selectCharacter(this)">
+                            <img src="assets/images/support-loadout.png" alt="Option 4" class="character-option" onclick="selectCharacter(this)">
+                            <img src="assets/images/assault-loadout.jpg" alt="Option 5" class="character-option" onclick="selectCharacter(this)">
+                        </div>
+                    </div>
+                </div>
+            <section class="side-column">
+                <h3 class="selection-title">Choose Weapon</h3>
+                <div class="weapon-slots">
+                    <div class="weapon-slot">
+                        <img src="assets/images/weapon1.jpg" alt="Weapon" class="weapon-image" onclick="toggleSelection(this)">
+                        <div class="weapon-selection">
+                            <img src="assets/images/weapon2.jpg" alt="Option 1" class="weapon-option" onclick="selectWeapon(this)">
+                            <img src="assets/images/weapon3.jpg" alt="Option 2" class="weapon-option" onclick="selectWeapon(this)">
+                            <img src="assets/images/weapon4.jpg" alt="Option 3" class="weapon-option" onclick="selectWeapon(this)">
+                            <img src="assets/images/weapon5.jpg" alt="Option 4" class="weapon-option" onclick="selectWeapon(this)">
+                            <img src="assets/images/weapon1.jpg" alt="Option 5" class="weapon-option" onclick="selectWeapon(this)">
+                        </div>
+                    </div>
+                </div>
+                <h3 class="selection-title">Choose Emote</h3>
+                <div class="emote-slots">
+                    <div class="emote-slot">
+                        <img src="assets/images/emote1.jpg" alt="Emote" class="emote-image" onclick="toggleSelection(this)">
+                        <div class="emote-selection">
+                            <img src="assets/images/emote2.jpg" alt="Option 1" class="emote-option" onclick="selectEmote(this)">
+                            <img src="assets/images/emote3.jpg" alt="Option 2" class="emote-option" onclick="selectEmote(this)">
+                            <img src="assets/images/emote4.jpg" alt="Option 3" class="emote-option" onclick="selectEmote(this)">
+                            <img src="assets/images/emote5.jpg" alt="Option 4" class="emote-option" onclick="selectEmote(this)">
+                            <img src="assets/images/emote1.jpg" alt="Option 5" class="emote-option" onclick="selectEmote(this)">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <section id="button">
+            <button class="startButton">Zoek spel...</button>
+        </section>
+    </main>
+    <footer></footer>
+</body>
+</html>
