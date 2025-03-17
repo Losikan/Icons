@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vriendenlijst | ICONS</title>
+     <link rel="stylesheet" href="css/style4.css">
+     <link rel="stylesheet" href="css/header-style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="js/nav.js" defer></script>
+    <script src="js/friendslist.js" defer></script>
+</head>
+<body>
+    <header class="top-header">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="ri-arrow-left-line sidebar-close"></i>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="homePage.html">Home</a></li>
+                <li><a href="inventaris.html">Inventaris</a></li>
+                <li><a href="shop.html">Winkel</a></li>
+                <li><a href="friendslist.html">Vriendenlijst</a></li>
+                <li><a href="settings.html">Instellingen</a></li>
+            </ul>
+            <div class="sidebar-bottom">
+                <div class="user-circle"></div>
+                <span>Naam</span>
+                <span><a href="landingspage.html">Uitloggen</a></span>
+            </div>
+        </nav>
+        <div class="overlay"></div>
+
+
+        <i class="ri-menu-line"></i>
+
+        <h1 class="logo"><a href="homePage.html">ICONS</a></h1>
+
+        <div class="nav-items-right">
+            <div class="mode-toggle-right">
+                <label class="switch">
+                    <input type="checkbox" id="modeSwitch">
+                    <span class="slider round">
+                        <i class="ri-sun-line sun-icon"></i>
+                        <i class="ri-moon-line moon-icon"></i>
+                    </span>
+                </label>
+            </div>
+
+            <div class="search-container">
+                <i class="ri-search-2-line" id="search-icon"></i>
+                <input type="text" class="search-input" placeholder="Zoeken...">
+            </div>
+
+            <i class="ri-account-circle-fill user"></i>
+
+            <div class="account-card">
+                <ul class="list">
+                    <li class="element">
+                        <a href="profiel.html" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
+                    </li>
+                    <li class="element">
+                        <a href="settings.html" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
+                    </li>
+                    <div class="separator"></div>
+                    <li class="element">
+                        <a href="landingspage.html" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main class="friends-container">
+        <section class="friends">
+            <div class="friends-list">
+                <div class="friends-list-header">
+                    <i class="ri-group-fill"></i>
+                    <div class="friends-search">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="search-icon">
+                          <g>
+                            <path
+                              d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
+                            ></path>
+                          </g>
+                        </svg>
+                      
+                        <input
+                          id="query"
+                          class="friends-search-input"
+                          type="search"
+                          placeholder="Search..."
+                          name="searchbar"
+                        />
+                      </div>
+                </div>
+
+                <div class="friends-list-users">
+                    <h1>Online <span class="count" id="online-count">3</span></h1>
+                    <ul id="online-list">
+                        <li>Mounir_sbe3<i class="ri-user-minus-fill"></i></li>
+                        <li>Raiking<i class="ri-user-minus-fill"></i></li>
+                        <li>Losii<i class="ri-user-minus-fill"></i></li>
+                    </ul>
+                    
+                    <h1>Offline <span class="count" id="offline-count">1</span></h1>
+                    <ul id="offline-list">
+                        <li>Salem<i class="ri-user-minus-fill"></i></li>
+                    </ul>
+                    
+                    <h1>Blocked <span class="count" id="blocklist-count">1</span></h1>
+                    <ul id="blocked-list">
+                        <li>Pantoffeltje<i class="ri-spam-3-fill"></i></li>
+                    </ul>
+                </div>
+                
+            </div>
+            <div class="friends-chat">
+                <div class="friends-chat-header">
+                    <div class="chat-back">
+                        <i class="ri-arrow-left-fill"></i>
+                    </div>
+                    <div class="chat-info">
+                        <h2 id="chatUsername"></h2>
+                        <p id="chatStatus"></p>
+                    </div>
+                    <div class="chat-icons">
+                        <i class="ri-flag-fill"></i>
+                        <i class="ri-spam-3-fill"></i>
+                    </div>
+                </div>
+                <div class="friends-chat-messages" id="chatMessages">
+                </div>
+                <div class="friends-chat-footer">
+                    <div class="messageBox">
+                        <div class="fileUploadWrapper">
+                            <label for="file">
+                                <i class="ri-attachment-line"></i>
+                            </label>
+                            <input name="file" id="file" type="file" accept="image/*" />
+                        </div>
+                        <input id="messageInput" type="text" placeholder="Message..." required disabled>
+                        <button id="sendButton" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1.94607 9.31543C1.42353 9.14125 1.4194 8.86022 1.95682 8.68108L21.043 2.31901C21.5715 2.14285 21.8746 2.43866 21.7265 2.95694L16.2733 22.0432C16.1223 22.5716 15.8177 22.59 15.5944 22.0876L11.9999 14L17.9999 6.00005L9.99992 12L1.94607 9.31543Z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
