@@ -1,0 +1,235 @@
+{
+    "status": 200,
+    "data": {
+      "items": {
+        "br": [
+          {
+            "id": "1",
+            "name": "Outlaw Midas",
+            "price": "450",
+            "description": "A glittering, SHADOWy gunslinger.",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_robedminer_gold_npc/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_robedminer_gold_npc/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "2",
+            "name": "Wave Rider Axo",
+            "description": "Here to hype up the WHOLE ocean!",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_caneaxl/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_caneaxl/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "3",
+            "name": "Cassidy Quinn",
+            "description": "She's all in.",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_casinoreaper_die/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_casinoreaper_die/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "4",
+            "name": "Fetch",
+            "description": "Never have a bad fur day again!",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_fluffwoof/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_fluffwoof/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "5",
+            "name": "Xanthus",
+            "description": "Bring the sting.",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_graffitifry/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_graffitifry/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "6",
+            "name": "Chef",
+            "description": "No bark, all tasty little bites.",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_grumblewoof/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_grumblewoof/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "7",
+            "name": "The Diamond",
+            "description": "Never unmasked.",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_hastybandit/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_hastybandit/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "8",
+            "name": "Faye Valentine",
+            "description": "A bounty hunter with a forgotten past, who loves games of chance.",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_kneelens/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_kneelens/icon.png"
+            },
+            "added": "2025-02-27T00:00:00Z"
+          },
+          {
+            "id": "9",
+            "name": "Alphonse",
+            "description": "Every hue of good boy.",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_mochiwoof/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_mochiwoof/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "10",
+            "name": "Ark'ana",
+            "description": "Embrace the chaos of victory.",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_omegaangel/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_omegaangel/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "11",
+            "name": "Bones",
+            "description": "He's got a skull to pick with you.",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_pointsmoke/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_pointsmoke/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "12",
+            "name": "Duke",
+            "description": "Let your style do the barking for you.",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_pointwoof/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_pointwoof/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "13",
+            "name": "Skillet",
+            "description": "Splodin' with excitement.",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_ragedebris/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_ragedebris/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "14",
+            "name": "NPC",
+            "description": "TBD",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_robedminer_gold_npc/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_robedminer_gold_npc/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          },
+          {
+            "id": "15",
+            "name": "NPC",
+            "description": "TBD",
+            "type": {
+              "value": "outfit",
+              "displayValue": "Outfit",
+              "backendValue": "AthenaCharacter"
+            },
+            "images": {
+              "smallIcon": "https://fortnite-api.com/images/cosmetics/br/character_robedminer_ruby_npc/smallicon.png",
+              "icon": "https://fortnite-api.com/images/cosmetics/br/character_robedminer_ruby_npc/icon.png"
+            },
+            "added": "2025-02-21T12:17:00Z"
+          }
+        ]
+      }
+    }
+  }

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winkel</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+    <link rel="stylesheet" href="Assets/CSS/Styles.css">
+</head>
+<body>
+    <header class="top-header">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="ri-arrow-left-line sidebar-close"></i>
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="homePage.html">Home</a></li>
+                <li><a href="inventaris.html">Inventaris</a></li>
+                <li><a href="shop.html">Winkel</a></li>
+                <li><a href="friendslist.html">Vriendenlijst</a></li>
+                <li><a href="settings.html">Instellingen</a></li>
+            </ul>
+            <div class="sidebar-bottom">
+                <div class="user-circle"></div>
+                <span>Naam</span>
+                <span><a href="landingspage.html">Uitloggen</a></span>
+            </div>
+        </nav>
+        <div class="overlay"></div>
+
+
+        <i class="ri-menu-line"></i>
+
+        <h1 class="logo"><a href="homePage.html">ICONS</a></h1>
+
+        <div class="nav-items-right">
+            <div class="mode-toggle-right">
+                <label class="switch">
+                    <input type="checkbox" id="modeSwitch">
+                    <span class="slider round">
+                        <i class="ri-sun-line sun-icon"></i>
+                        <i class="ri-moon-line moon-icon"></i>
+                    </span>
+                </label>
+            </div>
+
+            <div class="search-container">
+                <i class="ri-search-2-line" id="search-icon"></i>
+                <input type="text" class="search-input" placeholder="Zoeken...">
+            </div>
+
+            <i class="ri-account-circle-fill user"></i>
+
+            <div class="account-card">
+                <ul class="list">
+                    <li class="element">
+                        <a href="profiel.html" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
+                    </li>
+                    <li class="element">
+                        <a href="settings.html" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
+                    </li>
+                    <div class="separator"></div>
+                    <li class="element">
+                        <a href="landingspage.html" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container-filter">
+            <div class="wrapper">
+                <div class="price-input">
+                    <div class="field">
+                        <span>Min</span>
+                        <input type="number" class="input-min" value="0">
+                    </div>
+                    <div class="separator">-</div>
+                    <div class="field">
+                        <span>Max</span>
+                        <input type="number" class="input-max" value="999">
+                    </div>
+                </div>
+                <div class="price-slider">
+                    <div class="progress"></div>
+                </div>
+                <div class="range-input">
+                    <input type="range" class="range-min" min="0" max="999" value="0" step="1">
+                    <input type="range" class="range-max" min="0" max="999" value="999" step="1">
+                </div>
+            </div>
+            <div class="filter">
+                <div class="filter-container">
+                    <input type="checkbox" id="filterCheckbox" class="filter-checkbox">
+                    <label for="filterCheckbox" class="filter-label">
+                        <i class="ri-filter-line"></i> 
+                    </label>
+                    <div class="filter-options" id="filterOptions">
+                        <label class="filter-option">
+                            <input type="radio" name="filter" value="price-asc"> Goedkoopste
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="filter" value="price-desc"> Duurste
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="filter" value="date-desc"> Nieuw naar oud
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="filter" value="date-asc"> Oud naar nieuw
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="filter" value="popular"> Populair
+                        </label>
+                        <label class="filter-option">
+                            <input type="radio" name="filter" value="reviews"> Reviews
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <i class="ri-sort-alphabet-asc"></i>
+        </div>
+    
+        <div class="row1">
+            <div class="block1">
+                <h2 class="shoptitel">Populair <i class="ri-fire-line"></i></h2>
+                <br>
+                <div class="container-populaire-wrapper">
+                    <div class="container-populaire" id="shopcontainer">
+                        <div class="flip-container" onclick="flipCard(this)">
+                            <div class="article">
+                                <div class="front">
+                                    <div id="char-1" data-character-id="1">
+                                    </div>
+                                    <div class="star-rating">
+                                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="price"><i class="ri-copper-diamond-line"></i> 450</div>
+                                </div>
+                                <div class="back">
+                                    <p>Outlaw Midas, de beruchte goudbandiet, laat niets achter behalve chaos en glanzende sporen.</p>
+                                    <div class="cart">
+                                        <i class="ri-shopping-cart-2-line"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="flip-container" onclick="flipCard(this)">
+                            <div class="article">
+                                <div class="front">
+                                    <div id="char-2" data-character-id="2">
+                                    </div>
+                                    <div class="star-rating">
+                                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="price"><i class="ri-copper-diamond-line"></i> 450</div>
+                                </div>
+                                <div class="back">
+                                    <p>Wave Rider Axo scheert over het water als een schaduw in de nacht.</p>
+                                    <div class="cart">
+                                        <i class="ri-shopping-cart-2-line"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="flip-container" onclick="flipCard(this)">
+                            <div class="article">
+                                <div class="front">
+                                    <div id="char-3" data-character-id="3">
+                                    </div>
+                                    <div class="star-rating">
+                                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <div class="price"><i class="ri-copper-diamond-line"></i> 450</div>
+                                </div>
+                                <div class="back">
+                                    <p>Cassidy Quinn jaagt zonder genade op haar doelwitten.</p>
+                                    <div class="cart">
+                                        <i class="ri-shopping-cart-2-line"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="arrow prev"><i class="ri-arrow-left-line"></i></button>
+                    <button class="arrow next"><i class="ri-arrow-right-line"></i></button>
+                </div>
+            </div>
+    
+            <div class="block">
+                <h2 class="shoptitel">Battlepass <i class="ri-shield-star-line"></i></h2>
+                <br>
+                <div class="container-battlepas" id="shopcontainer">
+                    <div class="article-2">
+                        <p>Lv 1</p>
+                        <div id="char-4" data-character-id="4">
+                        </div>
+                        <div class="star-rating">
+                            <p><i class="ri-lock-line"></i> Beschikbaar vanaf level 1</p>
+                        </div>
+                    </div>
+    
+                    <div class="article-2">
+                        <p>Lv 5</p>
+                        <div id="char-5" data-character-id="5">
+                        </div>
+                        <div class="star-rating">
+                            <p><i class="ri-lock-line"></i> Ontgrendel bij level 5</p>
+                        </div>
+                    </div>
+    
+                    <div class="article-2">
+                        <p>Lv 10</p>
+                        <div id="char-6" data-character-id="6">
+                        </div>
+                        <div class="star-rating">
+                            <p><i class="ri-lock-line"></i> Level 10 vereist</p>
+                        </div>
+                    </div>
+    
+                    <div class="article-2">
+                        <p>Lv 25</p>
+                        <div id="char-7" data-character-id="7">
+                        </div>
+                        <div class="star-rating">
+                            <p><i class="ri-lock-line"></i> Bereik level 25</p>
+                        </div>
+                    </div>
+    
+                    <div class="article-2">
+                        <p>Lv 50</p>
+                        <div id="char-8" data-character-id="8">
+                        </div>
+                        <div class="star-rating">
+                            <p><i class="ri-lock-line"></i> Prestigereward</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row2">
+            <div class="block">
+                <h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
+                <br>
+                
+                <div class="container-comming-soon" id="shopcontainer">
+                    <div class="article-1">
+                        <div id="char-9" data-character-id="9">
+                        </div>
+                        <div class="star-rating">
+                            <p> <div id="timer">00:00:00:00</div></p>
+                        </div>
+                    </div>
+    
+                    <div class="article-1">
+                        <div id="char-10" data-character-id="10">
+                        </div>
+                    </div>
+    
+                    <div class="article-1">
+                        <div id="char-11" data-character-id="11">
+                        </div>
+                    </div>
+    
+                    <div class="article-1">
+                        <div id="char-12" data-character-id="12">
+                        </div>
+                    </div>
+    
+                    <div class="article-1">
+                        <div id="char-13" data-character-id="13">
+                        </div>
+                    </div>
+    
+                    <div class="article-1">
+                        <div id="char-14" data-character-id="14">
+                        </div>
+                    </div>
+    
+                    <div class="article-1">
+                        <div id="char-15" data-character-id="15">
+                        </div>
+                    </div>
+    
+                    <div class="article-1">
+                        <H2>Surprise</H2>
+                        <img class="suprise-img" src="Assets/img/description-image.png" alt="Verrassingsitem">
+                    </div>
+                    
+                </div>
+            </div>
+            <i class="ri-chat-1-line" id="chatIcon"></i>
+        </div>
+    </main>
+          <div id="chatbotContainer" class="chatbot-container">
+            <div class="chatbot-header">
+                <span>Icon Bot</span>
+                <i class="ri-close-line" id="closeChat"></i>
+            </div>
+            <div class="chatbot-body" id="chatbotBody">
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatInput" placeholder="Typ een bericht...">
+                <i class="ri-send-plane-2-line" id="sendMessage"></i>
+            </div>
+        </div>
+    
+    <footer>
+        <p>&copy; Alle rechten voorbehouden aan ICONS 2025</p>
+        <nav class="footer-nav">
+            <a href="privacybeleid.html" target="_blank">Privacybeleid</a>
+            <a href="algemenevoorwaarden.html" target="_blank">Algemene Voorwaarden</a>
+            <a href="cookiesbeleid.html" target="_blank">Cookiebeleid</a>
+        </nav>
+    </footer>
+    <script src="api.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

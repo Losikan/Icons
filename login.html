@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+    <link rel="stylesheet" href="Assets/CSS/Styles.css">
+</head>
+<body>
+    <div class="mode-toggle">
+        <label class="switch">
+            <input type="checkbox" id="modeSwitch">
+            <span class="slider round">
+                <i class="ri-sun-line sun-icon"></i>
+                <i class="ri-moon-line moon-icon"></i>
+            </span>
+        </label>
+    </div>
+
+    <main>
+        <svg class="login_blob" viewBox="0 0 566 840" xmlns="http://www.w3.org/2000/svg">
+            <mask id="mask0" mask-type="alpha">
+                <path d="M342.407 73.6315C388.53 56.4007 394.378 17.3643 391.538 0H566V840H0C14.5385 834.991 100.266 804.436 77.2046 707.263C49.6393 591.11 115.306 518.927 176.468 488.873C363.385 397.026 156.98 302.824 167.945 179.32C173.46 117.209 284.755 95.1699 342.407 73.6315Z"/>
+            </mask>
+        
+            <g mask="url(#mask0)">
+                <image id="backgroundImage" class="login_img" href="Assets/img/fortnite-battle-royale-uhd-4k-wallpaper.jpg">
+            </g>
+        </svg>
+
+        <div class="login container grid">
+            <div class="login_access">
+                <h1 class="login_title">Login</h1>
+                <div class="login_area">
+                    <form action="" class="login_form">
+                        <div class="login_content grid">
+                            <div class="login_box">
+                                <input type="email" id="email" required placeholder=" " class="login_input">
+                                <label for="email" class="login_label">Email</label>
+                                <i class="ri-mail-fill login_icon login_password" id="loginMail"></i>
+                            </div>
+
+                            <div class="login_box">
+                                <input type="password" id="password" required placeholder=" " class="login_input">
+                                <label for="password" class="login_label">Wachtwoord</label>
+                                <i class="ri-eye-off-fill login_icon login_password" id="loginPassword"></i>
+                            </div>
+                        </div>
+
+                        <a href="resetpassword.html" class="login_forgot">Wachtwoord vergeten?</a>
+                            <div class="login__remember-container">
+                                <label class="login__remember-label">
+                                <input type="checkbox" class="login__remember-input">
+                                <span class="login__remember-custom"></span>
+                                    Ingelogd blijven
+                                </label>
+                                </div>                        
+                        <button type="" class="login_button" id="login_button" >Login</button>
+                    </form>
+                        
+
+                    
+
+                    <p class="login_switch">
+                        Nog geen gebruiker?
+                        <button id="loginButtonRegister">Maak hier uw account!</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>   
+
+    <script src="js/script.js"></script>
+</body>
+</html>
