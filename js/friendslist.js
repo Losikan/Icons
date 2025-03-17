@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Create the report modal
     const reportModal = document.createElement('div');
     reportModal.className = 'report-modal';
     reportModal.innerHTML = `
@@ -98,6 +99,22 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
     `;
     document.body.appendChild(reportModal);
+
+    // Add event listeners for the modal buttons
+    document.getElementById('cancelReport').addEventListener('click', () => {
+        reportModal.style.display = 'none';
+        document.getElementById('reportReason').value = ''; // Clear the textarea
+    });
+
+    document.getElementById('submitReport').addEventListener('click', () => {
+        const reason = document.getElementById('reportReason').value;
+        if (reason.trim()) {
+            console.log('Report submitted for:', currentUser, 'Reason:', reason);
+            // Add your report submission logic here
+        }
+        reportModal.style.display = 'none';
+        document.getElementById('reportReason').value = ''; // Clear the textarea
+    });
 
     function reattachEventListeners() {
         document.querySelectorAll('#online-list li, #offline-list li, #blocked-list li').forEach(li => {
@@ -145,12 +162,21 @@ document.addEventListener('DOMContentLoaded', function () {
         e.stopPropagation();
         const li = this.closest('li');
         const wasSelected = li.classList.contains('selected');
+        const list = li.closest('ul'); // Get the parent list (online-list, offline-list, or blocked-list)
+    
+        // Update the counter for the respective list
+        const countElement = list.previousElementSibling.querySelector('.count');
+        if (countElement) {
+            countElement.textContent = list.children.length - 1; // Subtract 1 because we're about to remove the item
+        }
+    
+        // Remove the list item
         li.remove();
-
-        const list = li.closest('ul');
-        list.previousElementSibling.querySelector('.count').textContent = list.children.length;
-
+    
+        // Reset chat if the removed user was selected
         if (wasSelected) resetChat();
+    
+        // Reattach event listeners
         reattachEventListeners();
     }
 

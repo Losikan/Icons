@@ -489,77 +489,6 @@ body.dark-mode footer p {
     height: 10px;
 }
 
-@media (max-width: 480px) {
-
-    .card-image {
-        width: 100%;
-        height: 120%;
-    }
-
-    .card.prev {
-        transform: scale(0.9) translateX(-50%);
-    }
-
-    .card.next {
-        transform: scale(0.9) translateX(50%);
-    }
-
-    .card-content {
-        padding: 1rem;
-    }
-
-    .card-title {
-        font-size: 1.25rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .card-description {
-        font-size: 0.8rem;
-        margin-bottom: 1rem;
-        white-space: normal;
-    }
-
-    .card-content a:has(.card-button) {
-        display: block;
-    }
-
-    .nav-btn {
-        width: 35px;
-        height: 35px;
-    }
-
-    .nav-btn i {
-        font-size: 1.25rem;
-    }
-
-    .cookies-card {
-        overflow: visible;
-        left: 0;
-        bottom: 0;
-        border-radius: 0;
-        width: 100%;
-        transform: unset;
-    }
-
-    .logo {
-        left: 46px;
-        padding-left: 1rem;
-    }
-
-    .cookies-header svg {
-        flex: 0;
-    }
-
-    .cookies-header p {
-        flex: 1;
-        width: fit-content;
-    }
-
-    .footer-nav {
-        flex-direction: column;
-    }
-}
-
 @keyframes shake {
 
     0%,
@@ -984,110 +913,6 @@ body.dark-mode .content button:hover {
     color: white;
 }
 
-
-@media (max-width: 1200px) {
-    .card {
-        width: 35rem;
-        height: 35rem;
-    }
-
-    .card.prev {
-        transform: scale(0.9) translateX(-70%);
-    }
-
-    .card.next {
-        transform: scale(0.9) translateX(70%);
-    }
-}
-
-@media (max-width: 992px) {
-    .carousel-container {
-        height: 80vh;
-    }
-
-    .card {
-        width: 30rem;
-        height: 30rem;
-    }
-
-    .card-title {
-        font-size: 1.75rem;
-    }
-
-    .card-description {
-        font-size: 0.9rem;
-    }
-
-    .nav-btn {
-        width: 40px;
-        height: 40px;
-    }
-
-    footer {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        padding-bottom: 1rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .card {
-        max-width: 30rem;
-        height: 40rem;
-    }
-
-    .card-image {
-        height: 140%;
-    }
-
-    .card.prev {
-        transform: scale(0.9) translateX(-60%);
-    }
-
-    .card.next {
-        transform: scale(0.9) translateX(60%);
-    }
-
-    .card.far-left,
-    .card.far-right {
-        display: none;
-    }
-
-    .card-title {
-        font-size: 1.5rem;
-    }
-
-    .card-description {
-        font-size: 0.85rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .card-button {
-        padding: 0.5rem 1rem;
-    }
-
-    .setting .selector-container {
-        min-width: 10rem;
-    }
-
-    .settings .settings-buttons .settings-button {
-        width: 100%;
-        max-width: 20rem !important;
-        min-width: unset;
-    }
-}
-
-
-
-
-@media (max-height: 500px) and (orientation: landscape) {
-    .card {
-        height: 80vh;
-    }
-}
-
 .setting {
     display: flex;
     align-items: center;
@@ -1402,10 +1227,14 @@ body.dark-mode .friends-chat {
     background: var(--color-second);
 }
 
-
+body.dark-mode .friends-chat-header,
+body.dark-mode .friends-chat-footer {
+    background-color: var(--color-first);
+    color: white;
+}
 
 .friends-chat-header {
-    background-color: var(--color-first);
+    background-color: var(--body-color);
     padding: 10px;
     border-radius: 10px;
     border-radius: 10px;
@@ -1420,7 +1249,7 @@ body.dark-mode .friends-chat {
 }
 
 .friends-chat-footer {
-    background-color: var(--color-first);
+    background-color: var(--body-color);
     padding: 10px;
     margin-top: auto;
     border-radius: 10px;
@@ -1443,15 +1272,21 @@ body.dark-mode .friends-chat {
     display: none;
 }
 
+body.dark-mode .messageBox {
+    background-color: #16171d;
+    color: var(--white-color);
+}
+
 .messageBox {
     width: 100%;
     height: 55px;
     display: flex;
     align-items: center;
-    background-color: #1b1b22;
+    background-color: #e1e1e1;
     padding: 0 15px;
     border-radius: 10px;
     border: 1px solid rgb(63, 63, 63);
+    color: var(--text-color);
 }
 
 .messageBox:focus-within {
@@ -1530,9 +1365,13 @@ body.dark-mode .friends-chat {
     outline: none;
     border: none;
     padding-left: 10px;
-    color: #f5f5f5;
+    color: var(--text-color);
     margin-left: auto;
     font-family: var(--body-font);
+}
+
+body.dark-mode #messageInput {
+    color: var(--white-color);
 }
 
 #sendButton {
@@ -1644,6 +1483,11 @@ button#sendButton:hover svg path {
     max-width: 190px;
 }
 
+body.dark-mode .friends-search-input {
+    background-color: #16171d;
+    color: #bdbecb;
+}
+
 .friends-search-input {
     width: 100%;
     height: 45px;
@@ -1651,16 +1495,20 @@ button#sendButton:hover svg path {
     box-shadow: 0 0 0 1.5px #2b2c37, 0 0 25px -17px #000;
     border: 0;
     border-radius: 12px;
-    background-color: #16171d;
+    background-color: #e1e1e1;
     outline: none;
-    color: #bdbecb;
+    color: var(--text-color);
     transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
     cursor: text;
     z-index: 0;
 }
 
+body.dark-mode .friends-search-input::placeholder {
+    color: var(--white-color);
+}
+
 .friends-search-input::placeholder {
-    color: #bdbecb;
+    color: var(--text-color);
 }
 
 .friends-search-input:hover {
@@ -1675,10 +1523,14 @@ button#sendButton:hover svg path {
     box-shadow: 0 0 0 2.5px #2f303d;
 }
 
+body.dark-mode .search-icon {
+    fill: var(--white-color);
+}
+
 .search-icon {
     position: absolute;
     left: 1rem;
-    fill: #bdbecb;
+    fill: var(--text-color);
     width: 1rem;
     height: 1rem;
     pointer-events: none;
@@ -1766,18 +1618,28 @@ button#sendButton:hover svg path {
     z-index: 1000;
 }
 
+body.dark-mode .report-content {
+    background-color: hsl(220, 68%, 4%);
+}
+
 .report-content {
-    background: var(--text-color);
+    background: var(--body-color);
     padding: 20px;
     border-radius: 8px;
     width: 400px;
 }
 
+body.dark-mode textarea {
+    background-color: var(--color-first);
+    color: var(--white-color)
+}
+
 .report-content textarea {
-    background: #181818;
+    background: #e1e1e1;
     border: none;
-    color: white;
+    color: var(--text-color);
     resize: none;
+    border-radius: 8px;
 }
 
 .report-content h3 {
@@ -1818,7 +1680,102 @@ button#sendButton:hover svg path {
     transform: none !important;
 }
 
+
+
+
+@media (max-width: 1200px) {
+    .card {
+        width: 35rem;
+        height: 35rem;
+    }
+
+    .card.prev {
+        transform: scale(0.9) translateX(-70%);
+    }
+
+    .card.next {
+        transform: scale(0.9) translateX(70%);
+    }
+}
+
+@media (max-width: 992px) {
+    .carousel-container {
+        height: 80vh;
+    }
+
+    .card {
+        width: 30rem;
+        height: 30rem;
+    }
+
+    .card-title {
+        font-size: 1.75rem;
+    }
+
+    .card-description {
+        font-size: 0.9rem;
+    }
+
+    .nav-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    footer {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        padding-bottom: 1rem;
+    }
+}
+
 @media (max-width: 768px) {
+    .card {
+        max-width: 30rem;
+        height: 40rem;
+    }
+
+    .card-image {
+        height: 140%;
+    }
+
+    .card.prev {
+        transform: scale(0.9) translateX(-60%);
+    }
+
+    .card.next {
+        transform: scale(0.9) translateX(60%);
+    }
+
+    .card.far-left,
+    .card.far-right {
+        display: none;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+    }
+
+    .card-description {
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .card-button {
+        padding: 0.5rem 1rem;
+    }
+
+    .setting .selector-container {
+        min-width: 10rem;
+    }
+
+    .settings .settings-buttons .settings-button {
+        width: 100%;
+        max-width: 20rem !important;
+        min-width: unset;
+    }
+
     .friends-chat {
         display: none;
     }
@@ -1851,6 +1808,83 @@ button#sendButton:hover svg path {
         flex-direction: column;
         gap: 10px;
         max-width: 100vw;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .card {
+        height: 80vh;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .card-image {
+        width: 100%;
+        height: 120%;
+    }
+
+    .card.prev {
+        transform: scale(0.9) translateX(-50%);
+    }
+
+    .card.next {
+        transform: scale(0.9) translateX(50%);
+    }
+
+    .card-content {
+        padding: 1rem;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-description {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+        white-space: normal;
+    }
+
+    .card-content a:has(.card-button) {
+        display: block;
+    }
+
+    .nav-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .nav-btn i {
+        font-size: 1.25rem;
+    }
+
+    .cookies-card {
+        overflow: visible;
+        left: 0;
+        bottom: 0;
+        border-radius: 0;
+        width: 100%;
+        transform: unset;
+    }
+
+    .logo {
+        left: 46px;
+        padding-left: 1rem;
+    }
+
+    .cookies-header svg {
+        flex: 0;
+    }
+
+    .cookies-header p {
+        flex: 1;
+        width: fit-content;
+    }
+
+    .footer-nav {
+        flex-direction: column;
     }
 }
 
