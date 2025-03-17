@@ -1,45 +1,85 @@
-// Dark mode functionaliteit
-const modeSwitch = document.getElementById('modeSwitch');
+const modeSwitch = document.getElementById("modeSwitch");
 
-if (localStorage.getItem('darkMode') === 'true' || 
-   (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('darkMode'))) {
-  document.body.classList.add('dark-mode');
+if (
+  localStorage.getItem("darkMode") === "true" ||
+  (window.matchMedia("(prefers-color-scheme: dark)").matches &&
+    !localStorage.getItem("darkMode"))
+) {
+  document.body.classList.add("dark-mode");
   modeSwitch.checked = true;
 }
-modeSwitch.addEventListener('change', () => {
-  document.body.classList.toggle('dark-mode');
-  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+
+modeSwitch.addEventListener("change", () => {
+  document.body.classList.toggle("dark-mode");
+  localStorage.setItem(
+    "darkMode",
+    document.body.classList.contains("dark-mode")
+  );
 });
 
-// Zoekfunctionaliteit //
-const searchIcon = document.getElementById('search-icon');
-const searchInput = document.querySelector('.search-input');
+const searchIcon = document.getElementById("search-icon");
+const searchInput = document.querySelector(".search-input");
 
-searchIcon.addEventListener('click', (e) => {
+searchIcon.addEventListener("click", (e) => {
   e.stopPropagation();
-  searchInput.classList.toggle('active');
-  if (searchInput.classList.contains('active')) {
+  searchInput.classList.toggle("active");
+  if (searchInput.classList.contains("active")) {
     searchInput.focus();
   }
 });
 
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.search-container')) {
-    searchInput.classList.remove('active');
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".search-container")) {
+    searchInput.classList.remove("active");
   }
 });
 
-searchInput.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
-    console.log('Zoekopdracht:', searchInput.value);
-    searchInput.value = '';
-    searchInput.classList.remove('active');
+searchInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    console.log("Zoekopdracht:", searchInput.value);
+    searchInput.value = "";
+    searchInput.classList.remove("active");
+  }
+});
+
+const userIcon = document.querySelector(".user");
+const accountCard = document.querySelector(".account-card");
+
+userIcon.addEventListener("click", (e) => {
+  e.stopPropagation();
+  accountCard.classList.toggle("show");
+});
+
+document.addEventListener("click", (e) => {
+  if (!accountCard.contains(e.target) && !userIcon.contains(e.target)) {
+    accountCard.classList.remove("show");
   }
 });
 
 
+document.addEventListener('DOMContentLoaded', function() {
+  const sidebar = document.querySelector('.sidebar');
+  const menuIcon = document.querySelector('.ri-menu-line');
+  const overlay = document.querySelector('.overlay');
+  const closeIcon = document.querySelector('.sidebar-close');
 
-//Prijs filter//
+  const toggleSidebar = () => {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+  };
+
+  menuIcon.addEventListener('click', toggleSidebar);
+  closeIcon.addEventListener('click', toggleSidebar);
+  overlay.addEventListener('click', toggleSidebar);
+
+  document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+          toggleSidebar();
+      }
+  });
+});
+
+// Prijs filter
 const rangeInput = document.querySelectorAll(".range-input input"),
 priceInput = document.querySelectorAll(".price-input input"),
 range = document.querySelector(".slider .progress");
@@ -82,7 +122,7 @@ rangeInput.forEach(input =>{
     });
 });
 
-// Radio-Filter//
+// Radio-Filter
 document.addEventListener("DOMContentLoaded", function () {
   const filterCheckbox = document.getElementById("filterCheckbox");
   const filterOptions = document.getElementById("filterOptions");
@@ -147,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-/////AI CHATBOT////
+// AI CHATBOT
 document.addEventListener('DOMContentLoaded', function () {
   const chatIcon = document.getElementById('chatIcon');
   const chatbotContainer = document.getElementById('chatbotContainer');
@@ -200,6 +240,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }, 300);
     }
   });
+  
   function addMessage(sender, message) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('chat-message', sender);
@@ -209,24 +250,132 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-const container = document.querySelector('.container-populaire');
-const articles = document.querySelectorAll('.article');
+// API Functionaliteit
+async function fetchCharacter(characterId) {
+  try {
+      const response = await fetch('skins.json');
+      if (!response.ok) throw new Error('Fout bij ophalen van gegevens');
+      
+      const data = await response.json();
+      const characters = data.data.items.br;
+      const character = characters.find(char => char.id === characterId);
+      if (!character) throw new Error(`Character met ID ${characterId} niet gevonden`);
+      
+      const characterContainer = document.getElementById(`char-${characterId}`);
+      if (characterContainer) {
+          characterContainer.innerHTML = `
+              <div class="icons-shop">
+              <h2>${character.name}</h2> 
+              <img class="icons-shop" src="${character.images.icon}" alt="${character.name}">
+              </div>
+          `;
+      }
+  } catch (error) {
+      console.error('Error:', error);
+  }
+}
 
-container.addEventListener('scroll', () => {
-  articles.forEach(article => {
-    const rect = article.getBoundingClientRect();
-    article.classList.toggle('active', rect.left >= 0 && rect.right <= window.innerWidth);
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("[data-character-id]").forEach(element => {
+      fetchCharacter(element.dataset.characterId);
   });
 });
 
-// Overige functionaliteit
-document.querySelector('.ri-menu-line').addEventListener('click', () => {
-  console.log('Menu geopend');
+// Countdown Timer
+let tijd = 323102; 
+const timerElement = document.getElementById("timer");
+
+function updateTimerDisplay() {
+    let dagen = Math.floor(tijd / (60 * 60 * 24));
+    let uren = Math.floor((tijd % (60 * 60 * 24)) / (60 * 60));
+    let minuten = Math.floor((tijd % (60 * 60)) / 60);
+    let seconden = tijd % 60;
+    
+    timerElement.textContent = `${dagen.toString().padStart(2, '0')}:${uren.toString().padStart(2, '0')}:${minuten.toString().padStart(2, '0')}:${seconden.toString().padStart(2, '0')}`;
+}
+
+const countdown = setInterval(() => {
+    if (tijd > 0) {
+        tijd--;
+        updateTimerDisplay();
+    } else {
+        clearInterval(countdown);
+        timerElement.textContent = "Tijd voorbij!";
+    }
+}, 1000);
+
+updateTimerDisplay();
+////
+const initSlider = () => {
+  const slider = document.querySelector('.container-populaire');
+  const prevBtn = document.querySelector('.arrow.prev');
+  const nextBtn = document.querySelector('.arrow.next');
+  let currentIndex = 0;
+  const totalSlides = 3;
+
+  const updateButtons = () => {
+    prevBtn.style.display = currentIndex <= 0 ? 'none' : 'block';
+    nextBtn.style.display = currentIndex >= totalSlides - 1 ? 'none' : 'block';
+  };
+
+  const slideTo = (index) => {
+    currentIndex = Math.max(0, Math.min(index, totalSlides - 1));
+    slider.scrollTo({
+      left: slider.offsetWidth * currentIndex,
+      behavior: 'smooth'
+    });
+    updateButtons();
+  };
+
+  prevBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    slideTo(currentIndex - 1);
+  });
+
+  nextBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    slideTo(currentIndex + 1);
+  });
+
+  let touchStartX = 0;
+  slider.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  });
+
+  slider.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      diff > 0 ? slideTo(currentIndex + 1) : slideTo(currentIndex - 1);
+    }
+  });
+
+  updateButtons();
+};
+
+let currentFlippedCard = null;
+function flipCard(card) {
+  if (currentFlippedCard && currentFlippedCard !== card) {
+    currentFlippedCard.classList.remove("flipped");
+  }
+  card.classList.toggle("flipped");
+  currentFlippedCard = card.classList.contains("flipped") ? card : null;
+}
+
+document.addEventListener("click", (e) => {
+  if (!e.target.closest(".flip-container") && currentFlippedCard) {
+    currentFlippedCard.classList.remove("flipped");
+    currentFlippedCard = null;
+  }
 });
 
-document.querySelector('.ri-account-circle-fill').addEventListener('click', () => {
-  console.log('Account menu geopend');
+document.addEventListener('DOMContentLoaded', () => {
+  initSlider();
+  document.querySelector('.ri-menu-line').addEventListener('click', () => {
+    console.log('Menu geopend');
+  });
+
+  document.querySelector('.ri-account-circle-fill').addEventListener('click', () => {
+    console.log('Account menu geopend');
+  });
 });
-
-// API //
-
