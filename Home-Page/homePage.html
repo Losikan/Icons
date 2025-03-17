@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/homePage-style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
-    <script src="js/index.js"></script>
+    <script src="js/homePage-index.js"></script>
     <script src="js/nav.js" defer></script>
     <title>Document</title>
 </head>
@@ -77,14 +76,14 @@
         <div class="homePage-content">
 
             <div>
-                <h2 class="selection-title">Info</h2>
+                <h2 class="selection-title"><i class="ri-information-fill"></i> Progressie</h2>
                 <section class="homePage-info">
                     <section class="profile-box">
                         <div class="profile-container">
-                            <img src="assets/images/profileAvatar.jpeg" alt="Profile Avatar" class="profile-avatar">
+                            <img src="assets/images/profileAvatar.jpg" alt="Profile Avatar" class="profile-avatar">
                             <div class="profile-info">
-                                <h2 class="username">gebruikersNaam</h2>
-                                <p class="level">Level: 455</p>
+                                <h2 class="username"><i class="ri-account-box-fill"></i> gebruikersNaam</h2>
+                                <p class="level"><i class="ri-bard-fill"></i> Level: 455</p>
                                 
                             </div>
                         </div>
@@ -92,8 +91,8 @@
 
                     <section class="history-box">
                         <div class="stat-item">
-                            <h2>Geschiedenis <i class="ri-history-line"></i></h2>
-                            <h5>Record: 25min 11sec / 3050p <i class="ri-fire-fill"></i></h5>
+                            <h2><i class="ri-history-line"></i> Geschiedenis</h2>
+                            <h5><i class="ri-fire-fill"></i> Record: 25min 11sec / 3050p</h5>
                             <ul class="history-list">
                                 <li id="win">Gewonnen: 10min 45sec / 1050p</li>
                                 <li id="lose">Verloren: 2min 34sec / 250p</li>
@@ -107,24 +106,24 @@
             </div>
             </section>
             <div>
-                <h2 class="selection-title">Loadout <i class="ri-tools-fill"></i></h2>
+                <h1 class="selection-title"><i class="ri-tools-fill"></i> Loadout</h1>
                 <section id="loadout">
 
                     <div class="character-slots">
-                        <h3 class="selection-title">Speler <i class="ri-user-fill"></i></h3>
+                        <h3 class="selection-title"><i class="ri-user-fill"></i> Speler</h3>
                         <div class="character-slot">
-                            <img src="assets/images/assault-loadout.jpg" alt="Character" class="character-image"
+                            <img src="assets/images/skin1.webp" alt="Character" class="character-image"
                                 onclick="toggleSelection(this)">
                             <div class="character-selection">
-                                <img src="assets/images/engineer-loadout.png" alt="Option 1" class="character-option"
+                                <img src="assets/images/skin2.jpg" alt="Option 1" class="character-option"
                                     onclick="selectCharacter(this)">
-                                <img src="assets/images/sniper-loadout.png" alt="Option 2" class="character-option"
+                                <img src="assets/images/skin3.webp" alt="Option 2" class="character-option"
                                     onclick="selectCharacter(this)">
-                                <img src="assets/images/stealth-loadout.jpg" alt="Option 3" class="character-option"
+                                <img src="assets/images/skin4.webp" alt="Option 3" class="character-option"
                                     onclick="selectCharacter(this)">
-                                <img src="assets/images/support-loadout.png" alt="Option 4" class="character-option"
+                                <img src="assets/images/skin5.jpg" alt="Option 4" class="character-option"
                                     onclick="selectCharacter(this)">
-                                <img src="assets/images/assault-loadout.jpg" alt="Option 5" class="character-option"
+                                <img src="assets/images/skin1.webp" alt="Option 5" class="character-option"
                                     onclick="selectCharacter(this)">
                             </div>
                         </div>
@@ -132,20 +131,21 @@
 
 
                     <div class="weapon-slots">
-                        <h3 class="selection-title">Wapen <i class="ri-sword-fill"></i></h3>
+                        <h3 class="selection-title"><i class="ri-sword-fill"></i> Wapen</h3>
                         <div class="weapon-slot">
-                            <img src="assets/images/weapon1.jpg" alt="Weapon" class="weapon-image"
-                                onclick="toggleSelection(this)">
+                            <div class="weapon-image-container" onclick="toggleSelection(this)">
+                            <img src="assets/images/weapon1.webp" alt="Weapon" class="weapon-image">
+                            </div>
                             <div class="weapon-selection">
-                                <img src="assets/images/weapon2.jpg" alt="Option 1" class="weapon-option"
+                                <img src="assets/images/weapon2.webp" alt="Option 1" class="weapon-option"
                                     onclick="selectWeapon(this)">
-                                <img src="assets/images/weapon3.jpg" alt="Option 2" class="weapon-option"
+                                <img src="assets/images/weapon3.webp" alt="Option 2" class="weapon-option"
                                     onclick="selectWeapon(this)">
-                                <img src="assets/images/weapon4.jpg" alt="Option 3" class="weapon-option"
+                                <img src="assets/images/weapon4.webp" alt="Option 3" class="weapon-option"
                                     onclick="selectWeapon(this)">
-                                <img src="assets/images/weapon5.jpg" alt="Option 4" class="weapon-option"
+                                <img src="assets/images/weapon5.webp" alt="Option 4" class="weapon-option"
                                     onclick="selectWeapon(this)">
-                                <img src="assets/images/weapon1.jpg" alt="Option 5" class="weapon-option"
+                                <img src="assets/images/weapon1.webp" alt="Option 5" class="weapon-option"
                                     onclick="selectWeapon(this)">
                             </div>
                         </div>
@@ -153,20 +153,21 @@
 
 
                     <div class="emote-slots">
-                        <h3 class="selection-title">Emote <i class="ri-bear-smile-fill"></i></h3>
+                        <h3 class="selection-title"><i class="ri-bear-smile-fill"></i> Emote</h3>
                         <div class="emote-slot">
-                            <img src="assets/images/emote1.jpg" alt="Emote" class="emote-image"
-                                onclick="toggleSelection(this)">
+                            <div class="emote-image-container" onclick="toggleSelection(this)">
+                            <img src="assets/images/emote1.png" alt="Emote" class="emote-image">
+                            </div>
                             <div class="emote-selection">
-                                <img src="assets/images/emote2.jpg" alt="Option 1" class="emote-option"
+                                <img src="assets/images/emote2.png" alt="Option 1" class="emote-option"
                                     onclick="selectEmote(this)">
-                                <img src="assets/images/emote3.jpg" alt="Option 2" class="emote-option"
+                                <img src="assets/images/emote3.png" alt="Option 2" class="emote-option"
                                     onclick="selectEmote(this)">
                                 <img src="assets/images/emote4.jpg" alt="Option 3" class="emote-option"
                                     onclick="selectEmote(this)">
-                                <img src="assets/images/emote5.jpg" alt="Option 4" class="emote-option"
+                                <img src="assets/images/emote5.png" alt="Option 4" class="emote-option"
                                     onclick="selectEmote(this)">
-                                <img src="assets/images/emote1.jpg" alt="Option 5" class="emote-option"
+                                <img src="assets/images/emote1.png" alt="Option 5" class="emote-option"
                                     onclick="selectEmote(this)">
                             </div>
                         </div>
