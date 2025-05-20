@@ -1,0 +1,172 @@
+// Unified Selection Handler
+class SelectionManager {
+  constructor(type) {
+    this.type = type;
+    this.selector = `.${type}-selection`;
+    this.slotSelector = `.${type}-slot`;
+    this.initEventListeners();
+  }
+
+  toggleMenu(imgElement) {
+    document.querySelectorAll(this.selector).forEach(menu => menu.classList.remove('active'));
+    imgElement.nextElementSibling.classList.toggle('active');
+  }
+
+  selectItem(optionElement) {
+    const mainImage = optionElement.closest(this.selector).previousElementSibling;
+    mainImage.src = optionElement.src;
+    optionElement.closest(this.selector).classList.remove('active');
+  }
+
+  initEventListeners() {
+    document.addEventListener('click', e => {
+      if (!e.target.closest(this.slotSelector)) {
+        document.querySelectorAll(this.selector).forEach(menu => menu.classList.remove('active'));
+      }
+    });
+  }
+}
+
+// Dark Mode Handler
+function initializeDarkMode() {
+  const modeSwitch = document.getElementById('modeSwitch');
+  const isDark = localStorage.getItem('darkMode') === 'true' || 
+    (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('darkMode'));
+
+  document.body.classList.toggle('dark-mode', isDark);
+  if (modeSwitch) modeSwitch.checked = isDark;
+
+  modeSwitch?.addEventListener('change', () => {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+  });
+}
+
+// Carousel Component
+class Carousel {
+  constructor() {
+    this.cards = Array.from(document.querySelectorAll('.card'));
+    [this.prevBtn, this.nextBtn] = ['.prev-btn', '.next-btn'].map(s => document.querySelector(s));
+    this.activeIndex = 0;
+    this.totalCards = this.cards.length;
+    this.isAnimating = false;
+    this.init();
+  }
+
+  init() {
+    this.setupEventListeners();
+    this.updatePositions();
+  }
+
+  setupEventListeners() {
+    this.prevBtn.addEventListener('click', () => this.navigate(-1));
+    this.nextBtn.addEventListener('click', () => this.navigate(1));
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') this.navigate(-1);
+      if (e.key === 'ArrowRight') this.navigate(1);
+    });
+
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+    document.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) diff > 0 ? this.navigate(1) : this.navigate(-1);
+    });
+  }
+
+  navigate(direction) {
+    if (this.isAnimating) return;
+    this.isAnimating = true;
+    this.activeIndex = (this.activeIndex + direction + this.totalCards) % this.totalCards;
+    this.updatePositions();
+    setTimeout(() => this.isAnimating = false, 600);
+  }
+
+  updatePositions() {
+    this.cards.forEach((card, index) => {
+      const position = (index - this.activeIndex + this.totalCards) % this.totalCards;
+      card.className = 'card ' + ['active', 'next', 'prev', 'far-right', 'far-left'][position] || '';
+    });
+  }
+}
+
+// Cookie Consent
+function setupCookieConsent() {
+  const cookieCard = document.querySelector('.cookies-card');
+  const buttons = ['exit', 'accept', 'reject'].map(c => document.querySelector(`.${c}`));
+  
+  const closePopup = () => {
+    cookieCard.classList.add('hide');
+    setTimeout(() => cookieCard.style.display = 'none', 300);
+  };
+
+  buttons[0]?.addEventListener('click', closePopup);
+  buttons[1]?.addEventListener('click', () => {
+    buttons[1].innerHTML = '<i class="ri-check-line"></i>';
+    closePopup();
+  });
+  buttons[2]?.addEventListener('click', () => {
+    buttons[2].innerHTML = '<i class="ri-emotion-sad-fill"></i>';
+    closePopup();
+  });
+}
+
+// UI Initialization
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Components
+  initializeDarkMode();
+  new Carousel();
+  setupCookieConsent();
+
+  // Selection Managers
+  const managers = ['character', 'weapon', 'emote'].map(t => new SelectionManager(t));
+  managers.forEach(manager => {
+    window[`toggle${manager.type.charAt(0).toUpperCase() + manager.type.slice(1)}Selection`] = 
+      img => manager.toggleMenu(img);
+    window[`select${manager.type.charAt(0).toUpperCase() + manager.type.slice(1)}`] = 
+      option => manager.selectItem(option);
+  });
+
+  // Search Functionality
+  const searchIcon = document.getElementById('search-icon');
+  const searchInput = document.querySelector('.search-input');
+  searchIcon?.addEventListener('click', e => {
+    e.stopPropagation();
+    searchInput.classList.toggle('active');
+    searchInput.classList.contains('active') && searchInput.focus();
+  });
+  document.addEventListener('click', e => !e.target.closest('.search-container') && searchInput.classList.remove('active'));
+  searchInput?.addEventListener('keypress', e => e.key === 'Enter' && console.log('Search:', searchInput.value));
+
+  // User Account
+  const userIcon = document.querySelector('.user');
+  const accountCard = document.querySelector('.account-card');
+  userIcon?.addEventListener('click', e => {
+    e.stopPropagation();
+    accountCard.classList.toggle('show');
+  });
+  document.addEventListener('click', e => !accountCard.contains(e.target) && accountCard.classList.remove('show'));
+
+  // Sidebar Navigation
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.querySelector('.overlay');
+  const toggleSidebar = () => {
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+  };
+  document.querySelectorAll('.ri-menu-line, .sidebar-close').forEach(el => el.addEventListener('click', toggleSidebar));
+  overlay?.addEventListener('click', toggleSidebar);
+  document.addEventListener('keydown', e => e.key === 'Escape' && toggleSidebar());
+
+  // Additional Features
+  document.querySelectorAll('.card-button').forEach(button => {
+    button.addEventListener('click', function(e) {
+      if (!this.classList.contains('available')) {
+        this.classList.add('shake');
+        setTimeout(() => this.classList.remove('shake'), 300);
+      }
+      this.classList.contains('available') && setTimeout(() => window.location.href = this.closest('a').href, 500);
+    });
+  });
+});
