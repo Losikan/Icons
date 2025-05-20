@@ -1,0 +1,91 @@
+<%- include("Partials/header.ejs") %>
+
+<body>
+
+    <header>
+        <i class="ri-menu-line"></i>
+        <a href="/homePage" class="logo"><h1>ICONS</h1></a>
+
+        <div class="mode-toggle-right">
+            <label class="switch">
+                <input type="checkbox" id="modeSwitch">
+                <span class="slider round">
+                    <i class="ri-sun-line sun-icon"></i>
+                    <i class="ri-moon-line moon-icon"></i>
+                </span>
+            </label>
+        </div>
+
+        <div class="search-container">
+            <i class="ri-search-2-line" id="search-icon"></i>
+            <input type="text" class="search-input" placeholder="Zoeken...">
+        </div>
+
+            <a href="/profiel" class="label"><i  class="ri-account-circle-fill user" href></i></a>
+        </div>
+    </header>
+<main>
+        <div class="profile-section">
+            <div class="profile-pic">
+                <img src="afbeeldingen/" alt="profiel" width="100" height="100"></div>
+            <i class="ri-account-circle-2-fill"></i>
+            <h2 class="username">Gebruikersnaam</h2>
+            <div class="level">
+                <span class="level-icon"><i class="ri-gamepad-line"></i></span>
+                <span>Level: 455</span>
+            </div>
+        </div>
+        
+        <div class="tabs-container">
+            <div class="tabs">
+                <div class="tab-active">Showcase</div>
+            </div>
+            
+            <div class="tab-content">
+                <div class="showcase-grid">
+                    <div class="showcase-item">
+                        <img src="afbeeldingen/" alt="profiel" width="80%" height="90%">
+                    </div>
+                    <div class="showcase-item">
+                        <img src="afbeeldingen/" alt="profiel" width="80%" height="90%">
+                    </div>
+                    <div class="showcase-item2"></div>
+                </div>
+                
+                <div class="stats-section">
+                    <div class="stats-title">Statistieken</div>
+                    <div class="stats-item">
+                        <div class="stats-label">Level:</div>
+                        <div class="stats-value">455</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">K/D:</div>
+                        <div class="stats-value">455</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">Kills:</div>
+                        <div class="stats-value">455</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">Level: 455</div>
+                        <div class="stats-value"></div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">Level: 455</div>
+                        <div class="stats-value"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+    <footer>
+        <p>&copy; Alle rechten voorbehouden aan ICONS 2025</p>
+        <nav class="footer-nav">
+            
+        </nav>
+    </footer>
+
+</body>
+</html>
+    <%- include("Partials/footer.ejs") %>
