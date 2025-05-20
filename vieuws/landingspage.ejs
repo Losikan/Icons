@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page | ICONS</title>
-    <link rel="stylesheet" href="css/style4.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet" />
-    <script src="js/script3.js" defer></script>
-</head>
+<%- include("Partials/header.ejs") %>
+
 <body>
     <header class="top-header">
         <h1 class="logo">ICONS</h1>
@@ -33,7 +25,7 @@
                 <div class="card-content">
                     <h2 class="card-title">Fortnite</h2>
                     <p class="card-description">Bezoek de Icons website!</p>
-                    <a href="login.html"><button class="card-button available shatter-button">Naar project<i
+                    <a href="/login.ejs"><button class="card-button available shatter-button">Naar project<i
                                 class="ri-arrow-right-line"></i></button></a>
                 </div>
             </section>
@@ -86,14 +78,7 @@
             <i class="ri-arrow-right-s-line"></i>
         </button>
     </main>
-    <footer>
-        <p>&copy; Alle rechten voorbehouden aan ICONS 2025</p>
-        <nav class="footer-nav">
-            <a href="privacybeleid.html" target="_blank">Privacybeleid</a>
-            <a href="algemenevoorwaarden.html" target="_blank">Algemene Voorwaarden</a>
-            <a href="cookiesbeleid.html" target="_blank">Cookiebeleid</a>
-        </nav>
-    </footer>
+    
     <div class="cookies-card">
         <div class="cookies-header">
             <svg xml:space="preserve" viewBox="0 0 122.88 122.25" y="0px" x="0px" class="cookieSvg" version="1.1">
@@ -121,3 +106,4 @@
     </div>
 </body>
 </html>
+    <%- include("Partials/footer.ejs") %>

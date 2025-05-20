@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
-    <link rel="stylesheet" href="Assets/CSS/Styles.css">
-</head>
+<%- include("Partials/header.ejs") %>
+
 <body>
     <div class="mode-toggle">
         <label class="switch">
@@ -31,10 +24,20 @@
 
         <div class="login container grid">
             <div class="login_access">
-                <h1 class="login_title">Login</h1>
+                 <div class="login container grid">
+            <div class="login_access">
+                <a href="/login.ejs" class="back-link">
+                    <i class="ri-arrow-left-line"></i>
+                    <p class="Terug">Terug</p> 
+                </a><h1 class="login_title">Registreren</h1>
                 <div class="login_area">
                     <form action="" class="login_form">
                         <div class="login_content grid">
+                            
+                            <div class="login_box">
+                                <input type="name" id="name" required placeholder=" " class="login_input">
+                                <label for="name" class="login_label">Gebruikersnaam</label>
+                            </div>
                             <div class="login_box">
                                 <input type="email" id="email" required placeholder=" " class="login_input">
                                 <label for="email" class="login_label">Email</label>
@@ -46,14 +49,18 @@
                                 <label for="password" class="login_label">Wachtwoord</label>
                                 <i class="ri-eye-off-fill login_icon login_password" id="loginPassword"></i>
                             </div>
+                             <div class="login_box">
+                                <input type="password" id="password" required placeholder=" " class="login_input">
+                                <label for="password" class="login_label">Herhaal wachtwoord</label>
+                                <i class="ri-eye-off-fill login_icon login_password" id="loginPassword"></i>
+                            </div>
                         </div>
 
-                        <a href="resetpassword.html" class="login_forgot">Wachtwoord vergeten?</a>
                             <div class="login__remember-container">
                                 <label class="login__remember-label">
                                 <input type="checkbox" class="login__remember-input">
                                 <span class="login__remember-custom"></span>
-                                    Ingelogd blijven
+                                    Algemenen regels gelezen en geaccepteerd.
                                 </label>
                                 </div>                        
                         <button type="" class="login_button" id="login_button" >Login</button>
@@ -62,10 +69,6 @@
 
                     
 
-                    <p class="login_switch">
-                        Nog geen gebruiker?
-                        <button id="loginButtonRegister">Maak hier uw account!</button>
-                    </p>
                 </div>
             </div>
         </div>
@@ -74,3 +77,4 @@
     <script src="js/script.js"></script>
 </body>
 </html>
+    <%- include("Partials/footer.ejs") %>

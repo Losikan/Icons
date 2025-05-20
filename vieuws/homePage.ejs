@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include("Partials/header.ejs") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/homePage-style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
-    <script src="js/homePage-index.js"></script>
-    <script src="js/nav.js" defer></script>
-    <title>Document</title>
-</head>
 
 <body>
     <header class="top-header">
@@ -18,16 +8,16 @@
                 <i class="ri-arrow-left-line sidebar-close"></i>
             </div>
             <ul class="sidebar-nav">
-                <li><a href="homePage.html">Home</a></li>
-                <li><a href="inventaris.html">Inventaris</a></li>
-                <li><a href="shop.html">Winkel</a></li>
-                <li><a href="friendslist.html">Vriendenlijst</a></li>
-                <li><a href="settings.html">Instellingen</a></li>
+                <li><a href="/homePage.ejs">Home</a></li>
+                <li><a href="/inventaris.ejs">Inventaris</a></li>
+                <li><a href="/shop.ejs">Winkel</a></li>
+                <li><a href="/friendslist.ejs">Vriendenlijst</a></li>
+                <li><a href="/settings.ejs">Instellingen</a></li>
             </ul>
             <div class="sidebar-bottom">
                 <div class="user-circle"></div>
                 <span>Naam</span>
-                <span><a href="landingspage.html">Uitloggen</a></span>
+                <span><a href="/landingspage.ejs">Uitloggen</a></span>
             </div>
         </nav>
         <div class="overlay"></div>
@@ -35,7 +25,7 @@
 
         <i class="ri-menu-line"></i>
 
-        <h1 class="logo"><a href="homePage.html">ICONS</a></h1>
+        <h1 class="logo"><a href="/homePage.ejs">ICONS</a></h1>
 
         <div class="nav-items-right">
             <div class="mode-toggle-right">
@@ -58,14 +48,14 @@
             <div class="account-card">
                 <ul class="list">
                     <li class="element">
-                        <a href="profiel.html" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
+                        <a href="/profiel.ejs" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
                     </li>
                     <li class="element">
-                        <a href="settings.html" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
+                        <a href="/settings.ejs" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
                     </li>
                     <div class="separator"></div>
                     <li class="element">
-                        <a href="landingspage.html" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
+                        <a href="/landingspage.ejs" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
                     </li>
                 </ul>
             </div>
@@ -184,14 +174,8 @@
                     gebruik de pijltoetsen en om aan te vallen gebruik "spatie", success!!!</span></div>
         </section>
     </main>
-    <footer>
-        <p>&copy; Alle rechten voorbehouden aan ICONS 2025</p>
-        <nav class="footer-nav">
-            <a href="privacybeleid.html" target="_blank">Privacybeleid</a>
-            <a href="algemenevoorwaarden.html" target="_blank">Algemene Voorwaarden</a>
-            <a href="cookiesbeleid.html" target="_blank">Cookiebeleid</a>
-        </nav>
-    </footer>
+
 </body>
 
 </html>
+    <%- include("Partials/footer.ejs") %>
