@@ -1,10 +1,11 @@
-// Unified Selection Handler
 class SelectionManager {
   constructor(type) {
     this.type = type;
     this.selector = `.${type}-selection`;
     this.slotSelector = `.${type}-slot`;
-    this.initEventListeners();
+    if (document.querySelector(this.selector) || document.querySelector(this.slotSelector)) {
+      this.initEventListeners();
+    }
   }
 
   toggleMenu(imgElement) {
@@ -27,9 +28,11 @@ class SelectionManager {
   }
 }
 
-// Dark Mode Handler
+// Dark mode
 function initializeDarkMode() {
   const modeSwitch = document.getElementById('modeSwitch');
+  if (!modeSwitch && !document.body.classList.contains('dark-mode')) return;
+
   const isDark = localStorage.getItem('darkMode') === 'true' || 
     (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('darkMode'));
 
@@ -42,11 +45,17 @@ function initializeDarkMode() {
   });
 }
 
-// Carousel Component
+// Carousel
 class Carousel {
   constructor() {
     this.cards = Array.from(document.querySelectorAll('.card'));
-    [this.prevBtn, this.nextBtn] = ['.prev-btn', '.next-btn'].map(s => document.querySelector(s));
+    if (this.cards.length === 0) return;
+
+    this.prevBtn = document.querySelector('.prev-btn');
+    this.nextBtn = document.querySelector('.next-btn');
+    
+    if (!this.prevBtn || !this.nextBtn) return;
+
     this.activeIndex = 0;
     this.totalCards = this.cards.length;
     this.isAnimating = false;
@@ -91,9 +100,11 @@ class Carousel {
   }
 }
 
-// Cookie Consent
+// Cookies
 function setupCookieConsent() {
   const cookieCard = document.querySelector('.cookies-card');
+  if (!cookieCard) return;
+
   const buttons = ['exit', 'accept', 'reject'].map(c => document.querySelector(`.${c}`));
   
   const closePopup = () => {
@@ -112,15 +123,20 @@ function setupCookieConsent() {
   });
 }
 
-// UI Initialization
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize Components
   initializeDarkMode();
-  new Carousel();
+
+  if (document.querySelectorAll('.card').length > 0) {
+    new Carousel();
+  }
+  
   setupCookieConsent();
 
-  // Selection Managers
-  const managers = ['character', 'weapon', 'emote'].map(t => new SelectionManager(t));
+  // Selection manager
+  const managers = ['character', 'weapon', 'emote']
+    .filter(type => document.querySelector(`.${type}-selection`) || document.querySelector(`.${type}-slot`))
+    .map(t => new SelectionManager(t));
+    
   managers.forEach(manager => {
     window[`toggle${manager.type.charAt(0).toUpperCase() + manager.type.slice(1)}Selection`] = 
       img => manager.toggleMenu(img);
@@ -128,45 +144,54 @@ document.addEventListener('DOMContentLoaded', () => {
       option => manager.selectItem(option);
   });
 
-  // Search Functionality
+  // Search feature
   const searchIcon = document.getElementById('search-icon');
   const searchInput = document.querySelector('.search-input');
-  searchIcon?.addEventListener('click', e => {
-    e.stopPropagation();
-    searchInput.classList.toggle('active');
-    searchInput.classList.contains('active') && searchInput.focus();
-  });
-  document.addEventListener('click', e => !e.target.closest('.search-container') && searchInput.classList.remove('active'));
-  searchInput?.addEventListener('keypress', e => e.key === 'Enter' && console.log('Search:', searchInput.value));
+  if (searchIcon && searchInput) {
+    searchIcon.addEventListener('click', e => {
+      e.stopPropagation();
+      searchInput.classList.toggle('active');
+      searchInput.classList.contains('active') && searchInput.focus();
+    });
+    document.addEventListener('click', e => !e.target.closest('.search-container') && searchInput.classList.remove('active'));
+    searchInput.addEventListener('keypress', e => e.key === 'Enter' && console.log('Search:', searchInput.value));
+  }
 
-  // User Account
+  // User account
   const userIcon = document.querySelector('.user');
   const accountCard = document.querySelector('.account-card');
-  userIcon?.addEventListener('click', e => {
-    e.stopPropagation();
-    accountCard.classList.toggle('show');
-  });
-  document.addEventListener('click', e => !accountCard.contains(e.target) && accountCard.classList.remove('show'));
+  if (userIcon && accountCard) {
+    userIcon.addEventListener('click', e => {
+      e.stopPropagation();
+      accountCard.classList.toggle('show');
+    });
+    document.addEventListener('click', e => !accountCard.contains(e.target) && accountCard.classList.remove('show'));
+  }
 
-  // Sidebar Navigation
+  // Sidebar navigaiton
   const sidebar = document.querySelector('.sidebar');
   const overlay = document.querySelector('.overlay');
-  const toggleSidebar = () => {
-    sidebar.classList.toggle('active');
-    overlay.classList.toggle('active');
-  };
-  document.querySelectorAll('.ri-menu-line, .sidebar-close').forEach(el => el.addEventListener('click', toggleSidebar));
-  overlay?.addEventListener('click', toggleSidebar);
-  document.addEventListener('keydown', e => e.key === 'Escape' && toggleSidebar());
+  if (sidebar && overlay) {
+    const toggleSidebar = () => {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    };
+    document.querySelectorAll('.ri-menu-line, .sidebar-close').forEach(el => el.addEventListener('click', toggleSidebar));
+    overlay.addEventListener('click', toggleSidebar);
+    document.addEventListener('keydown', e => e.key === 'Escape' && toggleSidebar());
+  }
 
-  // Additional Features
-  document.querySelectorAll('.card-button').forEach(button => {
-    button.addEventListener('click', function(e) {
-      if (!this.classList.contains('available')) {
-        this.classList.add('shake');
-        setTimeout(() => this.classList.remove('shake'), 300);
-      }
-      this.classList.contains('available') && setTimeout(() => window.location.href = this.closest('a').href, 500);
+  // Additional features
+  const cardButtons = document.querySelectorAll('.card-button');
+  if (cardButtons.length > 0) {
+    cardButtons.forEach(button => {
+      button.addEventListener('click', function(e) {
+        if (!this.classList.contains('available')) {
+          this.classList.add('shake');
+          setTimeout(() => this.classList.remove('shake'), 300);
+        }
+        this.classList.contains('available') && setTimeout(() => window.location.href = this.closest('a').href, 500);
+      });
     });
-  });
+  }
 });

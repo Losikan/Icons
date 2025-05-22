@@ -6,6 +6,8 @@ import path from 'path';
 import authRoutes from './routes/authRoutes';
 import pageRoutes from './routes/pageRoutes';
 import './models/User';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 
@@ -14,10 +16,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(session({
-  secret: 'jouw_geheime_sleutel',
+app.use(session({ 
+  secret: process.env.SESSION_SECRET!,
   store: MongoStore.create({
-    mongoUrl: 'mongodb://localhost:27017/mijn_database',
+    mongoUrl: process.env.MONGO_URI!,
     ttl: 24 * 60 * 60
   }),
   resave: false,
@@ -25,7 +27,7 @@ app.use(session({
   cookie: { secure: false }
 }));
 
-mongoose.connect('mongodb://localhost:27017/mijn_database')
+mongoose.connect(process.env.MONGO_URI!)
   .then(() => console.log('Verbonden met MongoDB'))
   .catch(err => console.error('MongoDB-verbindingsfout:', err));
 

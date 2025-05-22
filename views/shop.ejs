@@ -116,196 +116,78 @@
     
         <div class="row1">
             <div class="block1">
-                <h2 class="shoptitel">Populair <i class="ri-fire-line"></i></h2>
-                <br>
-                <div class="container-populaire-wrapper">
-                    <div class="container-populaire" id="shopcontainer">
-                        <div class="flip-container" onclick="flipCard(this)">
-                            <div class="article">
-                                <div class="front">
-                                    <div id="char-1" data-character-id="1">
-                                    </div>
-                                    <div class="star-rating">
-                                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i>
-                                    </div>
-                                    <div class="price"><i class="ri-copper-diamond-line"></i> 450</div>
-                                </div>
-                                <div class="back">
-                                    <p>Outlaw Midas, de beruchte goudbandiet, laat niets achter behalve chaos en glanzende sporen.</p>
-                                    <div class="cart">
-                                        <i class="ri-shopping-cart-2-line"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="flip-container" onclick="flipCard(this)">
-                            <div class="article">
-                                <div class="front">
-                                    <div id="char-2" data-character-id="2">
-                                    </div>
-                                    <div class="star-rating">
-                                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i>
-                                    </div>
-                                    <div class="price"><i class="ri-copper-diamond-line"></i> 450</div>
-                                </div>
-                                <div class="back">
-                                    <p>Wave Rider Axo scheert over het water als een schaduw in de nacht.</p>
-                                    <div class="cart">
-                                        <i class="ri-shopping-cart-2-line"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="flip-container" onclick="flipCard(this)">
-                            <div class="article">
-                                <div class="front">
-                                    <div id="char-3" data-character-id="3">
-                                    </div>
-                                    <div class="star-rating">
-                                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                                        <i class="ri-star-fill"></i>
-                                    </div>
-                                    <div class="price"><i class="ri-copper-diamond-line"></i> 450</div>
-                                </div>
-                                <div class="back">
-                                    <p>Cassidy Quinn jaagt zonder genade op haar doelwitten.</p>
-                                    <div class="cart">
-                                        <i class="ri-shopping-cart-2-line"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="arrow prev"><i class="ri-arrow-left-line"></i></button>
-                    <button class="arrow next"><i class="ri-arrow-right-line"></i></button>
-                </div>
-            </div>
-    
-            <div class="block">
-                <h2 class="shoptitel">Battlepass <i class="ri-shield-star-line"></i></h2>
-                <br>
-                <div class="container-battlepas" id="shopcontainer">
-                    <div class="article-2">
-                        <p>Lv 1</p>
-                        <div id="char-4" data-character-id="4">
+                <!-- Populair Section -->
+<h2 class="shoptitel">Populair <i class="ri-fire-line"></i></h2>
+<br>
+<div class="container-populaire-wrapper">
+    <div class="container-populaire" id="shopcontainer">
+        <% items.slice(0, 3).forEach(item => { %>
+            <div class="flip-container" onclick="flipCard(this)">
+                <div class="article">
+                    <div class="front">
+                        <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
+                            <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
                         </div>
                         <div class="star-rating">
-                            <p><i class="ri-lock-line"></i> Beschikbaar vanaf level 1</p>
+                            <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
                         </div>
+                        <div class="price"><i class="ri-copper-diamond-line"></i> <%= item.price || '450' %></div>
                     </div>
-    
-                    <div class="article-2">
-                        <p>Lv 5</p>
-                        <div id="char-5" data-character-id="5">
-                        </div>
-                        <div class="star-rating">
-                            <p><i class="ri-lock-line"></i> Ontgrendel bij level 5</p>
-                        </div>
-                    </div>
-    
-                    <div class="article-2">
-                        <p>Lv 10</p>
-                        <div id="char-6" data-character-id="6">
-                        </div>
-                        <div class="star-rating">
-                            <p><i class="ri-lock-line"></i> Level 10 vereist</p>
-                        </div>
-                    </div>
-    
-                    <div class="article-2">
-                        <p>Lv 25</p>
-                        <div id="char-7" data-character-id="7">
-                        </div>
-                        <div class="star-rating">
-                            <p><i class="ri-lock-line"></i> Bereik level 25</p>
-                        </div>
-                    </div>
-    
-                    <div class="article-2">
-                        <p>Lv 50</p>
-                        <div id="char-8" data-character-id="8">
-                        </div>
-                        <div class="star-rating">
-                            <p><i class="ri-lock-line"></i> Prestigereward</p>
+                    <div class="back">
+                        <p><%= item.description %></p>
+                        <div class="cart">
+                            <i class="ri-shopping-cart-2-line"></i>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <% }); %>
     </div>
-        <div class="row2">
-            <div class="block">
-                <h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
-                <br>
-                
-                <div class="container-comming-soon" id="shopcontainer">
-                    <div class="article-1">
-                        <div id="char-9" data-character-id="9">
-                        </div>
-                        <div class="star-rating">
-                            <p> <div id="timer">00:00:00:00</div></p>
-                        </div>
-                    </div>
-    
-                    <div class="article-1">
-                        <div id="char-10" data-character-id="10">
-                        </div>
-                    </div>
-    
-                    <div class="article-1">
-                        <div id="char-11" data-character-id="11">
-                        </div>
-                    </div>
-    
-                    <div class="article-1">
-                        <div id="char-12" data-character-id="12">
-                        </div>
-                    </div>
-    
-                    <div class="article-1">
-                        <div id="char-13" data-character-id="13">
-                        </div>
-                    </div>
-    
-                    <div class="article-1">
-                        <div id="char-14" data-character-id="14">
-                        </div>
-                    </div>
-    
-                    <div class="article-1">
-                        <div id="char-15" data-character-id="15">
-                        </div>
-                    </div>
-    
-                    <div class="article-1">
-                        <H2>Surprise</H2>
-                        <img class="suprise-img" src="assets/images/description-image.png" alt="Verrassingsitem">
-                    </div>
-                    
-                </div>
+    <button class="arrow prev"><i class="ri-arrow-left-line"></i></button>
+    <button class="arrow next"><i class="ri-arrow-right-line"></i></button>
+</div>
+
+<!-- Battlepass section -->
+<h2 class="shoptitel">Battlepass <i class="ri-shield-star-line"></i></h2>
+<br>
+<div class="container-battlepas" id="shopcontainer">
+    <% items.slice(3, 8).forEach((item, index) => { %>
+        <div class="article-2">
+            <p>Lv <%= (index + 1) * 5 %></p>
+            <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
+                <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
             </div>
-            <i class="ri-chat-1-line" id="chatIcon"></i>
+            <div class="star-rating">
+                <p><i class="ri-lock-line"></i> Beschikbaar vanaf level <%= (index + 1) * 5 %></p>
+            </div>
         </div>
+    <% }); %>
+</div>
+
+<!-- coming soon section -->
+<h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
+<br>
+<div class="container-comming-soon" id="shopcontainer">
+    <% items.slice(8, 15).forEach(item => { %>
+        <div class="article-1">
+            <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
+                <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
+            </div>
+            <div class="star-rating">
+                <p><div id="timer">00:00:00:00</div></p>
+            </div>
+        </div>
+    <% }); %>
+    
+    <!-- surprise -->
+    <div class="article-1">
+        <H2>Surprise</H2>
+        <img class="suprise-img" src="assets/images/description-image.png" alt="Verrassingsitem">
+    </div>
+</div>
     </main>
-          <div id="chatbotContainer" class="chatbot-container">
-            <div class="chatbot-header">
-                <span>Icon Bot</span>
-                <i class="ri-close-line" id="closeChat"></i>
-            </div>
-            <div class="chatbot-body" id="chatbotBody">
-            </div>
-            <div class="chatbot-input">
-                <input type="text" id="chatInput" placeholder="Typ een bericht...">
-                <i class="ri-send-plane-2-line" id="sendMessage"></i>
-            </div>
-        </div>
     <%- include("Partials/footer.ejs") %>
 
    

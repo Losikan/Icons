@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import data from '../public/skins.json';
 const router = Router();
 
 const pages = [
@@ -10,8 +11,7 @@ const pages = [
   'profiel',
   'registreren',
   'resetpassword',
-  'settings',
-  'shop'
+  'settings'
 ];
 
 pages.forEach(page => {
@@ -19,6 +19,11 @@ pages.forEach(page => {
   router.get(routePath, (req, res) => {
     res.render(page);
   });
+});
+
+router.get('/shop', (req, res) => {
+  const items = data.data.items.br;
+  res.render('shop', { items });
 });
 
 router.get('/', (req, res) => res.render('landingspage'));
