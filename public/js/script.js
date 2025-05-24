@@ -93,11 +93,27 @@ class Carousel {
   }
 
   updatePositions() {
-    this.cards.forEach((card, index) => {
-      const position = (index - this.activeIndex + this.totalCards) % this.totalCards;
-      card.className = 'card ' + ['active', 'next', 'prev', 'far-right', 'far-left'][position] || '';
-    });
-  }
+  this.cards.forEach((card, index) => {
+    card.classList.remove('active', 'next', 'prev', 'far-right', 'far-left', 'hidden');
+
+    const offset = (index - this.activeIndex + this.totalCards) % this.totalCards;
+
+    if (offset === 0) {
+      card.classList.add('active');
+    } else if (offset === 1) {
+      card.classList.add('next');
+    } else if (offset === this.totalCards - 1) {
+      card.classList.add('prev');
+    } else if (offset === 2) {
+      card.classList.add('far-right');
+    } else if (offset === this.totalCards - 2) {
+      card.classList.add('far-left');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
 }
 
 // Cookies
