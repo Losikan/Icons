@@ -1,134 +1,747 @@
-<%- include("partials/header.ejs") %>
-<body>
-    <header class="top-header">
-        <nav class="sidebar">
-            <div class="sidebar-header">
-                <i class="ri-arrow-left-line sidebar-close"></i>
-            </div>
-            <ul class="sidebar-nav">
-                <li><a href="/homePage.ejs">Home</a></li>
-                <li><a href="/inventaris">Inventaris</a></li>
-                <li><a href="/shop">Winkel</a></li>
-                <li><a href="/friendslist">Vriendenlijst</a></li>
-                <li><a href="/settings">Instellingen</a></li>
-            </ul>
-            <div class="sidebar-bottom">
-                <div class="user-circle"></div>
-                <span>Naam</span>
-                <span><a href="/index">Uitloggen</a></span>
-            </div>
-        </nav>
-        <div class="overlay"></div>
-        <i class="ri-menu-line"></i>
-        <h1 class="logo"><a href="/homePage">ICONS</a></h1>
-        <div class="nav-items-right">
-            <div class="mode-toggle-right">
-                <label class="switch">
-                    <input type="checkbox" id="modeSwitch">
-                    <span class="slider round">
-                        <i class="ri-sun-line sun-icon"></i>
-                        <i class="ri-moon-line moon-icon"></i>
-                    </span>
-                </label>
-            </div>
-            <div class="search-container">
-                <i class="ri-search-2-line" id="search-icon"></i>
-                <input type="text" class="search-input" placeholder="Zoeken...">
-            </div>
-            <i class="ri-account-circle-fill user"></i>
-            <div class="account-card">
-                <ul class="list">
-                    <li class="element">
-                        <a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
-                    </li>
-                    <li class="element">
-                        <a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
-                    </li>
-                    <div class="separator"></div>
-                    <li class="element">
-                        <a href="/index" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </header>
-    <main class="friends-container">
-        <section class="friends">
-            <div class="friends-list">
-                <div class="friends-list-header">
-                    <i class="ri-group-fill"></i>
-                    <div class="friends-search">
-                        <svg viewBox="0 0 24 24" aria-hidden="true" class="search-icon">
-                          <g>
-                            <path
-                              d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
-                            ></path>
-                          </g>
-                        </svg>
-                      
-                        <input
-                          id="query"
-                          class="friends-search-input"
-                          type="search"
-                          placeholder="Search..."
-                          name="searchbar"
-                        />
-                      </div>
-                </div>
+<%- include("Partials/header.ejs") %>
 
-                <div class="friends-list-users">
-                    <h1>Online <span class="count" id="online-count">3</span></h1>
-                    <ul id="online-list">
-                        <li>Mounir_sbe3<i class="ri-user-minus-fill"></i></li>
-                        <li>Raiking<i class="ri-user-minus-fill"></i></li>
-                        <li>Losii<i class="ri-user-minus-fill"></i></li>
-                    </ul>
-                    
-                    <h1>Offline <span class="count" id="offline-count">1</span></h1>
-                    <ul id="offline-list">
-                        <li>Salem<i class="ri-user-minus-fill"></i></li>
-                    </ul>
-                    
-                    <h1>Blocked <span class="count" id="blocklist-count">1</span></h1>
-                    <ul id="blocked-list">
-                        <li>Pantoffeltje<i class="ri-spam-3-fill"></i></li>
-                    </ul>
-                </div>
-                
-            </div>
-            <div class="friends-chat">
-                <div class="friends-chat-header">
-                    <div class="chat-back">
-                        <i class="ri-arrow-left-fill"></i>
-                    </div>
-                    <div class="chat-info">
-                        <h2 id="chatUsername"></h2>
-                        <p id="chatStatus"></p>
-                    </div>
-                    <div class="chat-icons">
-                        <i class="ri-flag-fill"></i>
-                        <i class="ri-spam-3-fill"></i>
-                    </div>
-                </div>
-                <div class="friends-chat-messages" id="chatMessages">
-                </div>
-                <div class="friends-chat-footer">
-                    <div class="messageBox">
-                        <div class="fileUploadWrapper">
-                            <label for="file">
-                                <i class="ri-attachment-line"></i>
-                            </label>
-                            <input name="file" id="file" type="file" accept="image/*" />
-                        </div>
-                        <input id="messageInput" type="text" placeholder="Message..." required disabled>
-                        <button id="sendButton" disabled>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1.94607 9.31543C1.42353 9.14125 1.4194 8.86022 1.95682 8.68108L21.043 2.31901C21.5715 2.14285 21.8746 2.43866 21.7265 2.95694L16.2733 22.0432C16.1223 22.5716 15.8177 22.59 15.5944 22.0876L11.9999 14L17.9999 6.00005L9.99992 12L1.94607 9.31543Z"></path></svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+<body>
+  <header class="top-header">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <i class="ri-arrow-left-line sidebar-close"></i>
+      </div>
+      <ul class="sidebar-nav">
+        <li><a href="/homePage">Home</a></li>
+        <li><a href="/inventaris">Inventaris</a></li>
+        <li><a href="/shop">Winkel</a></li>
+        <li><a href="/friendslist">Vriendenlijst</a></li>
+        <li><a href="/settings">Instellingen</a></li>
+      </ul>
+      <div class="sidebar-bottom">
+        <div class="user-circle"></div>
+        <span><%= session.username %></span>
+        <span><a href="/logout">Uitloggen</a></span>
+      </div>
+    </nav>
+    <div class="overlay"></div>
+    <i class="ri-menu-line"></i>
+    <h1 class="logo"><a href="/homePage">ICONS</a></h1>
+    <div class="nav-items-right">
+      <div class="mode-toggle-right">
+        <label class="switch">
+          <input type="checkbox" id="modeSwitch">
+          <span class="slider round">
+            <i class="ri-sun-line sun-icon"></i>
+            <i class="ri-moon-line moon-icon"></i>
+          </span>
+        </label>
+      </div>
+      <div class="search-container">
+        <i class="ri-search-2-line" id="search-icon"></i>
+        <input type="text" class="search-input" placeholder="Zoeken...">
+      </div>
+      <i class="ri-account-circle-fill user"></i>
+      <div class="account-card">
+        <ul class="list">
+          <li class="element">
+            <a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
+          </li>
+          <li class="element">
+            <a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
+          </li>
+          <div class="separator"></div>
+          <li class="element">
+            <a href="/logout" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="friendschat-main">
+    <aside class="friendschat-sidebar">
+      <div class="friendschat-sidebar__top">
+        <button onclick="toggleSidebarSection('friendsList')" title="Friends">
+          <i class="ri-group-fill"></i>
+        </button>
+        <button onclick="toggleSidebarSection('addFriend')" title="Add Friend">
+          <i class="ri-user-add-fill"></i>
+        </button>
+        <button onclick="toggleSidebarSection('requests')" title="Friend Requests">
+          <i class="ri-mail-unread-fill"></i>
+        </button>
+      </div>
+
+      <div class="friendschat-sidebar__section" id="sidebar-section-addFriend" style="display: none;">
+        <div class="friendschat-sidebar__actions">
+          <input type="text" id="friendUsernameInput" class="friendschat-sidebar__input" placeholder="Search for users" oninput="searchUsers(this.value)" />
+        </div>
+        <div id="searchResultMessage" class="search-feedback"></div>
+        <ul id="searchResults" class="search-results-list"></ul>
+      </div>
+
+      <div class="friendschat-sidebar__section" id="sidebar-section-requests" style="display: none;">
+        <ul class="friendschat-sidebar__requests" id="friendRequestsList"></ul>
+      </div>
+
+      <div class="friendschat-sidebar__section" id="sidebar-section-friendsList">
+        <h2 class="friendschat-sidebar__title">Vrienden</h2>
+        <ul class="friendschat-sidebar__list" id="friendsList"></ul>
+      </div>
+    </aside>
+
+    <section class="friendschat-chat" id="chatSection" style="display: none;">
+      <div class="friendschat-chat__header">
+        <i class="ri-arrow-left-line" id="backToFriends"></i>
+        <span id="chatHeader">Selecteer een vriend om te beginnen chatten</span>
+      </div>
+      <div class="friendschat-chat__window" id="chatWindow"></div>
+      <div class="friendschat-chat__input">
+        <i id="imageSendBtn" class="ri-attachment-2"></i>
+        <input type="file" id="imageInput" accept="image/*" style="display:none" />
+        <input type="text" id="messageInput" placeholder="Typ een bericht..." />
+        <i class="ri-send-plane-2-fill msgSendBtn" onclick="sendMessage()"></i>
+      </div>
+    </section>
+    <template id="chat-loading-template">
+      <div class="chat-loading-spinner">
+        <div class="spinner"></div>
+        <div>Berichten aan het laden...</div>
+      </div>
+    </template>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const loggedInUsername = '<%= username %>';
+    const loggedInUserId = '<%= userId %>';
+
+    function moveFriendToTop(friendId) {
+      const list = document.getElementById('friendsList');
+      const friendEl = list.querySelector(`.friendschat-sidebar__friend[data-friend-id="${friendId}"]`);
+      if (friendEl && list.firstChild !== friendEl) {
+        list.prepend(friendEl);
+      }
+    }
+
+    function addUnreadIndicator(friendId) {
+      const friendEl = document.querySelector(`.friendschat-sidebar__friend[data-friend-id="${friendId}"]`);
+      if (friendEl && !friendEl.classList.contains('new-message')) {
+        friendEl.classList.add('new-message');
+      }
+    }
+
+    function removeUnreadIndicator(friendId) {
+      const friendEl = document.querySelector(`.friendschat-sidebar__friend[data-friend-id="${friendId}"]`);
+      if (friendEl) {
+        friendEl.classList.add('fade-unread');
+        setTimeout(() => {
+          friendEl.classList.remove('new-message', 'fade-unread');
+        }, 500);
+      }
+    }
+
+    const socket = io();
+    let currentRoom = '';
+    let currentRequestsType = 'incoming';
+
+    socket.on('connect', () => {
+      console.log('Connected to socket server');
+    });
+
+    socket.on('newMessageNotification', ({
+      room,
+      sender,
+      message,
+      timestamp
+    }) => {
+      if (sender !== loggedInUsername) {
+        const friendId = room.split('-').find(id => id !== loggedInUserId);
+        if (room !== currentRoom) {
+          addUnreadIndicator(friendId);
+        }
+        moveFriendToTop(friendId);
+      }
+      if (room === currentRoom) {
+        appendMessage(sender, message, timestamp);
+      }
+    });
+
+    const sidebar = document.querySelector('.friendschat-sidebar');
+    const chatSection = document.getElementById('chatSection');
+    const backBtn = document.getElementById('backToFriends');
+
+    async function sendFriendRequest() {
+      const username = document.getElementById('friendUsernameInput').value.trim();
+      const messageBox = document.getElementById('searchResultMessage');
+      messageBox.textContent = '';
+      if (!username) {
+        messageBox.textContent = 'Geef een gebruikersnaam in.';
+        return;
+      }
+      try {
+        const resUser = await fetch(`/api/user-by-username/${username}`);
+        if (!resUser.ok) throw new Error('Gebruiker niet gevonden');
+        const {
+          userId
+        } = await resUser.json();
+        const res = await fetch(`/friend-request/${userId}`, {
+          method: 'POST'
+        });
+        if (!res.ok) throw new Error(await res.text());
+        messageBox.textContent = 'Vriendschapverzoek verstuurd!';
+        messageBox.style.color = 'green';
+        document.getElementById('friendUsernameInput').value = '';
+        showFriendRequests(currentRequestsType);
+      } catch (err) {
+        messageBox.textContent = `Error: ${err.message}`;
+        messageBox.style.color = 'red';
+      }
+    }
+
+    let searchTimeout;
+
+    async function searchUsers(query) {
+      const resultsEl = document.getElementById('searchResults');
+      const messageBox = document.getElementById('searchResultMessage');
+      resultsEl.innerHTML = '';
+      messageBox.textContent = '';
+      if (!query.trim()) {
+        resultsEl.innerHTML = '';
+        messageBox.textContent = '';
+        return;
+      }
+      messageBox.textContent = 'Aan het zoeken...';
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(async () => {
+        if (document.getElementById('friendUsernameInput').value.trim() !== query.trim()) return;
+        try {
+          const res = await fetch(`/api/search-users?query=${encodeURIComponent(query.trim())}`);
+          const users = await res.json();
+          resultsEl.innerHTML = '';
+          messageBox.textContent = '';
+          if (!users.length) {
+            messageBox.textContent = 'Geen gebruikers gevonden.';
+            return;
+          }
+          const friendsRes = await fetch('/friends');
+          const friends = await friendsRes.json();
+          const friendIds = new Set(friends.map(f => f._id));
+          users.forEach(user => {
+            const li = document.createElement('li');
+            li.textContent = user.username;
+            const btn = document.createElement('button');
+            if (user._id === loggedInUserId) {
+              btn.textContent = 'Dit ben jij';
+              btn.disabled = true;
+            } else if (friendIds.has(user._id)) {
+              btn.textContent = 'Al een vriend';
+              btn.disabled = true;
+            } else {
+              btn.textContent = 'Toevoegen';
+              btn.onclick = () => sendFriendRequestById(user._id);
+            }
+            li.appendChild(btn);
+            resultsEl.appendChild(li);
+          });
+        } catch (err) {
+          messageBox.textContent = 'Error tijdens het zoeken van gebruikers.';
+        }
+      }, 300);
+    }
+
+    async function sendFriendRequestById(userId) {
+      const messageBox = document.getElementById('searchResultMessage');
+      try {
+        const res = await fetch(`/friend-request/${userId}`, {
+          method: 'POST'
+        });
+        if (!res.ok) throw new Error(await res.text());
+        messageBox.textContent = 'Vriendschapverzoek gestuurd!';
+        messageBox.style.color = 'lime';
+        showFriendRequests(currentRequestsType);
+      } catch (err) {
+        messageBox.textContent = `Error: ${err.message}`;
+        messageBox.style.color = 'red';
+      }
+    }
+
+    async function showFriendRequests(type) {
+      currentRequestsType = type;
+      const list = document.getElementById('friendRequestsList');
+      list.innerHTML = '';
+      try {
+        const endpoint = type === 'incoming' ? '/friend-requests/incoming' : '/friend-requests/outgoing';
+        const res = await fetch(endpoint);
+        const requests = await res.json();
+        requests.forEach(req => {
+          const li = document.createElement('li');
+          li.className = 'friendschat-sidebar__request';
+          li.textContent = req.from?.username || req.to?.username;
+          if (type === 'incoming') {
+            const acceptBtn = document.createElement('button');
+            acceptBtn.textContent = 'Accepteren';
+            acceptBtn.onclick = () => handleRequestAction(req._id, 'accept');
+            const declineBtn = document.createElement('button');
+            declineBtn.textContent = 'Weigeren';
+            declineBtn.onclick = () => handleRequestAction(req._id, 'reject');
+            li.appendChild(acceptBtn);
+            li.appendChild(declineBtn);
+          } else {
+            li.innerHTML += ' (In afwachting)';
+          }
+          list.appendChild(li);
+        });
+      } catch {
+        alert('Mislukt om vriendschapverzoeken te laden');
+      }
+    }
+
+    async function handleRequestAction(requestId, action) {
+      try {
+        const res = await fetch(`/friend-request/${requestId}/${action}`, {
+          method: 'POST'
+        });
+        if (!res.ok) throw new Error(await res.text());
+        showFriendRequests(currentRequestsType);
+        loadFriendsList();
+      } catch (err) {
+        alert(`Error: ${err.message}`);
+      }
+    }
+
+    async function loadFriendsList() {
+      const list = document.getElementById('friendsList');
+      list.innerHTML = '';
+      try {
+        const res = await fetch('/friends');
+        const friends = await res.json();
+        const unreadRes = await fetch('/api/unread-counts');
+        const unreadCounts = await unreadRes.json();
+        const unreadMap = new Map(unreadCounts.map(({
+          friendId,
+          count
+        }) => [friendId, count]));
+        const sortedFriends = friends;
+        sortedFriends.forEach(friend => {
+          const li = document.createElement('li');
+          li.className = 'friendschat-sidebar__friend';
+          li.textContent = friend.username;
+          li.dataset.friendId = friend._id;
+          li.onclick = () => openChat(friend._id, friend.username);
+          if (unreadMap.get(friend._id) > 0) {
+            li.classList.add('new-message');
+          }
+          list.appendChild(li);
+        });
+      } catch {
+        alert('Failed to load friends');
+      }
+    }
+
+    const appendedMessages = new Set();
+
+    function appendMessage(sender, message, timestamp) {
+      const key = `${sender}-${timestamp}-${message}`;
+      if (appendedMessages.has(key)) return;
+      appendedMessages.add(key);
+      const div = document.createElement('div');
+      div.className = 'friendschat-chat__message';
+      const timeStr = new Date(timestamp).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      if (sender === loggedInUsername) {
+        div.classList.add('message-sent');
+      } else {
+        div.classList.add('message-received');
+      }
+      div.innerHTML = `<strong>${sender}</strong> <span class="message-time">${timeStr}</span><br>${message}`;
+      const chatWindow = document.getElementById('chatWindow');
+      chatWindow.appendChild(div);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const message = input.value.trim();
+      if (!message) return;
+
+      const timestamp = new Date().toISOString();
+      socket.emit('chatMessage', {
+        room: currentRoom,
+        message,
+        timestamp
+      });
+
+      const friendId = currentRoom.split('-').find(id => id !== loggedInUserId);
+      moveFriendToTop(friendId);
+      removeUnreadIndicator(friendId);
+      input.value = '';
+    }
+
+    function toggleSidebarSection(section) {
+      const sections = ['addFriend', 'requests', 'friendsList'];
+      sections.forEach(id => {
+        const el = document.getElementById(`sidebar-section-${id}`);
+        el.style.display = id === section ? 'block' : 'none';
+      });
+      if (section === 'requests') {
+        showFriendRequests('incoming');
+      } else if (section === 'friendsList') {
+        loadFriendsList();
+      }
+    }
+
+    async function openChat(friendId, friendName) {
+      if ([friendId, loggedInUserId].sort().join('-') === currentRoom) return;
+
+      document.querySelectorAll('.friendschat-sidebar__friend.active').forEach(el => {
+        el.classList.remove('active');
+      });
+
+      const activeFriendEl = document.querySelector(`.friendschat-sidebar__friend[data-friend-id="${friendId}"]`);
+      if (activeFriendEl) {
+        activeFriendEl.classList.add('active');
+      }
+      chatSection.style.display = 'flex';
+      appendedMessages.clear();
+      currentRoom = [friendId, loggedInUserId].sort().join('-');
+      socket.emit('joinRoom', {
+        room: currentRoom
+      });
+
+      removeUnreadIndicator(friendId);
+      chatSection.style.display = 'flex';
+
+      const chatWindow = document.getElementById('chatWindow');
+      chatWindow.innerHTML = '';
+
+      const spinnerTemplate = document.getElementById('chat-loading-template');
+      const spinnerClone = spinnerTemplate.content.cloneNode(true);
+      chatWindow.appendChild(spinnerClone);
+
+      document.getElementById('chatHeader').textContent = ` ${friendName}`;
+
+      if (window.innerWidth <= 768) {
+        sidebar.classList.add('hidden');
+        backBtn.style.display = 'inline-block';
+      } else {
+        sidebar.classList.remove('hidden');
+        backBtn.style.display = 'none';
+      }
+
+      try {
+        await fetch(`/api/messages/${currentRoom}/read`, {
+          method: 'POST'
+        });
+
+        const res = await fetch(`/api/messages/${currentRoom}`);
+        const messages = await res.json();
+
+        chatWindow.innerHTML = '';
+
+        messages.forEach(({
+          sender,
+          message,
+          timestamp
+        }) => {
+          appendMessage(sender, message, timestamp);
+        });
+      } catch (err) {
+        chatWindow.innerHTML = '<div class="chat-error">Mislukt om berichten te laden.</div>';
+        console.error(err);
+      }
+    }
+
+    backBtn.addEventListener('click', () => {
+      chatSection.style.display = 'none';
+      sidebar.classList.remove('hidden');
+      backBtn.style.display = 'none';
+    });
+    window.onload = () => {
+      if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
+        Notification.requestPermission();
+      }
+      showFriendRequests('incoming');
+      loadFriendsList();
+      chatSection.style.display = 'none';
+      backBtn.style.display = 'none';
+      if (window.innerWidth <= 768 && chatSection.style.display === 'block') {
+        sidebar.classList.add('hidden');
+        backBtn.style.display = 'inline-block';
+      }
+    };
+
+    function isChatActive() {
+      return chatSection.style.display === 'block';
+    }
+
+    socket.on('chatMessage', ({
+      sender,
+      message,
+      timestamp,
+      room,
+      isImage
+    }) => {
+      const friendId = room.split('-').find(id => id !== loggedInUserId);
+
+      const handleMessage = async () => {
+        if (room === currentRoom) {
+          if (sender !== loggedInUsername) {
+            if (isImage || message.startsWith('data:image/')) {
+              appendImage(sender, message, timestamp);
+            } else {
+              appendMessage(sender, message, timestamp);
+            }
+
+            removeUnreadIndicator(friendId);
+
+            try {
+              await fetch(`/api/messages/${currentRoom}/read`, {
+                method: 'POST'
+              });
+            } catch (err) {}
+
+          } else {
+            if (isImage || message.startsWith('data:image/')) {
+              appendImage(sender, message, timestamp);
+            } else {
+              appendMessage(sender, message, timestamp);
+            }
+          }
+
+          moveFriendToTop(friendId);
+          removeUnreadIndicator(friendId);
+        } else {
+          addUnreadIndicator(friendId);
+          moveFriendToTop(friendId);
+        }
+
+        if (
+          sender !== loggedInUsername &&
+          (document.hidden || !isChatActive())
+        ) {
+          if (Notification.permission === "granted") {
+            const notification = new Notification(`Nieuwe bericht van ${sender}`, {
+              body: message.length > 100 ? message.slice(0, 97) + '...' : message,
+              icon: '/icon.png' // reminder om te veranderen naar favicon wanneer wij er eentje hebben
+            });
+
+            notification.onclick = () => {
+              window.focus();
+              notification.close();
+            };
+          } else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then(permission => {
+              if (permission === "granted") {}
+            });
+          }
+        }
+      };
+
+      handleMessage();
+    });
+
+    const imageSendBtn = document.getElementById('imageSendBtn');
+    const imageInput = document.getElementById('imageInput');
+    const chatWindow = document.getElementById('chatWindow');
+
+    imageSendBtn.addEventListener('click', () => {
+      imageInput.click();
+    });
+
+    imageInput.addEventListener('change', () => {
+      const file = imageInput.files[0];
+      if (!file) return;
+      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('Selecteer a.u.b een afbeelding met een toegelaten formaat. (PNG, JPG, JPEG, WEBP). \nGIFs, videos, documenten en andere bestanden zijn niet toegelaten.');
+        imageInput.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const imgDataUrl = reader.result;
+        sendImageMessage(imgDataUrl);
+        imageInput.value = '';
+      };
+      reader.readAsDataURL(file);
+    });
+
+    function sendImageMessage(dataUrl) {
+      const timestamp = new Date().toISOString();
+      socket.emit('chatMessage', {
+        room: currentRoom,
+        message: dataUrl,
+        timestamp,
+        isImage: true
+      });
+      const friendId = currentRoom.split('-').find(id => id !== loggedInUserId);
+      moveFriendToTop(friendId);
+      removeUnreadIndicator(friendId);
+    }
+
+    function appendImage(sender, imageData, timestamp) {
+      const key = `${sender}-${timestamp}-${imageData}`;
+      if (appendedMessages.has(key)) return;
+      appendedMessages.add(key);
+
+      const div = document.createElement('div');
+      div.className = 'friendschat-chat__message';
+
+      const timeStr = new Date(timestamp).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      if (sender === loggedInUsername) {
+        div.classList.add('message-sent');
+      } else {
+        div.classList.add('message-received');
+      }
+
+      div.innerHTML = `
+    <strong>${sender}</strong> <span class="message-time">${timeStr}</span><br>
+    <img src="${imageData}" alt="Image message" class="chat-image" />
+  `;
+
+      const chatWindow = document.getElementById('chatWindow');
+      chatWindow.appendChild(div);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    chatWindow.addEventListener('click', function(e) {
+      if (e.target.classList.contains('chat-image')) {
+        const overlay = document.getElementById('imageOverlay');
+        const overlayImg = document.getElementById('overlayImage');
+        overlayImg.src = e.target.src;
+        overlay.style.display = 'flex';
+      }
+    });
+
+    function closeImageOverlay() {
+      const overlay = document.getElementById('imageOverlay');
+      overlay.style.display = 'none';
+    }
+
+    function appendMessage(sender, message, timestamp) {
+      if (message.startsWith('data:image/')) {
+        appendImage(sender, message, timestamp);
+        return;
+      }
+
+      const key = `${sender}-${timestamp}-${message}`;
+      if (appendedMessages.has(key)) return;
+      appendedMessages.add(key);
+
+      const div = document.createElement('div');
+      div.className = 'friendschat-chat__message';
+      const timeStr = new Date(timestamp).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      if (sender === loggedInUsername) div.classList.add('message-sent');
+      else div.classList.add('message-received');
+
+      div.innerHTML = `<strong>${sender}</strong> <span class="message-time">${timeStr}</span><br>${message}`;
+      chatWindow.appendChild(div);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    const fullscreenOverlay = document.createElement('div');
+    fullscreenOverlay.style.cssText = `
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100vw; 
+        height: 100vh;
+        background: rgba(0,0,0,0.9);
+        display: none; 
+        justify-content: center; 
+        align-items: center;
+        z-index: 9999;
+        cursor: zoom-out;
+    `;
+    fullscreenOverlay.id = 'fullscreenImageOverlay';
+
+    const fullscreenImage = document.createElement('img');
+    fullscreenImage.style.cssText = `
+        max-width: 90vw; 
+        max-height: 90vh;
+        object-fit: contain;
+        transition: transform 0.1s ease-out;
+        transform-origin: center center;
+    `;
+
+    let currentScale = 1;
+
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = '×';
+    closeBtn.style.cssText = `
+    position: fixed; 
+    top: 20px; 
+    right: 30px;
+    font-size: 36px; 
+    color: white;
+    background: transparent; 
+    border: none;
+    cursor: pointer; 
+    z-index: 10000;
+    display: none;  // Add this line to hide initially
+`;
+
+    fullscreenOverlay.appendChild(fullscreenImage);
+    document.body.appendChild(fullscreenOverlay);
+    document.body.appendChild(closeBtn);
+
+    function openImageFullscreen(src) {
+      fullscreenImage.src = src;
+      fullscreenOverlay.style.display = 'flex';
+      closeBtn.style.display = 'block';
+      currentScale = 1;
+      updateImageTransform();
+    }
+
+    function closeImageFullscreen() {
+      fullscreenOverlay.style.display = 'none';
+      closeBtn.style.display = 'none';
+    }
+
+    function updateImageTransform() {
+      fullscreenImage.style.transform = `scale(${currentScale})`;
+    }
+
+    fullscreenOverlay.addEventListener('click', (e) => {
+      if (e.target === fullscreenOverlay) closeImageFullscreen();
+    });
+
+    closeBtn.addEventListener('click', closeImageFullscreen);
+
+    fullscreenImage.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = -e.deltaY * 0.001;
+      currentScale = Math.min(Math.max(0.5, currentScale + delta), 5);
+      updateImageTransform();
+      fullscreenImage.style.cursor = currentScale > 1 ? 'grab' : 'default';
+    });
+
+    chatWindow.addEventListener('click', function(e) {
+      if (e.target.classList.contains('chat-image')) {
+        openImageFullscreen(e.target.src);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 768) {
+        if (chatSection.style.display !== 'none') {
+          sidebar.classList.add('hidden');
+          backBtn.style.display = 'inline-block';
+        }
+      } else {
+        sidebar.classList.remove('hidden');
+        backBtn.style.display = 'none';
+      }
+    });
+  </script>
 </body>
+
 </html>
-    <%- include("partials/footer.ejs") %>
