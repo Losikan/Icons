@@ -195,3 +195,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+    // Flip Cards
+    document.querySelectorAll('.flip-container').forEach(card => {
+        card.addEventListener('click', function() {
+            this.classList.toggle('flipped');
+        });
+    });

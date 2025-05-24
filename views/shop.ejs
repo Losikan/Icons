@@ -7,7 +7,7 @@
                 <i class="ri-arrow-left-line sidebar-close"></i>
             </div>
             <ul class="sidebar-nav">
-                 <li><a href="/homePage">Home</a></li>
+                 <li><a href="/home">Home</a></li>
                 <li><a href="/inventaris">Inventaris</a></li>
                 <li><a href="/shop">Winkel</a></li>
                 <li><a href="/friendslist">Vriendenlijst</a></li>
@@ -24,7 +24,7 @@
 
         <i class="ri-menu-line"></i>
 
-        <h1 class="logo"><a href="/homePage">ICONS</a></h1>
+        <h1 class="logo"><a href="/home">ICONS</a></h1>
 
         <div class="nav-items-right">
             <div class="mode-toggle-right">
@@ -65,53 +65,9 @@
         <div class="container-filter">
             <div class="wrapper">
                 <div class="price-input">
-                    <div class="field">
-                        <span>Min</span>
-                        <input type="number" class="input-min" value="0">
+                    <div class="price"><i class="ri-copper-diamond-line"></i> </div>
                     </div>
-                    <div class="separator">-</div>
-                    <div class="field">
-                        <span>Max</span>
-                        <input type="number" class="input-max" value="999">
-                    </div>
-                </div>
-                <div class="price-slider">
-                    <div class="progress"></div>
-                </div>
-                <div class="range-input">
-                    <input type="range" class="range-min" min="0" max="999" value="0" step="1">
-                    <input type="range" class="range-max" min="0" max="999" value="999" step="1">
-                </div>
             </div>
-            <div class="filter">
-                <div class="filter-container">
-                    <input type="checkbox" id="filterCheckbox" class="filter-checkbox">
-                    <label for="filterCheckbox" class="filter-label">
-                        <i class="ri-filter-line"></i> 
-                    </label>
-                    <div class="filter-options" id="filterOptions">
-                        <label class="filter-option">
-                            <input type="radio" name="filter" value="price-asc"> Goedkoopste
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="filter" value="price-desc"> Duurste
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="filter" value="date-desc"> Nieuw naar oud
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="filter" value="date-asc"> Oud naar nieuw
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="filter" value="popular"> Populair
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="filter" value="reviews"> Reviews
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <i class="ri-sort-alphabet-asc"></i>
         </div>
     
         <div class="row1">
@@ -148,6 +104,8 @@
     <button class="arrow prev"><i class="ri-arrow-left-line"></i></button>
     <button class="arrow next"><i class="ri-arrow-right-line"></i></button>
 </div>
+            </div>
+            <div class="block2">
 
 <!-- Battlepass section -->
 <h2 class="shoptitel">Battlepass <i class="ri-shield-star-line"></i></h2>
@@ -165,10 +123,17 @@
         </div>
     <% }); %>
 </div>
+</div>
+        </div>
+        <br>
+        <h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
+        <br>
+        <div class="row2">
 
 <!-- coming soon section -->
-<h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
 <br>
+        <div class="block">
+
 <div class="container-comming-soon" id="shopcontainer">
     <% items.slice(8, 15).forEach(item => { %>
         <div class="article-1">
@@ -187,6 +152,8 @@
         <img class="suprise-img" src="assets/images/description-image.png" alt="Verrassingsitem">
     </div>
 </div>
+        </div>
+        </div>
     </main>
     <%- include("partials/footer.ejs") %>
 
