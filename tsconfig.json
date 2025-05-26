@@ -10,7 +10,11 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
+     "typeRoots": ["./node_modules/@types", "./types"],
+    "types": ["express-session"]
+    
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  
 }

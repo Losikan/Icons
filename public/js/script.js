@@ -201,3 +201,9 @@ document.addEventListener('DOMContentLoaded', () => {
             this.classList.toggle('flipped');
         });
     });
+    // Check voor login errors
+document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error') === 'email') alert('❌ Verkeerd e-mailadres');
+    if (params.get('error') === 'password') alert('❌ Verkeerd wachtwoord');
+});

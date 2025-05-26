@@ -15,7 +15,8 @@
             </ul>
             <div class="sidebar-bottom">
                 <div class="user-circle"></div>
-                <span>Naam</span>
+                <span>                 <%= user.username %> 
+</span>
                 <span><a href="/index">Uitloggen</a></span>
             </div>
         </nav>
@@ -65,8 +66,14 @@
         <div class="container-filter">
             <div class="wrapper">
                 <div class="price-input">
-                    <div class="price"><i class="ri-copper-diamond-line"></i> </div>
+                    <div class="price">
+                 <i class="ri-copper-diamond-line"></i> 
+                 <%= user.coins %> 
+                 </div>
                     </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     
