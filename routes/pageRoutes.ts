@@ -8,7 +8,7 @@ const router = Router();
 // ---------------------------
 // Dynamische Pagina Routes
 // ---------------------------
-const protectedPages = ['profiel', 'settings', 'inventaris', 'friendslist'];
+const protectedPages = ['profiel', 'settings', 'inventaris'];
 
 const pages = [
   'homePage',
