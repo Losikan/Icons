@@ -1,0 +1,1 @@
+{"root":["./index.ts","./Types/express.d.ts","./models/User.ts","./routes/authRoutes.ts","./routes/pageRoutes.ts"],"version":"5.8.3"}

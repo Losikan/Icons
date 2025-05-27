@@ -6,7 +6,7 @@
           {
             "id": "1",
             "name": "Outlaw Midas",
-            "price": "450",
+            "price": 350,
             "description": "A glittering, SHADOWy gunslinger.",
             "type": {
               "value": "outfit",
@@ -22,6 +22,7 @@
           {
             "id": "2",
             "name": "Wave Rider Axo",
+                        "price": 450,
             "description": "Here to hype up the WHOLE ocean!",
             "type": {
               "value": "outfit",
@@ -37,6 +38,7 @@
           {
             "id": "3",
             "name": "Cassidy Quinn",
+                        "price": 550,
             "description": "She's all in.",
             "type": {
               "value": "outfit",

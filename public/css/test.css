@@ -1,26 +1,3 @@
-@import url('satoshi.css');
-
-:root {
-    --first-color: hsl(208, 92%, 54%);
-    --first-color-alt: hsl(208, 88%, 50%);
-    --title-color: hsl(220, 68%, 4%);
-    --white-color: hsl(0, 0%, 100%);
-    --text-color: hsl(240, 8%, 7%);
-    --body-color: hsl(0, 0%, 100%);
-    --container-color: hsl(220, 50%, 97%);
-    --body-font: "Satoshi-Variable", system-ui;
-
-    --color-first: #212633;
-    --color-second: #2f3749;
-    --color-third: #ffffff27;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: var(--body-font);
-}
 
 /* HEADER */
 
