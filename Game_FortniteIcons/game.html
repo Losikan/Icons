@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fortnite Icons</title>
+    <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+    <div id="loadoutScreen">
+        <h2>Loadout</h2>
+        <div class="loadout-container">
+            <div class="loadout-box" data-type="character">
+                <h3>Character</h3>
+                <div class="options">
+                    <img src="assets/characters/characterCard0.png" data-value="0" class="selected">
+                    <img src="assets/characters/characterCard1.png" data-value="1">
+                    <img src="assets/characters/characterCard2.png" data-value="2">
+                    <img src="assets/characters/characterCard3.png" data-value="3">
+                </div>
+            </div>
+            <div class="loadout-box" data-type="weapon">
+                <h3>Weapon</h3>
+                <div class="options">
+                    <img src="assets/objects/gun0.png" data-value="0" class="selected">
+                    <img src="assets/objects/gun1.png" data-value="1">
+                    <img src="assets/objects/gun2.png" data-value="2">
+                    <img src="assets/objects/gun3.png" data-value="3">
+                </div>
+            </div>
+            <div class="loadout-box" data-type="emote">
+                <h3>Emote</h3>
+                <div class="options">
+                    <img src="assets/emotes/emote0.png" data-value="0" class="selected">
+                    <img src="assets/emotes/emote1.png" data-value="1">
+                    <img src="assets/emotes/emote2.png" data-value="2">
+                    <img src="assets/emotes/emote3.png" data-value="3">
+                </div>
+            </div>
+        </div>
+        <div class="start-message">Press ENTER to continue...</div>
+    </div>
+    <canvas id="gameCanvas"></canvas>
+    <script src="game.js"></script>
+</body>
+</html>
