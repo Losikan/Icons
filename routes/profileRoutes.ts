@@ -25,7 +25,7 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-router.get('/profile/:userId', async (req: Request, res: Response) => {
+router.get('/profile/id/:userId', async (req: Request, res: Response) => {
   const { userId } = req.params;
 
   try {
@@ -47,7 +47,10 @@ router.get('/profile/:userId', async (req: Request, res: Response) => {
   }
 });
 
-router.patch('/profile/:userId', async (req: Request, res: Response) => {
+
+
+
+router.patch('/profile/id/:userId', async (req: Request, res: Response) => {
   const { userId } = req.params;
   const { description, avatarUrl, level, achievements } = req.body;
 
@@ -76,18 +79,18 @@ router.patch('/profile/:userId', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/profile/:userId/avatar', upload.single('avatar'), async (req: Request, res: Response) => {
+router.post('/profile/id/:userId/avatar', upload.single('avatar'), async (req: Request, res: Response) => {
   const { userId } = req.params;
 
   try {
     if (!req.session || req.session.userId !== userId) {
       res.status(403).json({ message: 'Unauthorized' });
-      return ;
+      return;
     }
 
     if (!req.file) {
       res.status(400).json({ message: 'No file uploaded' });
-      return ;
+      return;
     }
 
     const user = await User.findById(userId);
@@ -109,6 +112,8 @@ router.post('/profile/:userId/avatar', upload.single('avatar'), async (req: Requ
     user.avatarUrl = avatarUrl;
     await user.save();
 
+    req.session.avatarUrl = avatarUrl;
+
     res.json({ message: 'Avatar updated', avatarUrl });
   } catch (err) {
     console.error('Error uploading avatar:', err);
@@ -116,4 +121,6 @@ router.post('/profile/:userId/avatar', upload.single('avatar'), async (req: Requ
   }
 });
 
+
 export default router;
+

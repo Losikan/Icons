@@ -1,193 +1,193 @@
 <%- include("partials/header.ejs") %>
 
 <body>
-    <header class="top-header">
-        <nav class="sidebar">
-            <div class="sidebar-header">
-                <i class="ri-arrow-left-line sidebar-close"></i>
-            </div>
-            <ul class="sidebar-nav">
-                 <li><a href="/homePage">Home</a></li>
-                <li><a href="/inventaris">Inventaris</a></li>
-                <li><a href="/shop">Winkel</a></li>
-                <li><a href="/friendslist">Vriendenlijst</a></li>
-                <li><a href="/settings">Instellingen</a></li>
-            </ul>
-            <div class="sidebar-bottom">
-                <div class="user-circle"></div>
-                <span>Naam</span>
-                <span><a href="/index">Uitloggen</a></span>
-            </div>
-        </nav>
-        <div class="overlay"></div>
+  <header class="top-header">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <i class="ri-arrow-left-line sidebar-close"></i>
+      </div>
+      <ul class="sidebar-nav">
+        <li><a href="/homePage">Home</a></li>
+        <li><a href="/inventaris">Inventaris</a></li>
+        <li><a href="/shop">Winkel</a></li>
+        <li><a href="/friendslist">Vriendenlijst</a></li>
+        <li><a href="/settings">Instellingen</a></li>
+      </ul>
+      <div class="sidebar-bottom">
+        <div class="user-circle"></div>
+        <span>Naam</span>
+        <span><a href="/index">Uitloggen</a></span>
+      </div>
+    </nav>
+    <div class="overlay"></div>
 
 
-        <i class="ri-menu-line"></i>
+    <i class="ri-menu-line"></i>
 
-        <h1 class="logo"><a href="/homePage">ICONS</a></h1>
+    <h1 class="logo"><a href="/homePage">ICONS</a></h1>
 
-        <div class="nav-items-right">
-            <div class="mode-toggle-right">
-                <label class="switch">
-                    <input type="checkbox" id="modeSwitch">
-                    <span class="slider round">
-                        <i class="ri-sun-line sun-icon"></i>
-                        <i class="ri-moon-line moon-icon"></i>
-                    </span>
-                </label>
-            </div>
+    <div class="nav-items-right">
+      <div class="mode-toggle-right">
+        <label class="switch">
+          <input type="checkbox" id="modeSwitch">
+          <span class="slider round">
+            <i class="ri-sun-line sun-icon"></i>
+            <i class="ri-moon-line moon-icon"></i>
+          </span>
+        </label>
+      </div>
 
-            <div class="search-container">
-                <i class="ri-search-2-line" id="search-icon"></i>
-                <input type="text" class="search-input" placeholder="Zoeken...">
-            </div>
+      <div class="search-container">
+        <i class="ri-search-2-line" id="search-icon"></i>
+        <input type="text" class="search-input" placeholder="Zoeken...">
+      </div>
 
-            <i class="ri-account-circle-fill user"></i>
+      <i class="ri-account-circle-fill user"></i>
 
-            <div class="account-card">
-                <ul class="list">
-                    <li class="element">
-                        <a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
-                    </li>
-                    <li class="element">
-                        <a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
-                    </li>
-                    <div class="separator"></div>
-                    <li class="element">
-                        <a href="/index" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </header>
-    
-    <main>
-        <div class="container-filter">
-            <div class="wrapper">
-                <div class="price-input">
-                    <div class="field">
-                        <span>Min</span>
-                        <input type="number" class="input-min" value="0">
-                    </div>
-                    <div class="separator">-</div>
-                    <div class="field">
-                        <span>Max</span>
-                        <input type="number" class="input-max" value="999">
-                    </div>
-                </div>
-                <div class="price-slider">
-                    <div class="progress"></div>
-                </div>
-                <div class="range-input">
-                    <input type="range" class="range-min" min="0" max="999" value="0" step="1">
-                    <input type="range" class="range-max" min="0" max="999" value="999" step="1">
-                </div>
-            </div>
-            <div class="filter">
-                <div class="filter-container">
-                    <input type="checkbox" id="filterCheckbox" class="filter-checkbox">
-                    <label for="filterCheckbox" class="filter-label">
-                        <i class="ri-filter-line"></i> 
-                    </label>
-                    <div class="filter-options" id="filterOptions">
-                        <label class="filter-option">
-                            <input type="radio" name="filter" value="price-asc"> Goedkoopste
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="filter" value="price-desc"> Duurste
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="filter" value="date-desc"> Nieuw naar oud
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="filter" value="date-asc"> Oud naar nieuw
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="filter" value="popular"> Populair
-                        </label>
-                        <label class="filter-option">
-                            <input type="radio" name="filter" value="reviews"> Reviews
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <i class="ri-sort-alphabet-asc"></i>
-        </div>
-    
-        <div class="row1">
-            <div class="block1">
-                <!-- Populair Section -->
-<h2 class="shoptitel">Populair <i class="ri-fire-line"></i></h2>
-<br>
-<div class="container-populaire-wrapper">
-    <div class="container-populaire" id="shopcontainer">
-        <% items.slice(0, 3).forEach(item => { %>
-            <div class="flip-container" onclick="flipCard(this)">
-                <div class="article">
-                    <div class="front">
-                        <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
-                            <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
-                        </div>
-                        <div class="star-rating">
-                            <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                            <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                            <i class="ri-star-fill"></i>
-                        </div>
-                        <div class="price"><i class="ri-copper-diamond-line"></i> <%= item.price || '450' %></div>
-                    </div>
-                    <div class="back">
-                        <p><%= item.description %></p>
-                        <div class="cart">
-                            <i class="ri-shopping-cart-2-line"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <% }); %>
+      <div class="account-card">
+        <ul class="list">
+          <li class="element">
+            <a href="/profile" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
+          </li>
+          <li class="element">
+            <a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
+          </li>
+          <div class="separator"></div>
+          <li class="element">
+            <a href="/index" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <button class="arrow prev"><i class="ri-arrow-left-line"></i></button>
-    <button class="arrow next"><i class="ri-arrow-right-line"></i></button>
-</div>
+  </header>
 
-<!-- Battlepass section -->
-<h2 class="shoptitel">Battlepass <i class="ri-shield-star-line"></i></h2>
-<br>
-<div class="container-battlepas" id="shopcontainer">
-    <% items.slice(3, 8).forEach((item, index) => { %>
-        <div class="article-2">
+  <main>
+    <div class="container-filter">
+      <div class="wrapper">
+        <div class="price-input">
+          <div class="field">
+            <span>Min</span>
+            <input type="number" class="input-min" value="0">
+          </div>
+          <div class="separator">-</div>
+          <div class="field">
+            <span>Max</span>
+            <input type="number" class="input-max" value="999">
+          </div>
+        </div>
+        <div class="price-slider">
+          <div class="progress"></div>
+        </div>
+        <div class="range-input">
+          <input type="range" class="range-min" min="0" max="999" value="0" step="1">
+          <input type="range" class="range-max" min="0" max="999" value="999" step="1">
+        </div>
+      </div>
+      <div class="filter">
+        <div class="filter-container">
+          <input type="checkbox" id="filterCheckbox" class="filter-checkbox">
+          <label for="filterCheckbox" class="filter-label">
+            <i class="ri-filter-line"></i>
+          </label>
+          <div class="filter-options" id="filterOptions">
+            <label class="filter-option">
+              <input type="radio" name="filter" value="price-asc"> Goedkoopste
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="filter" value="price-desc"> Duurste
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="filter" value="date-desc"> Nieuw naar oud
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="filter" value="date-asc"> Oud naar nieuw
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="filter" value="popular"> Populair
+            </label>
+            <label class="filter-option">
+              <input type="radio" name="filter" value="reviews"> Reviews
+            </label>
+          </div>
+        </div>
+      </div>
+      <i class="ri-sort-alphabet-asc"></i>
+    </div>
+
+    <div class="row1">
+      <div class="block1">
+        <!-- Populair Section -->
+        <h2 class="shoptitel">Populair <i class="ri-fire-line"></i></h2>
+        <br>
+        <div class="container-populaire-wrapper">
+          <div class="container-populaire" id="shopcontainer">
+            <% items.slice(0, 3).forEach(item => { %>
+            <div class="flip-container" onclick="flipCard(this)">
+              <div class="article">
+                <div class="front">
+                  <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
+                    <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
+                  </div>
+                  <div class="star-rating">
+                    <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                  </div>
+                  <div class="price"><i class="ri-copper-diamond-line"></i> <%= item.price || '450' %></div>
+                </div>
+                <div class="back">
+                  <p><%= item.description %></p>
+                  <div class="cart">
+                    <i class="ri-shopping-cart-2-line"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+          <button class="arrow prev"><i class="ri-arrow-left-line"></i></button>
+          <button class="arrow next"><i class="ri-arrow-right-line"></i></button>
+        </div>
+
+        <!-- Battlepass section -->
+        <h2 class="shoptitel">Battlepass <i class="ri-shield-star-line"></i></h2>
+        <br>
+        <div class="container-battlepas" id="shopcontainer">
+          <% items.slice(3, 8).forEach((item, index) => { %>
+          <div class="article-2">
             <p>Lv <%= (index + 1) * 5 %></p>
             <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
-                <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
+              <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
             </div>
             <div class="star-rating">
-                <p><i class="ri-lock-line"></i> Beschikbaar vanaf level <%= (index + 1) * 5 %></p>
+              <p><i class="ri-lock-line"></i> Beschikbaar vanaf level <%= (index + 1) * 5 %></p>
             </div>
+          </div>
+          <% }); %>
         </div>
-    <% }); %>
-</div>
 
-<!-- coming soon section -->
-<h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
-<br>
-<div class="container-comming-soon" id="shopcontainer">
-    <% items.slice(8, 15).forEach(item => { %>
-        <div class="article-1">
+        <!-- coming soon section -->
+        <h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
+        <br>
+        <div class="container-comming-soon" id="shopcontainer">
+          <% items.slice(8, 15).forEach(item => { %>
+          <div class="article-1">
             <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
-                <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
+              <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
             </div>
             <div class="star-rating">
-                <p><div id="timer">00:00:00:00</div></p>
+              <p>
+              <div id="timer">00:00:00:00</div>
+              </p>
             </div>
-        </div>
-    <% }); %>
-    
-    <!-- surprise -->
-    <div class="article-1">
-        <H2>Surprise</H2>
-        <img class="suprise-img" src="assets/images/description-image.png" alt="Verrassingsitem">
-    </div>
-</div>
-    </main>
-    <%- include("partials/footer.ejs") %>
+          </div>
+          <% }); %>
 
-   
+          <!-- surprise -->
+          <div class="article-1">
+            <H2>Surprise</H2>
+            <img class="suprise-img" src="assets/images/description-image.png" alt="Verrassingsitem">
+          </div>
+        </div>
+  </main>
+  <%- include("partials/footer.ejs") %>
