@@ -181,7 +181,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', e => e.key === 'Escape' && toggleSidebar());
   }
 
-  // Additional features
   const cardButtons = document.querySelectorAll('.card-button');
   if (cardButtons.length > 0) {
     cardButtons.forEach(button => {
@@ -195,15 +194,95 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-    // Flip Cards
     document.querySelectorAll('.flip-container').forEach(card => {
         card.addEventListener('click', function() {
             this.classList.toggle('flipped');
         });
     });
-    // Check voor login errors
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('error') === 'email') alert('❌ Verkeerd e-mailadres');
     if (params.get('error') === 'password') alert('❌ Verkeerd wachtwoord');
+});
+document.addEventListener('DOMContentLoaded', () => {
+   
+  
+  
+  // Koopfunctie
+    const handlePurchase = async (itemId, price) => {
+        try {
+            const response = await fetch('/purchase', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ itemId, price })
+            });
+
+            const result = await response.json();
+            
+            if (result.error) {
+                alert(result.error);
+            } else {
+                const itemCard = document.querySelector(`[data-item-id="${itemId}"]`);
+                if (itemCard) {
+                    itemCard.querySelector('.cart-icon').outerHTML = `
+                        <div class="owned-badge">
+                            <i class="ri-checkbox-circle-fill"></i>
+                        </div>
+                    `;
+                    document.getElementById('coins-display').textContent = result.coins;
+                }
+            }
+        } catch (error) {
+            alert('Aankoop mislukt, probeer later opnieuw');
+        }
+    };
+
+    // Event listeners
+document.querySelectorAll('.cart-icon').forEach(icon => {
+    icon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const itemId = e.currentTarget.dataset.itemId;
+        const itemName = e.currentTarget.dataset.itemName;
+        const price = parseInt(e.currentTarget.dataset.itemPrice);
+
+        if (confirm(`Weet je zeker dat je "${itemName}" wilt kopen voor ${price} coins?`)) {
+            handlePurchase(itemId, price);
+        }
+    });
+});
+
+});
+document.querySelectorAll('.price.clickable').forEach(priceElement => {
+    priceElement.addEventListener('click', async (e) => {
+        const itemId = e.currentTarget.dataset.itemId;
+        const itemName = e.currentTarget.dataset.itemName;
+        const price = parseInt(e.currentTarget.dataset.itemPrice);
+
+        if (confirm(`Weet je zeker dat je "${itemName}" wilt kopen voor ${price} coins?`)) {
+            try {
+                const response = await fetch('/purchase', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ itemId, price })
+                });
+
+                const result = await response.json();
+                
+                if (result.error) {
+                    alert(result.error);
+                } else {
+                    e.currentTarget.classList.remove('clickable');
+                    e.currentTarget.innerHTML = `
+                        <i class="ri-copper-diamond-line"></i>
+                        <span class="owned-text">Gekocht</span>
+                    `;
+                    document.querySelectorAll('.coin-display').forEach(el => {
+                        el.textContent = result.coins;
+                    });
+                }
+            } catch (error) {
+                alert('Aankoop mislukt, probeer later opnieuw');
+            }
+        }
+    });
 });

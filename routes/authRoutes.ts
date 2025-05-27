@@ -1,37 +1,62 @@
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
-import crypto from 'crypto';
-import nodemailer from 'nodemailer';
 import User from '../models/User';
+
+
+declare module 'express-session' {
+  interface Session {
+    userId: string;
+  }
+}
 
 const router = Router();
 
-// Login functionaliteit
-router.get('/login', (req, res) => res.render('login'));
+// ======================
+// Authenticatie Middleware
+// ======================
+const isAuthenticated = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.session.userId) return next();
+  res.redirect("/login");
+};
 
-router.post('/login', async (req, res) => {
+// ======================
+// Login Functionaliteit
+// ======================
+router.get('/login', (req: Request, res: Response) => {
+  res.render('login');
+});
+
+router.post('/login', async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({
       $or: [{ email: req.body.email }, { username: req.body.email }]
-    });
+    }).select('+password');
 
     if (!user) return res.redirect('/login?error=email');
     if (!await bcrypt.compare(req.body.password, user.password)) 
       return res.redirect('/login?error=password');
 
-    (req.session as any).userId = user._id;
-    res.redirect('/home');
+    req.session.userId = user._id.toString();
+    return res.redirect('/home');
   } catch (error) {
-    res.redirect('/login?error=server');
+    console.error('Login error:', error);
+    return res.redirect('/login?error=server');
   }
 });
 
-// Registratie functionaliteit
-router.get('/register', (req, res) => res.render('registreren'));
+// ======================
+// Registratie Functionaliteit
+// ======================
+router.get('/register', (req: Request, res: Response) => {
+  res.render('registreren');
+});
 
-router.post('/register', async (req, res) => {
+router.post('/register', async (req: Request, res: Response) => {
   try {
-    // Eerste validaties
     if (req.body.password !== req.body.confirmPassword) {
       return res.render('registreren', { 
         error: 'Wachtwoorden komen niet overeen',
@@ -39,83 +64,112 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // Dubbele gebruikers check
     const existingUser = await User.findOne({
-      $or: [
-        { username: req.body.username },
-        { email: req.body.email }
-      ]
+      $or: [{ username: req.body.username }, { email: req.body.email }]
     });
 
     if (existingUser) {
-      let errorMessage = 'Gebruikersnaam of e-mail bestaat al';
-      if (existingUser.email === req.body.email) errorMessage = 'E-mailadres is al in gebruik';
-      if (existingUser.username === req.body.username) errorMessage = 'Gebruikersnaam is al in gebruik';
-      
-      return res.render('registreren', { 
-        error: errorMessage,
-        formData: req.body 
-      });
+      const errorMessage = existingUser.email === req.body.email 
+        ? 'E-mailadres is al in gebruik' 
+        : 'Gebruikersnaam is al in gebruik';
+      return res.render('registreren', { error: errorMessage, formData: req.body });
     }
 
-    // Gebruiker aanmaken
-    const hashedPassword = await bcrypt.hash(req.body.password, 12);
-    const newUser = new User({
+    const newUser = await User.create({
       username: req.body.username,
       email: req.body.email,
-      password: hashedPassword
+      password: await bcrypt.hash(req.body.password, 12),
+      coins: 1000,
+      inventory: [] // 🔄 Changed from purchasedItems
     });
 
-    await newUser.save();
-    res.redirect('/login');
+    req.session.userId = newUser._id.toString();
+    return res.redirect('/home');
   } catch (error: any) {
-    let errorMessage = 'Registratiefout - probeer andere gegevens';
-    if (error.code === 11000) {
-      errorMessage = 'Deze gegevens zijn al in gebruik';
-    }
-    res.render('registreren', { 
-      error: errorMessage,
-      formData: req.body 
-    });
+    console.error('Registratiefout:', error);
+    const errorMessage = error.code === 11000 
+      ? 'Deze gegevens zijn al in gebruik' 
+      : 'Registratiefout - probeer andere gegevens';
+    return res.render('registreren', { error: errorMessage, formData: req.body });
   }
 });
 
-// Uitloggen
-router.get('/logout', (req, res) => {
-  req.session.destroy(() => res.redirect('/login'));
-
-});
-
-
-
-const isAuthenticated = (req: any, res: any, next: any) => {
-  if (req.session.id) return next(); // Gebruiker is ingelogd
-  res.redirect("/login"); // Stuur door naar login als niet ingelogd
-};
-// Voeg dit toe aan je authRoutes.ts
-router.get('/shop', isAuthenticated, async (req, res) => {
+// ======================
+// Winkel Functionaliteit
+// ======================
+router.get('/shop', isAuthenticated, async (req: Request, res: Response): Promise<void> => {
   try {
-    // 1. Haal de gebruiker op via de SESSIE-ID
-    const user = await User.findById(req.session.id);
-    
-    // 2. Geef een fout als de gebruiker niet bestaat
-    if (!user) return res.redirect('/login?error=user_not_found');
+    const user = await User.findById(req.session.userId)
+      .select('username coins inventory')
+      .lean();
 
-    // 3. Debug: Log de coins en het type
-    console.log("[DEBUG] Coins:", user.coins, "Type:", typeof user.coins);
+    if (!user) {
+      req.session.destroy(() => {});
+      res.redirect('/login');
+      return;
+    }
 
-    // 4. Render de shop met de gebruikersdata
     res.render('shop', { 
       user: {
-        username: user.username,
-        coins: user.coins // 🚨 Zorg dat dit een NUMBER is!
+        ...user,
+        coins: user.coins || 0,
+        inventory: user.inventory || []
       }
     });
   } catch (error) {
-    console.error("[Fout in /shop]:", error);
-    res.redirect('/login?error=server');
+    console.error('Shop error:', error);
+    res.redirect('/login');
   }
 });
 
+router.post('/purchase', isAuthenticated, async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { itemId, price } = req.body;
+    
+    // Validatie
+    if (!itemId || typeof price !== 'number' || price <= 0) {
+      res.status(400).json({ error: 'Ongeldige aanvraag' });
+      return;
+    }
+
+    // Atomic update
+    const updatedUser = await User.findOneAndUpdate(
+      { 
+        _id: req.session.userId,
+        coins: { $gte: price },
+        inventory: { $ne: itemId }
+      },
+      { 
+        $inc: { coins: -price },
+        $push: { inventory: itemId }
+      },
+      { new: true, select: 'coins inventory' }
+    );
+
+    if (!updatedUser) {
+      const errorMsg = updatedUser === null 
+        ? 'Onvoldoende saldo of item al in bezit' 
+        : 'Item niet gevonden';
+      res.status(400).json({ error: errorMsg });
+      return;
+    }
+
+    res.json({
+      success: true,
+      coins: updatedUser.coins,
+      inventory: updatedUser.inventory
+    });
+  } catch (error) {
+    console.error('Aankoopfout:', error);
+    res.status(500).json({ error: 'Interne serverfout' });
+  }
+});
+
+// ======================
+// Uitloggen
+// ======================
+router.get('/logout', (req: Request, res: Response): void => {
+  req.session.destroy(() => res.redirect('/login'));
+});
 
 export default router;

@@ -2105,3 +2105,171 @@ body.dark-mode .chatbot-input{
   color: gold;
   margin-left: 5px;
 }
+
+.price.clickable {
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.price.clickable:hover {
+    transform: scale(1.05);
+    color: #2196F3;
+}
+
+.owned-badge {
+    color: #4CAF50;
+    font-size: 2rem;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.owned-text {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+
+.owned-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 3;
+    color: #4CAF50;
+    font-size: 1.8rem;
+}
+/*+++++++++++++++++++++++++++++++++++++TEST+++++++++++++++++++++++++++++++++*/
+/* Profile Section */
+.profile-section {
+    text-align: center;
+    padding: 2rem;
+    background: var(--container-color);
+    border-radius: 1rem;
+    margin: 2rem auto;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 1rem;
+    border: 3px solid var(--first-color);
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.username {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.level {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--text-color);
+}
+
+/* Tabs */
+.tabs-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--container-color);
+}
+
+.tab-active, .tab {
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    border-radius: 0.5rem 0.5rem 0 0;
+    transition: all 0.3s ease;
+}
+
+.tab-active {
+    background: var(--first-color);
+    color: white;
+}
+
+/* Showcase Grid */
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.showcase-item {
+    background: var(--container-color);
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.showcase-item:hover {
+    transform: translateY(-5px);
+}
+
+.showcase-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.showcase-info {
+    padding: 1rem;
+}
+
+/* Stats Section */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+    background: var(--container-color);
+    border-radius: 1rem;
+}
+
+.stats-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--body-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.stats-label {
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.stats-value {
+    font-weight: 600;
+    color: var(--first-color);
+}
+
+/* Dark Mode Aanpassingen */
+body.dark-mode .profile-section,
+body.dark-mode .stats-grid,
+body.dark-mode .showcase-item {
+    background: hsl(220, 10%, 15%);
+}
+
+body.dark-mode .stats-item {
+    background: hsl(220, 10%, 20%);
+}

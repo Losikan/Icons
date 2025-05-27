@@ -27,17 +27,22 @@ pages.forEach(page => {
   
   router.get(routePath, async (req: Request, res: Response) => {
     try {
-      // Authenticatie check voor beveiligde pagina's
       if (protectedPages.includes(page) && !req.session.userId) {
         return res.redirect("/login");
       }
       
-      // Geef altijd de laatste user-data door
       const user = req.session.userId 
-        ? await User.findById(req.session.userId).lean()
+        ? await User.findById(req.session.userId)
+              .select('username email coins inventory') // 🔄 Updated
+              .lean()
         : null;
 
-      res.render(page, { user });
+      res.render(page, { 
+        user: {
+          ...user,
+          inventory: user?.inventory || [] // 🔄 Updated
+        }
+      });
     } catch (error) {
       console.error(`${page} Route Error:`, error);
       res.status(500).render("error", { message: "Laadfout" });
@@ -46,20 +51,26 @@ pages.forEach(page => {
 });
 
 // ---------------------------
-// Shop Route (gecorrigeerd)
+// Shop Route
 // ---------------------------
 router.get('/shop', async (req: Request, res: Response) => {
   try {
     if (!req.session.userId) return res.redirect("/login");
 
-    const user = await User.findById(req.session.userId).lean();
+    const user = await User.findById(req.session.userId)
+      .select('username coins inventory') // 🔄 Updated
+      .lean();
+
     if (!user) {
       req.session.destroy(() => {});
       return res.redirect("/login");
     }
 
     res.render("shop", { 
-      user,
+      user: {
+        ...user,
+        inventory: user.inventory || [] // 🔄 Updated
+      },
       items: data.data.items.br
     });
   } catch (error) {
@@ -68,13 +79,16 @@ router.get('/shop', async (req: Request, res: Response) => {
   }
 });
 
-
-
 // ---------------------------
 // Overige Routes
 // ---------------------------
 router.get('/', (req: Request, res: Response) => {
-  res.render('landingspage', { user: req.session.userId ? { coins: req.session.coins } : null });
+  res.render('landingspage', { 
+    user: req.session.userId ? { 
+      coins: req.session.coins,
+      inventory: [] // 🔄 Standaard lege array
+    } : null 
+  });
 });
 
 export default router;

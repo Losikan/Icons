@@ -1,4 +1,5 @@
 <%- include("partials/header.ejs") %>
+<script src="/js/script.js" defer></script>
 
 <body>
     <header class="top-header">
@@ -7,7 +8,7 @@
                 <i class="ri-arrow-left-line sidebar-close"></i>
             </div>
             <ul class="sidebar-nav">
-                 <li><a href="/home">Home</a></li>
+                <li><a href="/home">Home</a></li>
                 <li><a href="/inventaris">Inventaris</a></li>
                 <li><a href="/shop">Winkel</a></li>
                 <li><a href="/friendslist">Vriendenlijst</a></li>
@@ -15,16 +16,13 @@
             </ul>
             <div class="sidebar-bottom">
                 <div class="user-circle"></div>
-                <span>                 <%= user.username %> 
-</span>
+                <span><%= user.username %></span>
                 <span><a href="/index">Uitloggen</a></span>
             </div>
         </nav>
         <div class="overlay"></div>
 
-
         <i class="ri-menu-line"></i>
-
         <h1 class="logo"><a href="/home">ICONS</a></h1>
 
         <div class="nav-items-right">
@@ -44,19 +42,12 @@
             </div>
 
             <i class="ri-account-circle-fill user"></i>
-
             <div class="account-card">
                 <ul class="list">
-                    <li class="element">
-                        <a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
-                    </li>
-                    <li class="element">
-                        <a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
-                    </li>
+                    <li class="element"><a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a></li>
+                    <li class="element"><a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a></li>
                     <div class="separator"></div>
-                    <li class="element">
-                        <a href="/index" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
-                    </li>
+                    <li class="element"><a href="/index" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a></li>
                 </ul>
             </div>
         </div>
@@ -67,28 +58,29 @@
             <div class="wrapper">
                 <div class="price-input">
                     <div class="price">
-                 <i class="ri-copper-diamond-line"></i> 
-                 <%= user.coins %> 
-                 </div>
-                    </div>
+                        <i class="ri-copper-diamond-line"></i> 
+                        <span id="coins-display"><%= user.coins %></span>
                     </div>
                 </div>
-
             </div>
         </div>
-    
+
         <div class="row1">
             <div class="block1">
-                <!-- Populair Section -->
-<h2 class="shoptitel">Populair <i class="ri-fire-line"></i></h2>
-<br>
+                <h2 class="shoptitel">Populair <i class="ri-fire-line"></i></h2>
+                <br>
 <div class="container-populaire-wrapper">
     <div class="container-populaire" id="shopcontainer">
         <% items.slice(0, 3).forEach(item => { %>
-            <div class="flip-container" onclick="flipCard(this)">
+            <div class="flip-container" data-item-id="<%= item.id %>">
                 <div class="article">
                     <div class="front">
-                        <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
+                        <div class="item-header">
+                            <% if (user.inventory.includes(item.id)) { %>
+                                <div class="owned-badge">
+                                    <i class="ri-checkbox-circle-fill"></i>
+                                </div>
+                            <% } %>
                             <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
                         </div>
                         <div class="star-rating">
@@ -96,13 +88,28 @@
                             <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
                             <i class="ri-star-fill"></i>
                         </div>
-                        <div class="price"><i class="ri-copper-diamond-line"></i> <%= item.price || '450' %></div>
+                        <div class="price <% if (!user.inventory.includes(item.id)) { %>clickable<% } %>" 
+                             data-item-id="<%= item.id %>"
+                             data-item-price="<%= item.price %>"
+                             data-item-name="<%= item.name %>">
+                            <i class="ri-copper-diamond-line"></i> 
+                            <% if (user.inventory.includes(item.id)) { %>
+                                <span class="owned-text">Gekocht</span>
+                            <% } else { %>
+                                <span class="price-amount"><%= item.price || '450' %></span>
+                            <% } %>
+                        </div>
                     </div>
                     <div class="back">
                         <p><%= item.description %></p>
-                        <div class="cart">
-                            <i class="ri-shopping-cart-2-line"></i>
-                        </div>
+                        <% if (!user.inventory.includes(item.id)) { %>
+                            <div class="cart-icon" 
+                                 data-item-id="<%= item.id %>"
+                                 data-item-price="<%= item.price %>"
+                                 data-item-name="<%= item.name %>">
+                                <i class="ri-shopping-cart-2-line"></i>
+                            </div>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -112,56 +119,51 @@
     <button class="arrow next"><i class="ri-arrow-right-line"></i></button>
 </div>
             </div>
-            <div class="block2">
 
-<!-- Battlepass section -->
-<h2 class="shoptitel">Battlepass <i class="ri-shield-star-line"></i></h2>
-<br>
-<div class="container-battlepas" id="shopcontainer">
-    <% items.slice(3, 8).forEach((item, index) => { %>
-        <div class="article-2">
-            <p>Lv <%= (index + 1) * 5 %></p>
-            <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
-                <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
-            </div>
-            <div class="star-rating">
-                <p><i class="ri-lock-line"></i> Beschikbaar vanaf level <%= (index + 1) * 5 %></p>
+            <div class="block2">
+                <h2 class="shoptitel">Battlepass <i class="ri-shield-star-line"></i></h2>
+                <br>
+                <div class="container-battlepas" id="shopcontainer">
+                    <% items.slice(3, 8).forEach((item, index) => { %>
+                        <div class="article-2">
+                            <p>Lv <%= (index + 1) * 5 %></p>
+                            <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
+                                <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
+                            </div>
+                            <div class="star-rating">
+                                <p><i class="ri-lock-line"></i> Beschikbaar vanaf level <%= (index + 1) * 5 %></p>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
             </div>
         </div>
-    <% }); %>
-</div>
-</div>
-        </div>
+
         <br>
         <h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
         <br>
         <div class="row2">
-
-<!-- coming soon section -->
-<br>
-        <div class="block">
-
-<div class="container-comming-soon" id="shopcontainer">
-    <% items.slice(8, 15).forEach(item => { %>
-        <div class="article-1">
-            <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
-                <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
+            <div class="block">
+                <div class="container-comming-soon" id="shopcontainer">
+                    <% items.slice(8, 15).forEach(item => { %>
+                        <div class="article-1">
+                            <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
+                                <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
+                            </div>
+                            <div class="star-rating">
+                                <p><div id="timer">00:00:00:00</div></p>
+                            </div>
+                        </div>
+                    <% }); %>
+                    
+                    <div class="article-1">
+                        <H2>Surprise</H2>
+                        <img class="suprise-img" src="assets/images/description-image.png" alt="Verrassingsitem">
+                    </div>
+                </div>
             </div>
-            <div class="star-rating">
-                <p><div id="timer">00:00:00:00</div></p>
-            </div>
-        </div>
-    <% }); %>
-    
-    <!-- surprise -->
-    <div class="article-1">
-        <H2>Surprise</H2>
-        <img class="suprise-img" src="assets/images/description-image.png" alt="Verrassingsitem">
-    </div>
-</div>
-        </div>
         </div>
     </main>
     <%- include("partials/footer.ejs") %>
-
-   
+</body>
+</html>
