@@ -14,7 +14,7 @@ router.post('/login', async (req, res) => {
 
     if (user && await bcrypt.compare(req.body.password, user.password)) {
       (req.session as any).userId = user._id;
-      (req.session as any).username = user.username;  // ADD THIS LINE
+      (req.session as any).username = user.username;
       return res.redirect('/home');
     }
     res.render('login', { error: 'Ongeldige inloggegevens' });
@@ -55,8 +55,8 @@ router.get('/logout', (req, res) => {
       console.error('Logout error:', err);
       return res.status(500).send('Could not log out.');
     }
-    res.clearCookie('connect.sid'); // clear the session cookie
-    res.redirect('/login'); // redirect to login or landing page
+    res.clearCookie('connect.sid');
+    res.redirect('/login');
   });
 });
 

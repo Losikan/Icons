@@ -2,90 +2,211 @@
 
 <body>
 
-    <header>
-        <i class="ri-menu-line"></i>
-        <a href="/homePage" class="logo"><h1>ICONS</h1></a>
-
-        <div class="mode-toggle-right">
-            <label class="switch">
-                <input type="checkbox" id="modeSwitch">
-                <span class="slider round">
-                    <i class="ri-sun-line sun-icon"></i>
-                    <i class="ri-moon-line moon-icon"></i>
-                </span>
-            </label>
-        </div>
-
-        <div class="search-container">
-            <i class="ri-search-2-line" id="search-icon"></i>
-            <input type="text" class="search-input" placeholder="Zoeken...">
-        </div>
-
-            <a href="/profiel" class="label"><i  class="ri-account-circle-fill user" href></i></a>
-        </div>
-    </header>
-<main>
-        <div class="profile-section">
-            <div class="profile-pic">
-                <img src="afbeeldingen/" alt="profiel" width="100" height="100"></div>
-            <i class="ri-account-circle-2-fill"></i>
-            <h2 class="username">Gebruikersnaam</h2>
-            <div class="level">
-                <span class="level-icon"><i class="ri-gamepad-line"></i></span>
-                <span>Level: 455</span>
-            </div>
-        </div>
-        
-        <div class="tabs-container">
-            <div class="tabs">
-                <div class="tab-active">Showcase</div>
-            </div>
-            
-            <div class="tab-content">
-                <div class="showcase-grid">
-                    <div class="showcase-item">
-                        <img src="afbeeldingen/" alt="profiel" width="80%" height="90%">
-                    </div>
-                    <div class="showcase-item">
-                        <img src="afbeeldingen/" alt="profiel" width="80%" height="90%">
-                    </div>
-                    <div class="showcase-item2"></div>
-                </div>
-                
-                <div class="stats-section">
-                    <div class="stats-title">Statistieken</div>
-                    <div class="stats-item">
-                        <div class="stats-label">Level:</div>
-                        <div class="stats-value">455</div>
-                    </div>
-                    <div class="stats-item">
-                        <div class="stats-label">K/D:</div>
-                        <div class="stats-value">455</div>
-                    </div>
-                    <div class="stats-item">
-                        <div class="stats-label">Kills:</div>
-                        <div class="stats-value">455</div>
-                    </div>
-                    <div class="stats-item">
-                        <div class="stats-label">Level: 455</div>
-                        <div class="stats-value"></div>
-                    </div>
-                    <div class="stats-item">
-                        <div class="stats-label">Level: 455</div>
-                        <div class="stats-value"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <header class="top-header">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <i class="ri-arrow-left-line sidebar-close"></i>
+      </div>
+      <ul class="sidebar-nav">
+        <li><a href="/homePage">Home</a></li>
+        <li><a href="/inventaris">Inventaris</a></li>
+        <li><a href="/shop">Winkel</a></li>
+        <li><a href="/friendslist">Vriendenlijst</a></li>
+        <li><a href="/settings">Instellingen</a></li>
+      </ul>
+      <div class="sidebar-bottom">
+        <div class="user-circle"></div>
+        <span><%= session.username %></span>
+        <span><a href="/logout">Uitloggen</a></span>
+      </div>
+    </nav>
+    <div class="overlay"></div>
+    <i class="ri-menu-line"></i>
+    <h1 class="logo"><a href="/homePage">ICONS</a></h1>
+    <div class="nav-items-right">
+      <div class="mode-toggle-right">
+        <label class="switch">
+          <input type="checkbox" id="modeSwitch">
+          <span class="slider round">
+            <i class="ri-sun-line sun-icon"></i>
+            <i class="ri-moon-line moon-icon"></i>
+          </span>
+        </label>
+      </div>
+      <div class="search-container">
+        <i class="ri-search-2-line" id="search-icon"></i>
+        <input type="text" class="search-input" placeholder="Zoeken...">
+      </div>
+      <i class="ri-account-circle-fill user"></i>
+      <div class="account-card">
+        <ul class="list">
+          <li class="element">
+            <a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
+          </li>
+          <li class="element">
+            <a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
+          </li>
+          <div class="separator"></div>
+          <li class="element">
+            <a href="/logout" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
+          </li>
+        </ul>
+      </div>
     </div>
-</main>
-    <footer>
-        <p>&copy; Alle rechten voorbehouden aan ICONS 2025</p>
-        <nav class="footer-nav">
-            
-        </nav>
-    </footer>
+  </header>
+  <main class="profile">
+    <section class="profile__header">
+      <div class="profile__avatar-container">
+        <img id="profileAvatar" src="/images/default-avatar.png" alt="User Avatar" class="profile__avatar" />
 
+        <form id="avatarForm" enctype="multipart/form-data" style="display: none;">
+          <input type="file" name="avatar" id="avatarInput" accept="image/*" />
+        </form>
+
+        <button class="profile__edit-button" title="Edit Profile" onclick="document.getElementById('avatarInput').click();">
+          <i class="ri-edit-fill"></i>
+        </button>
+      </div>
+      <div class="profile__info">
+        <h1 id="profileUsername" class="profile__username">Loading...</h1>
+        <p id="profileLevel" class="profile__level">Level --</p>
+        <p id="profileDescription" class="profile__description">Loading description...</p>
+        <button id="addFriendBtn" class="profile__add-friend-button">
+          <i class="ri-user-add-line"></i> Add Friend
+        </button>
+      </div>
+    </section>
+
+    <section class="profile__body">
+      <div class="profile__inventory">
+        <h2 class="profile__section-title">Inventory</h2>
+        <div id="inventoryGrid" class="profile__inventory-grid">
+        </div>
+      </div>
+
+      <div class="profile__stats">
+        <h2 class="profile__section-title">Stats</h2>
+        <ul id="profileStatsList" class="profile__stats-list">
+        </ul>
+      </div>
+
+      <div class="profile__achievements">
+        <h2 class="profile__section-title">Achievements</h2>
+        <ul id="achievementsList" class="profile__achievements-list">
+        </ul>
+      </div>
+    </section>
+  </main>
+  <script>
+    const userId = "<%= userId %>";
+
+    async function loadProfile() {
+      try {
+        const res = await fetch(`/api/profile/${userId}`);
+        const user = await res.json();
+
+        document.getElementById('profileUsername').textContent = user.username;
+        document.getElementById('profileLevel').textContent = `Level ${user.level || 1}`;
+        document.getElementById('profileDescription').textContent = user.description || 'No description yet.';
+        document.getElementById('profileAvatar').src = user.avatarUrl || '/images/default-avatar.png';
+
+        const inventoryGrid = document.getElementById('inventoryGrid');
+        inventoryGrid.innerHTML = "";
+
+        const totalSlots = 12;
+        const items = user.inventory || [];
+
+        for (let i = 0; i < totalSlots; i++) {
+          const div = document.createElement('div');
+          div.className = 'profile__inventory-item';
+
+          if (items[i]?.item) {
+            const item = items[i].item;
+            div.title = item.description || item.name;
+            div.innerHTML = `
+      <img src="${item.iconUrl}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" />
+    `;
+            div.style.border = 'none';
+          }
+
+          inventoryGrid.appendChild(div);
+        }
+
+        const statsList = document.getElementById('profileStatsList');
+        const stats = user.stats || {
+          highScore: 0,
+          totalScore: 0,
+          gamesPlayed: 0
+        };
+
+        const statLabels = {
+          highScore: 'High Score',
+          totalScore: 'Total Score',
+          gamesPlayed: 'Games Played'
+        };
+
+        for (const key in stats) {
+          const li = document.createElement('li');
+          li.className = 'profile__stat';
+          li.innerHTML = `<span class="profile__stat-label">${statLabels[key] || key}:</span> ${stats[key]}`;
+          statsList.appendChild(li);
+        }
+
+        const achievementsList = document.getElementById('achievementsList');
+        (user.achievements || []).forEach(ach => {
+          const li = document.createElement('li');
+          li.className = 'profile__achievement';
+          li.title = ach.description || ach.name;
+
+          li.innerHTML = `
+    <img src="${ach.iconUrl}" alt="${ach.name}" class="achievement-image"" />
+  `;
+
+          achievementsList.appendChild(li);
+        });
+
+      } catch (err) {
+        console.error('Failed to load profile:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadProfile);
+
+
+    document.getElementById('avatarInput').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('Selecteer a.u.b een afbeelding met een toegelaten formaat. (PNG, JPG, JPEG, WEBP).\nGIFs, videos, documenten en andere bestanden zijn niet toegelaten.');
+        e.target.value = '';
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('avatar', file);
+
+      try {
+        const res = await fetch(`/api/profile/${userId}/avatar`, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!res.ok) throw new Error('Upload failed');
+        const data = await res.json();
+
+        document.getElementById('profileAvatar').src = data.avatarUrl + '?t=' + new Date().getTime();
+      } catch (err) {
+        console.error('Avatar upload error:', err);
+        alert('Upload mislukt.');
+      }
+    });
+
+    const editButton = document.querySelector('.profile__edit-button');
+    const profileAvatar = document.getElementById('profileAvatar');
+  </script>
 </body>
+
 </html>
-    <%- include("partials/footer.ejs") %>
+<%- include("partials/footer.ejs") %>

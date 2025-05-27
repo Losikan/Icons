@@ -7,7 +7,6 @@ const pages = [
   'inventaris',
   'landingspage',
   'login',
-  'profiel',
   'registreren',
   'resetpassword',
   'settings'
@@ -30,6 +29,17 @@ router.get('/friendslist', (req, res) => {
     return res.redirect('/login');
   }
   res.render('friendslist', {
+    username: req.session.username,
+    userId: req.session.userId,
+    session: req.session
+  });
+});
+
+router.get('/profiel', (req, res) => {
+  if (!req.session?.username) {
+    return res.redirect('/login');
+  }
+  res.render('profiel', {
     username: req.session.username,
     userId: req.session.userId,
     session: req.session

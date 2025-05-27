@@ -17,6 +17,12 @@ import friendRoutes from './routes/friendRoutes';
 import userRoutes from './routes/userRoutes';
 import chatRoutes from './routes/chatRoutes';
 import './models/User';
+import profileRoutes from './routes/profileRoutes';
+import Achievement from './models/Achievement';
+import { IAchievement } from './models/Achievement';
+import './models/User';
+import './models/Item';
+import './models/Achievement';
 
 const app = express();
 const httpServer = createServer(app);
@@ -36,7 +42,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI!)
-  .then(() => console.log('Connected to MongoDB'))
+  .then(async () => {
+    console.log('Connected to MongoDB')})
   .catch(err => console.error('MongoDB connection error:', err));
 
 app.use(sessionMiddleware);
@@ -143,6 +150,8 @@ app.use('/', authRoutes);
 app.use('/', friendRoutes);
 app.use('/api', userRoutes);
 app.use('/api', chatRoutes);
+app.use('/api', profileRoutes);
+
 
 const PORT = process.env.PORT || 3000;
 httpServer.listen(PORT, () => {
