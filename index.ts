@@ -1,6 +1,7 @@
 import express from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
+import MongoStore from 'connect-mongo';
 import path from 'path';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -27,18 +28,23 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 
-declare module 'express-session' {
-  interface SessionData {
-    iuser: string;
-    username?: string;
-  }
-}
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+import 'express-session';
+
+declare module 'express-session' {
+  interface SessionData {
+    userId?: string;
+    username?: string;
+    coins?: number;
+    avatarUrl?: string;
+    inventory?: any[]; // Adjust type as needed
+  }
+}
 
 mongoose.connect(process.env.MONGO_URI!)
   .then(async () => {

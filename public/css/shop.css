@@ -373,7 +373,7 @@ body.dark-mode .login_input:focus {
 }
 
 body.dark-mode .login_label {
-  color: var(--text-color);
+  color: black;
   z-index: 1;
 }
 
@@ -943,10 +943,15 @@ header p{
   margin-top: 5px;
   font-size: 16px;
 }
+
 .price-input{
-  width: 100%;
+  border-radius: 5px;
+  background-color:hsla(219, 15%, 66%, 0.3);  width: 100%;
   display: flex;
-  margin: 30px 0 35px;
+margin-left: auto;
+margin-right: 12px;
+  width: fit-content;
+  
 }
 .price-input .field{
   display: flex;
@@ -2102,8 +2107,9 @@ body.dark-mode .chatbot-input{
 
 .price {
   font-size: 1.2rem;
-  color: gold;
-  margin-left: 5px;
+  color: rgb(0, 0, 0);
+
+  margin: 5PX 5PX 5PX 5PX;
 }
 
 .price.clickable {
@@ -2262,7 +2268,11 @@ body.dark-mode .chatbot-input{
     font-weight: 600;
     color: var(--first-color);
 }
-
+body.dark-mode .price {
+  font-size: 1.2rem;
+  color: gold;
+  margin-left: 5px;
+}
 /* Dark Mode Aanpassingen */
 body.dark-mode .profile-section,
 body.dark-mode .stats-grid,

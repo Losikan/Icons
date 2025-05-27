@@ -79,8 +79,8 @@ router.post('/register', async (req: Request, res: Response) => {
       username: req.body.username,
       email: req.body.email,
       password: await bcrypt.hash(req.body.password, 12),
-      coins: 1000,
-      inventory: [] // 🔄 Changed from purchasedItems
+      coins: 0,
+      inventory: [] 
     });
 
     req.session.userId = newUser._id.toString();
@@ -94,76 +94,7 @@ router.post('/register', async (req: Request, res: Response) => {
   }
 });
 
-// ======================
-// Winkel Functionaliteit
-// ======================
-router.get('/shop', isAuthenticated, async (req: Request, res: Response): Promise<void> => {
-  try {
-    const user = await User.findById(req.session.userId)
-      .select('username coins inventory')
-      .lean();
 
-    if (!user) {
-      req.session.destroy(() => {});
-      res.redirect('/login');
-      return;
-    }
-
-    res.render('shop', { 
-      user: {
-        ...user,
-        coins: user.coins || 0,
-        inventory: user.inventory || []
-      }
-    });
-  } catch (error) {
-    console.error('Shop error:', error);
-    res.redirect('/login');
-  }
-});
-
-router.post('/purchase', isAuthenticated, async (req: Request, res: Response): Promise<void> => {
-  try {
-    const { itemId, price } = req.body;
-    
-    // Validatie
-    if (!itemId || typeof price !== 'number' || price <= 0) {
-      res.status(400).json({ error: 'Ongeldige aanvraag' });
-      return;
-    }
-
-    // Atomic update
-    const updatedUser = await User.findOneAndUpdate(
-      { 
-        _id: req.session.userId,
-        coins: { $gte: price },
-        inventory: { $ne: itemId }
-      },
-      { 
-        $inc: { coins: -price },
-        $push: { inventory: itemId }
-      },
-      { new: true, select: 'coins inventory' }
-    );
-
-    if (!updatedUser) {
-      const errorMsg = updatedUser === null 
-        ? 'Onvoldoende saldo of item al in bezit' 
-        : 'Item niet gevonden';
-      res.status(400).json({ error: errorMsg });
-      return;
-    }
-
-    res.json({
-      success: true,
-      coins: updatedUser.coins,
-      inventory: updatedUser.inventory
-    });
-  } catch (error) {
-    console.error('Aankoopfout:', error);
-    res.status(500).json({ error: 'Interne serverfout' });
-  }
-});
 
 // ======================
 // Uitloggen

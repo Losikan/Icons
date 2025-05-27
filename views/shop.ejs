@@ -107,7 +107,6 @@
                                  data-item-id="<%= item.id %>"
                                  data-item-price="<%= item.price %>"
                                  data-item-name="<%= item.name %>">
-                                <i class="ri-shopping-cart-2-line"></i>
                             </div>
                         <% } %>
                     </div>
@@ -140,10 +139,11 @@
         </div>
 
         <br>
-        <h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
         <br>
         <div class="row2">
             <div class="block">
+                        <h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
+                    <br>
                 <div class="container-comming-soon" id="shopcontainer">
                     <% items.slice(8, 15).forEach(item => { %>
                         <div class="article-1">

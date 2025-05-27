@@ -88,5 +88,14 @@ router.get('/', (req: Request, res: Response) => {
     } : null 
   });
 });
-
+router.get('/friendslist', (req, res) => {
+  if (!req.session?.username) {
+    return res.redirect('/login');
+  }
+  res.render('friendslist', {
+    username: req.session.username,
+    userId: req.session.userId,
+    session: req.session
+  });
+});
 export default router;

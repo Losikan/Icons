@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         } catch (error) {
-            alert('Aankoop mislukt, probeer later opnieuw');
+            alert('Aankoop mislukt, probeer later opnieuw kleine teelbal');
         }
     };
 
