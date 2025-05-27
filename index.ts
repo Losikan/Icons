@@ -34,6 +34,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+import 'express-session';
+
+declare module 'express-session' {
+  interface SessionData {
+    userId?: string;
+    username?: string;
+    coins?: number;
+    avatarUrl?: string;
+    inventory?: any[]; // Adjust type as needed
+  }
+}
+
 mongoose.connect(process.env.MONGO_URI!)
   .then(async () => {
     console.log('Connected to MongoDB')})
