@@ -15,7 +15,7 @@ router.post('/login', async (req, res) => {
     if (user && await bcrypt.compare(req.body.password, user.password)) {
       (req.session as any).userId = user._id;
       (req.session as any).username = user.username;
-      (req.session as any).avatarUrl = user.avatarUrl || '/images/default-avatar.png';
+      (req.session as any).avatarUrl = user.avatarUrl || '/assets/images/default-avatar.png';
       return res.redirect('/home');
     }
     res.render('login', { error: 'Ongeldige inloggegevens' });

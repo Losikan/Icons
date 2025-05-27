@@ -37,7 +37,8 @@
         <i class="ri-search-2-line" id="search-icon"></i>
         <input type="text" class="search-input" placeholder="Zoeken...">
       </div>
-      <img id="profileAvatarHeader" class="user profile__avatar" src="<%= session.avatarUrl || '/images/default-avatar.png' %>" alt="User Avatar" />
+      <img id="profileAvatarHeader" class="user profile__avatar" src="/assets/images/default-avatar.png" />
+
 
 
       <div class="account-card">
@@ -59,7 +60,7 @@
   <main class="profile">
     <section class="profile__header">
       <div class="profile__avatar-container">
-        <img id="profileAvatar" src="/images/default-avatar.png" alt="User Avatar" class="profile__avatar" />
+        <img id="profileAvatar" src="/assets/images/default-avatar.png" alt="User Avatar" class="profile__avatar" />
 
         <form id="avatarForm" enctype="multipart/form-data" style="display: none;">
           <input type="file" name="avatar" id="avatarInput" accept="image/*" />
@@ -116,11 +117,24 @@
       }
     });
 
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch(`/api/profile/id/${loggedInUserId}`);
+        const user = await res.json();
+        const avatarUrl = user.avatarUrl || '/assets/images/default-avatar.png';
+
+        document.getElementById('profileAvatarHeader').src = avatarUrl;
+      } catch (err) {
+        console.error('Failed to load avatar for header:', err);
+      }
+    });
+
+
     async function loadProfile() {
       try {
         const res = await fetch(`/api/profile/id/${userId}`);
         const user = await res.json();
-        const avatarUrl = user.avatarUrl || '/images/default-avatar.png';
+        const avatarUrl = user.avatarUrl || '/assets/images/default-avatar.png';
 
         document.getElementById('profileUsername').textContent = user.username;
         document.getElementById('profileLevel').textContent = `Level ${user.level || 1}`;
