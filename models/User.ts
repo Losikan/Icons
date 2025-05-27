@@ -78,9 +78,12 @@ const userSchema = new Schema<IUser>({
   },
   coins: {
     type: Number,
-    default: 1000,
-    min: [0, 'Saldo kan niet negatief zijn']
+    default: 0,
+    min: 0
   },
+   inventory: [{
+    type: String 
+  }],
   friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   unreadRooms: [{ type: String }],
   resetToken: { type: String, select: false },
@@ -88,7 +91,6 @@ const userSchema = new Schema<IUser>({
   description: { type: String, default: '' },
   avatarUrl: { type: String, default: '' },
   level: { type: Number, default: 1 },
-  inventory: [inventoryItemSchema],
   stats: statsSchema,
   achievements: [{ type: Schema.Types.ObjectId, ref: 'Achievement' }]
 }, { 
@@ -119,6 +121,7 @@ userSchema.index({ inventory: 1 });
 
 // Virtuals
 userSchema.virtual('purchaseHistory').get(function() {
+  if (!this.inventory) return [];
   return this.inventory.map(invItem => 
     skinsData.data.items.br.find(item => item.id === invItem.item.toString())
   );

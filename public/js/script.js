@@ -223,82 +223,60 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
    
   
-  
   // Koopfunctie
-    const handlePurchase = async (itemId, price) => {
-        try {
-            const response = await fetch('/purchase', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ itemId, price })
+const handlePurchase = async (itemId, price) => {
+  try {
+    // Zorg dat price een number is
+    const numericPrice = Number(price);
+    
+    const response = await fetch('/purchase', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        itemId: String(itemId), // Explicit string conversie
+        price: numericPrice
+      })
+    });
+
+        const result = await response.json();
+        
+        if (result.error) {
+            alert(result.error);
+        } else {
+            // Update alle relevante UI elementen
+            document.querySelectorAll(`[data-item-id="${itemId}"] .cart-icon`).forEach(icon => {
+                icon.outerHTML = `<div class="owned-badge"><i class="ri-checkbox-circle-fill"></i></div>`;
+            });
+            
+            document.querySelectorAll(`[data-item-id="${itemId}"] .price`).forEach(priceElement => {
+                priceElement.classList.remove('clickable');
+                priceElement.innerHTML = `
+                    <i class="ri-copper-diamond-line"></i>
+                    <span class="owned-text">Gekocht</span>
+                `;
             });
 
-            const result = await response.json();
-            
-            if (result.error) {
-                alert(result.error);
-            } else {
-                const itemCard = document.querySelector(`[data-item-id="${itemId}"]`);
-                if (itemCard) {
-                    itemCard.querySelector('.cart-icon').outerHTML = `
-                        <div class="owned-badge">
-                            <i class="ri-checkbox-circle-fill"></i>
-                        </div>
-                    `;
-                    document.getElementById('coins-display').textContent = result.coins;
-                }
-            }
-        } catch (error) {
-            alert('Aankoop mislukt, probeer later opnieuw kleine teelbal');
+            document.querySelectorAll('.coin-display, #coins-display').forEach(el => {
+                el.textContent = result.coins;
+            });
         }
-    };
+    } catch (error) {
+        alert('Aankoop mislukt, probeer later opnieuw');
+    }
+};
 
-    // Event listeners
-document.querySelectorAll('.cart-icon').forEach(icon => {
-    icon.addEventListener('click', (e) => {
+// Event listeners
+document.querySelectorAll('.cart-icon, .price.clickable').forEach(element => {
+    element.addEventListener('click', async (e) => {
         e.stopPropagation();
-        const itemId = e.currentTarget.dataset.itemId;
-        const itemName = e.currentTarget.dataset.itemName;
-        const price = parseInt(e.currentTarget.dataset.itemPrice);
+        const target = e.currentTarget;
+        const itemId = target.dataset.itemId;
+        const itemName = target.dataset.itemName;
+        const price = parseInt(target.dataset.itemPrice);
 
         if (confirm(`Weet je zeker dat je "${itemName}" wilt kopen voor ${price} coins?`)) {
-            handlePurchase(itemId, price);
+            await handlePurchase(itemId, price);
         }
     });
 });
-
-});
-document.querySelectorAll('.price.clickable').forEach(priceElement => {
-    priceElement.addEventListener('click', async (e) => {
-        const itemId = e.currentTarget.dataset.itemId;
-        const itemName = e.currentTarget.dataset.itemName;
-        const price = parseInt(e.currentTarget.dataset.itemPrice);
-
-        if (confirm(`Weet je zeker dat je "${itemName}" wilt kopen voor ${price} coins?`)) {
-            try {
-                const response = await fetch('/purchase', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ itemId, price })
-                });
-
-                const result = await response.json();
-                
-                if (result.error) {
-                    alert(result.error);
-                } else {
-                    e.currentTarget.classList.remove('clickable');
-                    e.currentTarget.innerHTML = `
-                        <i class="ri-copper-diamond-line"></i>
-                        <span class="owned-text">Gekocht</span>
-                    `;
-                    document.querySelectorAll('.coin-display').forEach(el => {
-                        el.textContent = result.coins;
-                    });
-                }
-            } catch (error) {
-                alert('Aankoop mislukt, probeer later opnieuw');
-            }
-        }
-    });
 });

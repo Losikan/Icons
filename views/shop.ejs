@@ -9,7 +9,6 @@
             </div>
             <ul class="sidebar-nav">
                 <li><a href="/home">Home</a></li>
-                <li><a href="/inventaris">Inventaris</a></li>
                 <li><a href="/shop">Winkel</a></li>
                 <li><a href="/friendslist">Vriendenlijst</a></li>
                 <li><a href="/settings">Instellingen</a></li>
@@ -17,7 +16,7 @@
             <div class="sidebar-bottom">
                 <div class="user-circle"></div>
                 <span><%= user.username %></span>
-                <span><a href="/index">Uitloggen</a></span>
+                <span><a href="/landingspage">Uitloggen</a></span>
             </div>
         </nav>
         <div class="overlay"></div>
@@ -35,19 +34,13 @@
                     </span>
                 </label>
             </div>
-
-            <div class="search-container">
-                <i class="ri-search-2-line" id="search-icon"></i>
-                <input type="text" class="search-input" placeholder="Zoeken...">
-            </div>
-
             <i class="ri-account-circle-fill user"></i>
             <div class="account-card">
                 <ul class="list">
                     <li class="element"><a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a></li>
                     <li class="element"><a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a></li>
                     <div class="separator"></div>
-                    <li class="element"><a href="/index" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a></li>
+                    <li class="element"><a href="/landingspage" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a></li>
                 </ul>
             </div>
         </div>
@@ -84,9 +77,9 @@
                             <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
                         </div>
                         <div class="star-rating">
-                            <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                            <i class="ri-star-fill"></i><i class="ri-star-fill"></i>
-                            <i class="ri-star-fill"></i>
+                            <% for(let i = 0; i < 5; i++) { %>
+                                <i class="ri-star-fill"></i>
+                            <% } %>
                         </div>
                         <div class="price <% if (!user.inventory.includes(item.id)) { %>clickable<% } %>" 
                              data-item-id="<%= item.id %>"
@@ -96,7 +89,7 @@
                             <% if (user.inventory.includes(item.id)) { %>
                                 <span class="owned-text">Gekocht</span>
                             <% } else { %>
-                                <span class="price-amount"><%= item.price || '450' %></span>
+                                <span class="price-amount"><%= item.price %></span>
                             <% } %>
                         </div>
                     </div>
@@ -107,6 +100,7 @@
                                  data-item-id="<%= item.id %>"
                                  data-item-price="<%= item.price %>"
                                  data-item-name="<%= item.name %>">
+                                <i class="ri-shopping-cart-2-line"></i>
                             </div>
                         <% } %>
                     </div>

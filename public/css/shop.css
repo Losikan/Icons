@@ -1432,19 +1432,12 @@ img {
   display: none;
 }
 /* ================= MEDIA QUERIES ================= */
-@media only screen and (max-width: 974){
-  .block{
-    width: 100%;
+@media  screen and (min-width: 974){
+
+  .row1 {
+    flex-direction: column;
+    padding-left: 20px;
   }
-    .block1{
-          width: 100%;
-
-    }
-  .block2{
-        width: 100%;
-
-  }
-
   
 }
 /* Grote desktop (1480px en hoger) */

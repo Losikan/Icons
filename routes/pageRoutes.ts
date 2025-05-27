@@ -8,16 +8,17 @@ const router = Router();
 // ---------------------------
 // Dynamische Pagina Routes
 // ---------------------------
-const protectedPages = ['profiel', 'settings', 'inventaris'];
+const protectedPages = ['profiel', 'settings'];
 
 const pages = [
   'homePage',
-  'inventaris',
   'landingspage',
   'login',
   'registreren',
   'resetpassword',
-  'settings'
+  'settings',
+  'profiel'
+  
 ];
 
 pages.forEach(page => {
@@ -88,14 +89,23 @@ router.get('/', (req: Request, res: Response) => {
     } : null 
   });
 });
-router.get('/friendslist', (req, res) => {
-  if (!req.session?.username) {
+
+router.get('/friendslist', async (req: Request, res: Response) => {
+  if (!req.session?.userId) {
     return res.redirect('/login');
   }
+
+  const user = await User.findById(req.session.userId).lean();
+
+  if (!user) {
+    return res.redirect('/login');
+  }
+
   res.render('friendslist', {
-    username: req.session.username,
-    userId: req.session.userId,
-    session: req.session
+    username: user.username,
+    userId: user._id.toString()
   });
 });
+
+
 export default router;
