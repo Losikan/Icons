@@ -1,7 +1,6 @@
 import express from 'express';
 import session from 'express-session';
 import mongoose from 'mongoose';
-import MongoStore from 'connect-mongo';
 import path from 'path';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -30,7 +29,7 @@ const io = new Server(httpServer);
 
 declare module 'express-session' {
   interface SessionData {
-    userId: string;
+    iuser: string;
     username?: string;
   }
 }
