@@ -108,4 +108,22 @@ router.get('/friendslist', async (req: Request, res: Response) => {
 });
 
 
+router.get('/friendslist', async (req: Request, res: Response) => {
+  if (!req.session?.userId) {
+    return res.redirect('/login');
+  }
+
+  const user = await User.findById(req.session.userId).lean();
+
+  if (!user) {
+    return res.redirect('/login');
+  }
+
+  res.render('friendslist', {
+    username: user.username,
+    userId: user._id.toString()
+  });
+});
+
+
 export default router;

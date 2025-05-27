@@ -1,4 +1,5 @@
 <%- include("partials/header.ejs") %>
+<%- include("partials/header.ejs") %>
 
 <body>
   <header class="top-header">
@@ -14,6 +15,8 @@
       </ul>
       <div class="sidebar-bottom">
         <div class="user-circle"></div>
+        <span><%= username %></span>
+        <span><a href="/logout">Uitloggen</a></span>
         <span><%= username %></span>
         <span><a href="/landingspage">Uitloggen</a></span>
       </div>
