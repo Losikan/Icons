@@ -15,6 +15,7 @@ export interface IStats {
 }
 
 export interface IUser extends Document {
+  _id: Types.ObjectId;
   username: string;
   email: string;
   password: string;
