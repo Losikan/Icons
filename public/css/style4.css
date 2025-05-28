@@ -1980,7 +1980,7 @@ body.dark-mode {
     gap: 2rem;
     grid-template-areas:
         "inventory inventory stats"
-        "inventory inventory achievements";
+        "inventory inventory empty";
 }
 
 .profile__inventory {
@@ -2013,7 +2013,19 @@ body.dark-mode {
     justify-content: center;
     align-items: center;
     border: var(--border);
+    position: relative;
 }
+
+
+.profile__inventory-item img {
+    border-radius: 12px;
+}
+
+.profile__inventory-item button {
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
 
 body.dark-mode .profile__inventory-item {
     background-color: hsl(222, 24%, 46%);
@@ -2036,13 +2048,103 @@ body.dark-mode .profile__inventory-item {
     }
 }
 
+.item-actions {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    display: flex;
+    gap: 0.3rem;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    padding: 2px 6px;
+    filter: none !important;
+    /* <- fixes the grayscale issue */
+}
+
+.item-actions button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: gray;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+}
+
+.fav-active {
+    color: gold !important;
+}
+
+.fav-slot {
+    background-color: rgba(255, 215, 0, 0.15) !important;
+    /* Light gold/yellow tint */
+    border-radius: 12px;
+}
+
+.block-active {
+    color: red !important;
+}
+
+/* Hide fill icons by default */
+.item-actions button i.ri-star-fill,
+.item-actions button i.ri-spam-3-fill {
+    display: none;
+}
+
+/* Hover toggle for favorite button */
+.fav-btn:not(.fav-active):hover i.ri-star-line {
+    display: none;
+}
+
+.fav-btn:not(.fav-active):hover i.ri-star-fill {
+    display: inline;
+}
+
+/* Show fill icon if active */
+.fav-btn.fav-active i.ri-star-line {
+    display: none;
+}
+
+.fav-btn.fav-active i.ri-star-fill {
+    display: inline;
+}
+
+/* Hover toggle for block button */
+.block-btn:not(.block-active):hover i.ri-spam-3-line {
+    display: none;
+}
+
+.block-btn:not(.block-active):hover i.ri-spam-3-fill {
+    display: inline;
+}
+
+/* Show fill icon if active */
+.block-btn.block-active i.ri-spam-3-line {
+    display: none;
+}
+
+.block-btn.block-active i.ri-spam-3-fill {
+    display: inline;
+}
+
+
+
+
+
 .profile__body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
     grid-template-areas:
         "inventory inventory stats"
-        "inventory inventory achievements";
+        "inventory inventory";
 }
 
 @media (max-width: 900px) {
@@ -2052,11 +2154,81 @@ body.dark-mode .profile__inventory-item {
     }
 
     .profile__inventory,
-    .profile__stats,
-    .profile__achievements {
+    .profile__stats {
         width: 100%;
     }
 }
+
+.profile__inventory-grid {
+    scrollbar-width: thin;
+    scrollbar-color: #a0aec0 transparent;
+}
+
+.profile__inventory-grid::-webkit-scrollbar {
+    height: 6px;
+}
+
+.profile__inventory-grid::-webkit-scrollbar-thumb {
+    background-color: #a0aec0;
+    border-radius: 4px;
+}
+
+.profile__inventory-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #a0aec0 transparent;
+}
+
+.profile__inventory-tabs::-webkit-scrollbar {
+    height: 6px;
+}
+
+.profile__inventory-tabs::-webkit-scrollbar-thumb {
+    background-color: #a0aec0;
+    border-radius: 4px;
+}
+
+.inventory-tab {
+    flex: 0 0 auto;
+    padding: 0.5rem 1rem;
+    border: var(--border);
+    background: transparent;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+body.dark-mode .inventory-tab {
+    border: 1px solid #ccc;
+    color: white;
+    background-color: var(--color-third);
+}
+
+.inventory-tab.active,
+body.dark-mode .inventory-tab.active {
+    background: var(--first-color);
+    color: white;
+}
+
+.inventory-tab-content {
+    display: none;
+    /* Hide by default */
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.inventory-tab-content.active {
+    display: grid;
+    /* Show when active */
+}
+
 
 .profile__stats {
     grid-area: stats;
@@ -2065,6 +2237,7 @@ body.dark-mode .profile__inventory-item {
     border-radius: 1rem;
     color: var(--text-color);
     border: var(--border);
+    min-height: 320px;
 }
 
 .profile__stats-list {
@@ -2080,51 +2253,11 @@ body.dark-mode .profile__inventory-item {
     font-weight: 600;
 }
 
-.profile__achievements {
-    grid-area: achievements;
-    background: var(--profile-background);
-    padding: 1.5rem;
-    border-radius: 1rem;
-    color: var(--text-color);
-    border: var(--border);
-}
-
-.profile__achievements-list {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-}
-
-
-.achievement-image {
-    width: 100%;
-    max-width: 64px;
-    border-radius: 8px;
-    filter: drop-shadow(5px 10px 10px rgba(0, 0, 0, 0.205));
-}
-
 .profile__section-title {
     font-size: 1.5rem;
     margin-bottom: 1rem;
 }
 
-.profile__inventory-grid,
-.profile__achievements-list {
-    scrollbar-width: thin;
-    scrollbar-color: #a0aec0 transparent;
-}
-
-.profile__inventory-grid::-webkit-scrollbar,
-.profile__achievements-list::-webkit-scrollbar {
-    height: 6px;
-}
-
-.profile__inventory-grid::-webkit-scrollbar-thumb,
-.profile__achievements-list::-webkit-scrollbar-thumb {
-    background-color: #a0aec0;
-    border-radius: 4px;
-}
 
 .profile__username {
     font-size: 1.5rem;
@@ -2140,4 +2273,135 @@ body.dark-mode .profile__inventory-item {
     height: 32px;
     border-width: 1px;
     cursor: pointer;
+}
+
+
+.modal.hidden {
+    display: none;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal button {
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.modal-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+
+.favorites-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.favorite-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.favorite-slot {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+}
+
+.favorite-item {
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.favorite-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.edit-favorites-btn {
+    align-self: flex-start;
+    padding: 8px 16px;
+    background: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .favorite-slots {
+        grid-template-columns: 1fr;
+    }
 }
