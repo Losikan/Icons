@@ -67,29 +67,27 @@
       <div class="profile__info">
         <h1 id="profileUsername" class="profile__username">Loading...</h1>
         <p id="profileLevel" class="profile__level">Level --</p>
-        <p id="profileDescription" class="profile__description">Loading description...</p>
-        <button id="addFriendBtn" class="profile__add-friend-button">
-          <i class="ri-user-add-line"></i> Add Friend
-        </button>
       </div>
     </section>
 
     <section class="profile__body">
       <div class="profile__inventory">
         <h2 class="profile__section-title">Inventory</h2>
-        <div id="inventoryGrid" class="profile__inventory-grid">
+
+        <div class="profile__inventory-tabs">
+          <button class="inventory-tab active" data-tab="inventory">Inventory</button>
+          <button class="inventory-tab" data-tab="banned">Banned</button>
+          <button class="inventory-tab" data-tab="favorites">Favorites</button>
         </div>
+
+        <div id="inventoryGrid" class="profile__inventory-grid inventory-tab-content active" data-tab-content="inventory"></div>
+        <div id="bannedGrid" class="profile__inventory-grid inventory-tab-content" data-tab-content="banned"></div>
+        <div id="favoritesGrid" class="profile__inventory-grid inventory-tab-content" data-tab-content="favorites"></div>
       </div>
 
       <div class="profile__stats">
         <h2 class="profile__section-title">Stats</h2>
         <ul id="profileStatsList" class="profile__stats-list">
-        </ul>
-      </div>
-
-      <div class="profile__achievements">
-        <h2 class="profile__section-title">Achievements</h2>
-        <ul id="achievementsList" class="profile__achievements-list">
         </ul>
       </div>
     </section>
@@ -123,6 +121,22 @@
       } catch (err) {
         console.error('Failed to load avatar for header:', err);
       }
+
+      document.querySelectorAll('.inventory-tab').forEach(button => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('.inventory-tab').forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+
+          const target = button.getAttribute('data-tab');
+          document.querySelectorAll('.inventory-tab-content').forEach(grid => {
+            if (grid.getAttribute('data-tab-content') === target) {
+              grid.classList.add('active');
+            } else {
+              grid.classList.remove('active');
+            }
+          });
+        });
+      });
     });
 
 
@@ -132,34 +146,46 @@
         const user = await res.json();
         const avatarUrl = user.avatarUrl || '/assets/images/default-avatar.png';
 
+        // Set avatar and basic info
         document.getElementById('profileUsername').textContent = user.username;
         document.getElementById('profileLevel').textContent = `Level ${user.level || 1}`;
-        document.getElementById('profileDescription').textContent = user.description || 'No description yet.';
-
         document.querySelectorAll('.profile__avatar:not(#profileAvatarHeader)').forEach(img => {
           img.src = avatarUrl;
         });
 
+        // Get grid elements
         const inventoryGrid = document.getElementById('inventoryGrid');
+        const bannedGrid = document.getElementById('bannedGrid');
+        const favoritesGrid = document.getElementById('favoritesGrid');
+
+        // Clear previous content
         inventoryGrid.innerHTML = "";
+        bannedGrid.innerHTML = "";
+        favoritesGrid.innerHTML = "";
 
-        const totalSlots = 12;
-        const items = user.inventory || [];
+        // Render item slots
+        function renderItems(grid, items, totalSlots = 6) {
+          for (let i = 0; i < totalSlots; i++) {
+            const div = document.createElement('div');
+            div.className = 'profile__inventory-item';
 
-        for (let i = 0; i < totalSlots; i++) {
-          const div = document.createElement('div');
-          div.className = 'profile__inventory-item';
+            if (items[i]?.item) {
+              const item = items[i].item;
+              div.title = item.description || item.name;
+              div.innerHTML = `<img src="${item.iconUrl}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" />`;
+              div.style.border = 'none';
+            }
 
-          if (items[i]?.item) {
-            const item = items[i].item;
-            div.title = item.description || item.name;
-            div.innerHTML = `<img src="${item.iconUrl}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" />`;
-            div.style.border = 'none';
+            grid.appendChild(div);
           }
-
-          inventoryGrid.appendChild(div);
         }
 
+        // Populate each tab grid
+        renderItems(inventoryGrid, user.inventory || []);
+        renderItems(bannedGrid, user.bannedItems || []);
+        renderItems(favoritesGrid, user.favoriteItems || []);
+
+        // Stats section
         const statsList = document.getElementById('profileStatsList');
         statsList.innerHTML = '';
         const stats = user.stats || {
@@ -180,20 +206,11 @@
           statsList.appendChild(li);
         }
 
-        const achievementsList = document.getElementById('achievementsList');
-        achievementsList.innerHTML = '';
-        (user.achievements || []).forEach(ach => {
-          const li = document.createElement('li');
-          li.className = 'profile__achievement';
-          li.title = ach.description || ach.name;
-          li.innerHTML = `<img src="${ach.iconUrl}" alt="${ach.name}" class="achievement-image" />`;
-          achievementsList.appendChild(li);
-        });
-
       } catch (err) {
         console.error('Failed to load profile:', err);
       }
     }
+
 
     document.getElementById('avatarInput').addEventListener('change', async (e) => {
       const file = e.target.files[0];

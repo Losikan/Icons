@@ -25,13 +25,14 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
+
+
 router.get('/profile/id/:userId', async (req: Request, res: Response) => {
   const { userId } = req.params;
 
   try {
     const user = await User.findById(userId)
-      .select('username description avatarUrl level inventory stats achievements friends unreadRooms createdAt updatedAt')
-      .populate('achievements')
+      .select('username avatarUrl level inventory stats friends unreadRooms createdAt updatedAt')
       .populate('inventory.item')
       .lean();
 
@@ -52,19 +53,17 @@ router.get('/profile/id/:userId', async (req: Request, res: Response) => {
 
 router.patch('/profile/id/:userId', async (req: Request, res: Response) => {
   const { userId } = req.params;
-  const { description, avatarUrl, level, achievements } = req.body;
+  const { avatarUrl, level } = req.body;
 
   try {
     const updateData: any = {};
-    if (description !== undefined) updateData.description = description;
     if (avatarUrl !== undefined) updateData.avatarUrl = avatarUrl;
     if (level !== undefined) updateData.level = level;
-    if (achievements !== undefined) updateData.achievements = achievements;
 
     const user = await User.findByIdAndUpdate(
       userId,
       updateData,
-      { new: true, select: 'username description avatarUrl level achievements' }
+      { new: true, select: 'username avatarUrl level' }
     );
 
     if (!user) {
