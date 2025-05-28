@@ -1356,6 +1356,10 @@ li.selected {
     margin-left: 8px;
 }
 
+.user-circle img {
+    border-radius: 8px;
+}
+
 .message-sent {
     background-color: #DCF8C6;
     align-self: flex-end;
@@ -2135,4 +2139,5 @@ body.dark-mode .profile__inventory-item {
     width: 32px;
     height: 32px;
     border-width: 1px;
+    cursor: pointer;
 }

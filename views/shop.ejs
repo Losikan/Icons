@@ -14,16 +14,16 @@
         <li><a href="/settings">Instellingen</a></li>
       </ul>
       <div class="sidebar-bottom">
-        <div class="user-circle"></div>
-        <span><%= user.username %></span>
-        <span><a href="/landingspage">Uitloggen</a></span>
+        <div class="user-circle">
+          <img class="user profileAvatarHeader" src="/assets/images/default-avatar.png" />
+        </div>
+        <span><%= session.username %></span>
+        <span><a href="/logout">Uitloggen</a></span>
       </div>
     </nav>
     <div class="overlay"></div>
-
     <i class="ri-menu-line"></i>
-    <h1 class="logo"><a href="/home">ICONS</a></h1>
-
+    <h1 class="logo"><a href="/homePage">ICONS</a></h1>
     <div class="nav-items-right">
       <div class="mode-toggle-right">
         <label class="switch">
@@ -34,13 +34,19 @@
           </span>
         </label>
       </div>
-      <i class="ri-account-circle-fill user"></i>
+      <img class="user profile__avatar profileAvatarHeader header-user-avatar" src="/assets/images/default-avatar.png" />
       <div class="account-card">
         <ul class="list">
-          <li class="element"><a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a></li>
-          <li class="element"><a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a></li>
+          <li class="element">
+            <a href="/profile" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
+          </li>
+          <li class="element">
+            <a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
+          </li>
           <div class="separator"></div>
-          <li class="element"><a href="/landingspage" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a></li>
+          <li class="element">
+            <a href="/logout" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -107,50 +113,50 @@
         </div>
       </div>
 
-            <div class="block2">
-                <h2 class="shoptitel">Battlepass <i class="ri-shield-star-line"></i></h2>
-                <br>
-                <div class="container-battlepas" id="shopcontainer">
-                    <% items.slice(3, 8).forEach((item, index) => { %>
-                        <div class="article-2">
-
-                            <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
-                                <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
-                            </div>
-                            <div class="star-rating">
-                                <p><i class="ri-lock-line"></i> Beschikbaar vanaf level <%= (index + 1) * 5 %></p>
-                            </div>
-                        </div>
-                    <% }); %>
-                </div>
-            </div>
-        </div>
-
+      <div class="block2">
+        <h2 class="shoptitel">Battlepass <i class="ri-shield-star-line"></i></h2>
         <br>
-        <br>
-        <div class="row2">
-            <div class="block">
-                        <h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
-                    <br>
-                <div class="container-comming-soon" id="shopcontainer">
-                    <% items.slice(8, 15).forEach(item => { %>
-                        <div class="article-1">
-                            <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
-                                <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
-                            </div>
+        <div class="container-battlepas" id="shopcontainer">
+          <% items.slice(3, 8).forEach((item, index) => { %>
+          <div class="article-2">
 
-                        </div>
-                    <% }); %>
-                    
-                    <div class="article-1">
-                        <H2>Surprise</H2>
-                        <img class="suprise-img" src="assets/images/description-image.png" alt="Verrassingsitem">
-                    </div>
-                </div>
+            <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
+              <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
             </div>
+            <div class="star-rating">
+              <p><i class="ri-lock-line"></i> Beschikbaar vanaf level <%= (index + 1) * 5 %></p>
+            </div>
+          </div>
+          <% }); %>
         </div>
-    </main>
-    <%- include("partials/footer.ejs") %>
+      </div>
+    </div>
+
+    <br>
+    <br>
+    <div class="row2">
+      <div class="block">
+        <h2 class="shoptitel">Coming soon <i class="ri-megaphone-line"></i></h2>
+        <br>
+        <div class="container-comming-soon" id="shopcontainer">
+          <% items.slice(8, 15).forEach(item => { %>
+          <div class="article-1">
+            <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
+              <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
+            </div>
+
+          </div>
+          <% }); %>
+
+          <div class="article-1">
+            <H2>Surprise</H2>
+            <img class="suprise-img" src="assets/images/description-image.png" alt="Verrassingsitem">
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <%- include("partials/footer.ejs") %>
 </body>
 
 </html>

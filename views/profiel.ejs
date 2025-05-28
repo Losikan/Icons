@@ -14,7 +14,9 @@
         <li><a href="/settings">Instellingen</a></li>
       </ul>
       <div class="sidebar-bottom">
-        <div class="user-circle"></div>
+        <div class="user-circle">
+          <img class="user profileAvatarHeader" src="/assets/images/default-avatar.png" />
+        </div>
         <span><%= session.username %></span>
         <span><a href="/logout">Uitloggen</a></span>
       </div>
@@ -32,10 +34,7 @@
           </span>
         </label>
       </div>
-      <img id="profileAvatarHeader" class="user profile__avatar" src="/assets/images/default-avatar.png" />
-
-
-
+      <img class="user profile__avatar profileAvatarHeader header-user-avatar" src="/assets/images/default-avatar.png" />
       <div class="account-card">
         <ul class="list">
           <li class="element">
@@ -118,7 +117,9 @@
         const user = await res.json();
         const avatarUrl = user.avatarUrl || '/assets/images/default-avatar.png';
 
-        document.getElementById('profileAvatarHeader').src = avatarUrl;
+        document.querySelectorAll('.profileAvatarHeader').forEach(img => {
+          img.src = avatarUrl;
+        });
       } catch (err) {
         console.error('Failed to load avatar for header:', err);
       }

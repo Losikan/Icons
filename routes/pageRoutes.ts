@@ -27,15 +27,16 @@ pages.forEach(page => {
       
       const user = req.session.userId 
         ? await User.findById(req.session.userId)
-              .select('username email coins inventory') 
+              .select('username email coins inventory')
               .lean()
         : null;
 
       res.render(page, { 
         user: {
           ...user,
-          inventory: user?.inventory || [] 
-        }
+          inventory: user?.inventory || []
+        },
+      session: req.session
       });
     } catch (error) {
       console.error(`${page} Route Error:`, error);
@@ -50,7 +51,7 @@ router.get('/shop', async (req: Request, res: Response) => {
     if (!req.session.userId) return res.redirect("/login");
 
     const user = await User.findById(req.session.userId)
-      .select('username coins inventory') 
+      .select('username coins inventory')
       .lean();
 
     if (!user) {
@@ -61,9 +62,10 @@ router.get('/shop', async (req: Request, res: Response) => {
     res.render("shop", { 
       user: {
         ...user,
-        inventory: user.inventory || [] 
+        inventory: user.inventory || []
       },
-      items: data.data.items.br
+      items: data.data.items.br,
+      session: req.session
     });
   } catch (error) {
     console.error("Shop Route Error:", error);
@@ -76,7 +78,7 @@ router.get('/', (req: Request, res: Response) => {
   res.render('landingspage', { 
     user: req.session.userId ? { 
       coins: req.session.coins,
-      inventory: [] 
+      inventory: []
     } : null 
   });
 });
@@ -94,7 +96,8 @@ router.get('/friendslist', async (req: Request, res: Response) => {
 
   res.render('friendslist', {
     username: user.username,
-    userId: user._id.toString()
+    userId: user._id.toString(),
+    session: req.session
   });
 });
 
@@ -112,7 +115,8 @@ router.get('/friendslist', async (req: Request, res: Response) => {
 
   res.render('friendslist', {
     username: user.username,
-    userId: user._id.toString()
+    userId: user._id.toString(),
+    session: req.session
   });
 });
 
