@@ -7,30 +7,31 @@ const CONFIG = {
     },
     assets: {
         characters: {
-            0: 'assets/characters/character0.png',
-            1: 'assets/characters/character1.png',
-            2: 'assets/characters/character2.png',
-            3: 'assets/characters/character3.png'
+            0: 'gameAssets/characters/character0.png',
+            1: 'gameAssets/characters/character1.png',
+            2: 'gameAssets/characters/character2.png',
+            3: 'gameAssets/characters/character3.png'
         },
         bullets: {
-            0: 'assets/objects/bullet0.png',
-            1: 'assets/objects/bullet1.png',
-            2: 'assets/objects/bullet2.png',
-            3: 'assets/objects/bullet3.png'
+            0: 'gameAssets/objects/bullet0.png',
+            1: 'gameAssets/objects/bullet1.png',
+            2: 'gameAssets/objects/bullet2.png',
+            3: 'gameAssets/objects/bullet3.png'
         },
         emotes: {
-            0: 'assets/emotes/emote0.png',
-            1: 'assets/emotes/emote1.png',
-            2: 'assets/emotes/emote2.png',
-            3: 'assets/emotes/emote3.png'
+            0: 'gameAssets/emotes/emote0.png',
+            1: 'gameAssets/emotes/emote1.png',
+            2: 'gameAssets/emotes/emote2.png',
+            3: 'gameAssets/emotes/emote3.png'
         },
         enemies: {
-            enemy1: 'assets/enemies/enemy1.png',
-            enemy2: 'assets/enemies/enemy2.png',
-            enemy3: 'assets/enemies/enemy3.png'
+            enemy1: 'gameAssets/enemies/enemy1.png',
+            enemy2: 'gameAssets/enemies/enemy2.png',
+            enemy3: 'gameAssets/enemies/enemy3.png'
         },
-        map: 'assets/objects/map.png',
-        gameOver: 'assets/objects/gameOver.png'
+        map: 'gameAssets/objects/map.png',
+        gameOver: 'gameAssets/objects/gameOver.png',
+        health: 'gameAssets/objects/health.png'
     },
     character: {
         speeds: [1, 1.5, 2, 2.5],
@@ -235,7 +236,20 @@ class Game {
         this.highScore = localStorage.getItem('highScore') || 0;
         this.gameOver = false;
         this.gameOverImage = new Image();
+        this.healthImage = new Image();
+        this.health = 0;
+        this.lastHitTime = 0;
         this.initLoadout();
+    }
+
+    getMaxHealth() {
+        switch (this.loadout.character) {
+            case 0: return 1;
+            case 1: return 2;
+            case 2: return 4;
+            case 3: return 7;
+            default: return 1;
+        }
     }
 
     initLoadout() {
@@ -266,6 +280,7 @@ class Game {
             this.setupCanvas();
             this.setupEventListeners();
             this.spawnEnemies();
+            this.health = this.getMaxHealth();
             this.gameLoop();
         } catch (error) {
             console.error('Initialization error:', error);
@@ -292,6 +307,7 @@ class Game {
                 this.characterSheet = new Image(),
                 this.mapImage = new Image(),
                 this.gameOverImage,
+                this.healthImage,
                 ...(this.bulletImages = Array(4).fill().map(() => new Image())),
                 ...(this.emoteImages = Array(4).fill().map(() => new Image())),
                 ...Object.values(this.enemySprites = {
@@ -319,6 +335,7 @@ class Game {
             this.characterSheet.src = CONFIG.assets.characters[this.loadout.character];
             this.mapImage.src = CONFIG.assets.map;
             this.gameOverImage.src = CONFIG.assets.gameOver;
+            this.healthImage.src = CONFIG.assets.health;
             this.bulletImages.forEach((img, i) => img.src = CONFIG.assets.bullets[i]);
             this.emoteImages.forEach((img, i) => img.src = CONFIG.assets.emotes[i]);
             this.enemySprites.enemy1.src = CONFIG.assets.enemies.enemy1;
@@ -460,30 +477,49 @@ class Game {
     checkPlayerCollisions() {
         if (this.gameOver) return;
 
+        const now = Date.now();
+        if (now - this.lastHitTime < 1000) return;
+
         const player = this.character;
-        const playerSize = 36;
         
         for (const enemy of this.enemies) {
             const dx = player.x - enemy.x;
             const dy = player.y - enemy.y;
-            const distance = Math.sqrt(dx*dx + dy*dy);
+            const distance = Math.sqrt(dx * dx + dy * dy);
             
-            if (distance < 50) { 
-                this.showGameOver();
-                return;
+            if (distance < 50) {
+                this.health -= 1;
+                this.lastHitTime = now;
+                if (this.health <= 0) {
+                    this.showGameOver();
+                }
+                break;
             }
+        }
+    }
+
+    drawHearts() {
+        const heartSize = 32;
+        const padding = 5;
+        let x = this.canvas.width - padding - heartSize;
+        const y = 10;
+
+        for (let i = 0; i < this.health; i++) {
+            this.ctx.drawImage(this.healthImage, x, y, heartSize, heartSize);
+            x -= (heartSize + padding);
         }
     }
 
     showGameOver() {
         this.gameOver = true;
         clearInterval(this.enemyInterval);
+        
         this.ctx.drawImage(
             this.gameOverImage,
-            this.canvas.width/2 - 200,
-            this.canvas.height/2 - 100,
-            400,
-            200
+            0, 
+            0, 
+            this.canvas.width,  
+            this.canvas.height  
         );
 
         document.addEventListener('keypress', (e) => {
@@ -499,6 +535,8 @@ class Game {
         this.bullets = [];
         this.emotes = [];
         this.score = 0;
+        this.health = this.getMaxHealth();
+        this.lastHitTime = 0;
         
         document.getElementById('loadoutScreen').style.display = 'flex';
         this.canvas.style.display = 'none';
@@ -508,7 +546,7 @@ class Game {
         }
     }
 
- gameLoop() {
+    gameLoop() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
         if (!this.gameOver) {
@@ -564,13 +602,17 @@ class Game {
             this.ctx.font = '24px Arial';
             this.ctx.fillText(`Score: ${this.score}`, 10, 30);
             this.ctx.fillText(`High Score: ${this.highScore}`, 10, 60);
+
+            if (this.healthImage.complete) {
+                this.drawHearts();
+            }
         } else {
             this.ctx.drawImage(
                 this.gameOverImage,
-                this.canvas.width/2 - 200,
-                this.canvas.height/2 - 100,
-                400,
-                200
+                0,
+                0,
+                this.canvas.width,
+                this.canvas.height
             );
         }
 
