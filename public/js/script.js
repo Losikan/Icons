@@ -195,15 +195,23 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('keypress', e => e.key === 'Enter' && console.log('Search:', searchInput.value));
   }
 
-  const userIcon = document.querySelector('.user');
-  const accountCard = document.querySelector('.account-card');
-  if (userIcon && accountCard) {
-    userIcon.addEventListener('click', e => {
-      e.stopPropagation();
-      accountCard.classList.toggle('show');
-    });
-    document.addEventListener('click', e => !accountCard.contains(e.target) && accountCard.classList.remove('show'));
-  }
+
+  // user account
+const userIcon = document.querySelector('.header-user-avatar'); // Specific to header
+const accountCard = document.querySelector('.account-card');
+
+if (userIcon && accountCard) {
+  userIcon.addEventListener('click', e => {
+    e.stopPropagation();
+    accountCard.classList.toggle('show');
+  });
+
+  document.addEventListener('click', e => {
+    if (!accountCard.contains(e.target) && !userIcon.contains(e.target)) {
+      accountCard.classList.remove('show');
+    }
+  });
+}
 
   const sidebar = document.querySelector('.sidebar');
   const overlay = document.querySelector('.overlay');

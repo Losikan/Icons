@@ -14,18 +14,16 @@
         <li><a href="/settings">Instellingen</a></li>
       </ul>
       <div class="sidebar-bottom">
-        <div class="user-circle"></div>
-        <span>Naam</span>
-        <span><a href="/index">Uitloggen</a></span>
+        <div class="user-circle">
+          <img class="user profileAvatarHeader" src="/assets/images/default-avatar.png" />
+        </div>
+        <span><%= session.username %></span>
+        <span><a href="/logout">Uitloggen</a></span>
       </div>
     </nav>
     <div class="overlay"></div>
-
-
     <i class="ri-menu-line"></i>
-
-    <h1 class="logo"><a href="/home">ICONS</a></h1>
-
+    <h1 class="logo"><a href="/homePage">ICONS</a></h1>
     <div class="nav-items-right">
       <div class="mode-toggle-right">
         <label class="switch">
@@ -36,11 +34,7 @@
           </span>
         </label>
       </div>
-
-
-
-      <i class="ri-account-circle-fill user"></i>
-
+      <img class="user profile__avatar profileAvatarHeader header-user-avatar" src="/assets/images/default-avatar.png" />
       <div class="account-card">
         <ul class="list">
           <li class="element">
@@ -51,143 +45,95 @@
           </li>
           <div class="separator"></div>
           <li class="element">
-            <a href="/index" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
+            <a href="/logout" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
           </li>
         </ul>
       </div>
     </div>
   </header>
 
-   
-    <main class="selection-container">
-        <div class="selection-grid">
-            <!-- Character Selectie -->
-<div class="selection-options" id="characterOptions">
-    <% const availableSkins = ['1', '2', '3', '4', '5']; %>
-    <% availableSkins.forEach(skinId => { %>
+
+  <main class="selection-container">
+    <div class="selection-grid">
+      <!-- Character Selectie -->
+      <div class="selection-options" id="characterOptions">
+        <% const availableSkins = ['1', '2', '3', '4', '5']; %>
+        <% availableSkins.forEach(skinId => { %>
         <% if (user.inventory.includes(skinId)) { %>
-            <div class="option-item" 
-                 onclick="selectItem('character', '<%= skinId %>')"
-                 data-skin-id="<%= skinId %>">
-                <img src="assets/images/skin<%= skinId %>.webp" 
-                     alt="Character Skin <%= skinId %>">
-            </div>
+        <div class="option-item" onclick="selectItem('character', '<%= skinId %>')" data-skin-id="<%= skinId %>">
+          <img src="assets/images/skin<%= skinId %>.webp" alt="Character Skin <%= skinId %>">
+        </div>
         <% } else { %>
-            <div class="option-item locked">
-                <img src="assets/images/skin<%= skinId %>.webp" 
-                     alt="Locked Skin <%= skinId %>"
-                     class="grayscale">
-                <div class="lock-overlay">
-                    <i class="ri-lock-line"></i>
-                </div>
-            </div>
+        <div class="option-item locked">
+          <img src="assets/images/skin<%= skinId %>.webp" alt="Locked Skin <%= skinId %>" class="grayscale">
+          <div class="lock-overlay">
+            <i class="ri-lock-line"></i>
+          </div>
+        </div>
         <% } %>
-    <% }); %>
-</div>
+        <% }); %>
+      </div>
 
-            <!-- Weapon Selectie -->
-            <div class="selection-card">
-                <h2 class="selection-title"><i class="ri-sword-fill"></i> Select Weapon</h2>
-                <div class="selection-main" onclick="toggleSelection('weapon')">
-                    <img src="assets/images/placeholder.png" alt="Weapon" id="weaponPreview">
-                </div>
-                <div class="selection-options" id="weaponOptions">
-                    <% for(let i=1; i<=5; i++) { %>
-                        <div class="option-item" onclick="selectItem('weapon', <%=i %>)">
-                            <img src="assets/images/weapon<%=i %>.webp" alt="Weapon <%=i %>">
-                        </div>
-                    <% } %>
-                </div>
-            </div>
-
-            <!-- Emote Selectie -->
-            <div class="selection-card">
-                <h2 class="selection-title"><i class="ri-emotion-happy-fill"></i> Select Emote</h2>
-                <div class="selection-main" onclick="toggleSelection('emote')">
-                    <img src="assets/images/placeholder.png" alt="Emote" id="emotePreview">
-                </div>
-                <div class="selection-options" id="emoteOptions">
-                    <% for(let i=1; i<=5; i++) { %>
-                        <div class="option-item" onclick="selectItem('emote', <%=i %>)">
-                            <img src="assets/images/emote<%=i %>.png" alt="Emote <%=i %>">
-                        </div>
-                    <% } %>
-                </div>
-            </div>
+      <!-- Weapon Selectie -->
+      <div class="selection-card">
+        <h2 class="selection-title"><i class="ri-sword-fill"></i> Select Weapon</h2>
+        <div class="selection-main" onclick="toggleSelection('weapon')">
+          <img src="assets/images/placeholder.png" alt="Weapon" id="weaponPreview">
         </div>
-
-        <!-- Continue Sectie -->
-        <div class="continue-section hidden" id="continueSection">
-            <button class="continue-button" id="continueButton">
-                Continue to Battle
-                <i class="ri-arrow-right-double-line"></i>
-            </button>
+        <div class="selection-options" id="weaponOptions">
+          <% for(let i=1; i<=5; i++) { %>
+          <div class="option-item" onclick="selectItem('weapon', <%=i %>)">
+            <img src="assets/images/weapon<%=i %>.webp" alt="Weapon <%=i %>">
+          </div>
+          <% } %>
         </div>
+      </div>
 
-        <!-- Empty Frame -->
-        <div id="battleFrame" class="battle-frame hidden"></div>
-    </main>
+      <!-- Emote Selectie -->
+      <div class="selection-card">
+        <h2 class="selection-title"><i class="ri-emotion-happy-fill"></i> Select Emote</h2>
+        <div class="selection-main" onclick="toggleSelection('emote')">
+          <img src="assets/images/placeholder.png" alt="Emote" id="emotePreview">
+        </div>
+        <div class="selection-options" id="emoteOptions">
+          <% for(let i=1; i<=5; i++) { %>
+          <div class="option-item" onclick="selectItem('emote', <%=i %>)">
+            <img src="assets/images/emote<%=i %>.png" alt="Emote <%=i %>">
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
 
-    <script>
-        const state = {
-            selected: {
-                character: null,
-                weapon: null,
-                emote: null
-            },
-            optionsVisible: null
-        };
+    <!-- Continue Sectie -->
+    <div class="continue-section hidden" id="continueSection">
+      <button class="continue-button" id="continueButton">
+        Continue to Battle
+        <i class="ri-arrow-right-double-line"></i>
+      </button>
+    </div>
 
-        function toggleSelection(type) {
-            const options = document.getElementById(`${type}Options`);
-            if(state.optionsVisible === type) {
-                options.classList.remove('active');
-                state.optionsVisible = null;
-            } else {
-                document.querySelectorAll('.selection-options').forEach(opt => opt.classList.remove('active'));
-                options.classList.add('active');
-                state.optionsVisible = type;
-            }
-            updateContinueButton();
-        }
+    <!-- Empty Frame -->
+    <div id="battleFrame" class="battle-frame hidden"></div>
+  </main>
 
-        function selectItem(type, id) {
-            const preview = document.getElementById(`${type}Preview`);
-            preview.src = `assets/images/${type}${id}.${type === 'emote' ? 'png' : 'webp'}`;
-            preview.alt = `${type} ${id}`;
-            state.selected[type] = id;
-            
-            document.getElementById(`${type}Options`).classList.remove('active');
-            state.optionsVisible = null;
-            updateContinueButton();
-        }
+  <script>
+    const loggedInUserId = "<%= session.userId %>";
 
-        function updateContinueButton() {
-            const allSelected = Object.values(state.selected).every(Boolean);
-            const continueSection = document.getElementById('continueSection');
-            
-            if(allSelected) {
-                continueSection.classList.remove('hidden');
-                continueSection.classList.add('fade-in');
-            } else {
-                continueSection.classList.add('hidden');
-            }
-        }
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch(`/api/profile/id/${loggedInUserId}`);
+        const user = await res.json();
+        const avatarUrl = user.avatarUrl || '/assets/images/default-avatar.png';
 
-        document.getElementById('continueButton').addEventListener('click', () => {
-            document.querySelector('.selection-grid').classList.add('hidden');
-            document.getElementById('continueSection').classList.add('hidden');
-            document.getElementById('battleFrame').classList.remove('hidden');
-            
-            // Battle frame animation
-            const frame = document.getElementById('battleFrame');
-            frame.style.transform = 'scale(0.9)';
-            setTimeout(() => {
-                frame.style.transform = 'scale(1)';
-                frame.style.opacity = '1';
-            }, 50);
+        document.querySelectorAll('.profileAvatarHeader').forEach(img => {
+          img.src = avatarUrl;
         });
-    </script>
+      } catch (err) {
+        console.error('Failed to load avatar for header:', err);
+      }
+    });
+  </script>
 </body>
 
 <%- include("partials/footer.ejs") %>

@@ -13,14 +13,16 @@
         <li><a href="/settings">Instellingen</a></li>
       </ul>
       <div class="sidebar-bottom">
-        <div class="user-circle"></div>
-        <span><%= username %></span>
+        <div class="user-circle">
+          <img class="user profileAvatarHeader" src="/assets/images/default-avatar.png" />
+        </div>
+        <span><%= session.username %></span>
         <span><a href="/logout">Uitloggen</a></span>
       </div>
     </nav>
     <div class="overlay"></div>
     <i class="ri-menu-line"></i>
-    <h1 class="logo"><a href="/home">ICONS</a></h1>
+    <h1 class="logo"><a href="/homePage">ICONS</a></h1>
     <div class="nav-items-right">
       <div class="mode-toggle-right">
         <label class="switch">
@@ -31,8 +33,7 @@
           </span>
         </label>
       </div>
-
-      <i class="ri-account-circle-fill user"></i>
+      <img class="user profile__avatar profileAvatarHeader header-user-avatar" src="/assets/images/default-avatar.png" />
       <div class="account-card">
         <ul class="list">
           <li class="element">
@@ -43,7 +44,7 @@
           </li>
           <div class="separator"></div>
           <li class="element">
-            <a href="/landingspage" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
+            <a href="/logout" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
           </li>
         </ul>
       </div>
@@ -104,9 +105,37 @@
   </main>
 
   <script src="/socket.io/socket.io.js"></script>
+
   <script>
     const loggedInUsername = '<%= username %>';
     const loggedInUserId = '<%= userId %>';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProfile();
+
+      if (loggedInUserId !== profileUserId) {
+        const editBtn = document.querySelector('.profile__edit-button');
+        const avatarForm = document.getElementById('avatarForm');
+
+        if (editBtn) editBtn.style.display = 'none';
+        if (avatarForm) avatarForm.style.display = 'none';
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch(`/api/profile/id/${loggedInUserId}`);
+        const user = await res.json();
+        const avatarUrl = user.avatarUrl || '/assets/images/default-avatar.png';
+
+        document.querySelectorAll('.profileAvatarHeader').forEach(img => {
+          img.src = avatarUrl;
+        });
+      } catch (err) {
+        console.error('Failed to load avatar for header:', err);
+      }
+    });
+
 
     function moveFriendToTop(friendId) {
       const list = document.getElementById('friendsList');
