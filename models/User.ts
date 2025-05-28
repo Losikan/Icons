@@ -1,6 +1,7 @@
 import { Schema, model, Document, Types, Model } from 'mongoose';
 import skinsData from '../public/skins.json';
 import { IItem } from './Item';
+import { IAchievement } from './Achievement';
 
 export interface IInventoryItem {
   item: Types.ObjectId | IItem;
@@ -24,11 +25,12 @@ export interface IUser extends Document {
   resetToken?: string;
   resetTokenExpiration?: Date;
   
-
+  description?: string;
   avatarUrl?: string;
   level?: number;
   inventory: IInventoryItem[];
   stats?: IStats;
+  achievements?: (Types.ObjectId | IAchievement)[];
 }
 
 const inventoryItemSchema = new Schema<IInventoryItem>({
@@ -86,9 +88,11 @@ const userSchema = new Schema<IUser>({
   unreadRooms: [{ type: String }],
   resetToken: { type: String, select: false },
   resetTokenExpiration: { type: Date, select: false },
+  description: { type: String, default: '' },
   avatarUrl: { type: String, default: '' },
   level: { type: Number, default: 1 },
-  stats: statsSchema
+  stats: statsSchema,
+  achievements: [{ type: Schema.Types.ObjectId, ref: 'Achievement' }]
 }, { 
   timestamps: true,
   toJSON: { 
