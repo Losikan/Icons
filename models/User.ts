@@ -1,7 +1,6 @@
 import { Schema, model, Document, Types, Model } from 'mongoose';
 import skinsData from '../public/skins.json';
 import { IItem } from './Item';
-import { IAchievement } from './Achievement';
 
 export interface IInventoryItem {
   item: Types.ObjectId | IItem;
@@ -14,6 +13,18 @@ export interface IStats {
   gamesPlayed: number;
 }
 
+export interface IBannedItem {
+  itemId: string;
+  reason: string;
+  bannedAt: Date;
+}
+
+const bannedItemSchema = new Schema({
+  itemId: { type: String, required: true },
+  reason: { type: String, default: '' },
+  bannedAt: { type: Date, default: Date.now }
+}, { _id: false });
+
 export interface IUser extends Document {
   _id: Types.ObjectId;
   username: string;
@@ -24,22 +35,24 @@ export interface IUser extends Document {
   unreadRooms: string[];
   resetToken?: string;
   resetTokenExpiration?: Date;
-  
-  description?: string;
+
   avatarUrl?: string;
   level?: number;
-  inventory: IInventoryItem[];
+
+  inventory: string[];
+  bannedItems: IBannedItem[];
+  favoriteItems: string[];
+
   stats?: IStats;
-  achievements?: (Types.ObjectId | IAchievement)[];
 }
 
 const inventoryItemSchema = new Schema<IInventoryItem>({
-  item: { 
-    type: Schema.Types.ObjectId, 
-    ref: 'Item', 
+  item: {
+    type: Schema.Types.ObjectId,
+    ref: 'Item',
     required: true,
     validate: {
-      validator: function(v: Types.ObjectId) {
+      validator: function (v: Types.ObjectId) {
         return skinsData.data.items.br.some(item => item.id === v.toString());
       },
       message: 'Item met ID {VALUE} bestaat niet in de shop'
@@ -81,32 +94,38 @@ const userSchema = new Schema<IUser>({
     default: 0,
     min: 0
   },
-   inventory: [{
-    type: String 
+  inventory: [{
+    type: String
   }],
+  favoriteItems: [{
+    type: String,
+    default: []
+  }],
+  bannedItems: {
+    type: [bannedItemSchema],
+    default: []
+  },
   friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   unreadRooms: [{ type: String }],
   resetToken: { type: String, select: false },
   resetTokenExpiration: { type: Date, select: false },
-  description: { type: String, default: '' },
   avatarUrl: { type: String, default: '' },
   level: { type: Number, default: 1 },
-  stats: statsSchema,
-  achievements: [{ type: Schema.Types.ObjectId, ref: 'Achievement' }]
-}, { 
+  stats: statsSchema
+}, {
   timestamps: true,
-  toJSON: { 
+  toJSON: {
     virtuals: true,
-    transform: function(doc, ret) {
+    transform: function (doc, ret) {
       delete ret.password;
       delete ret.resetToken;
       delete ret.resetTokenExpiration;
       return ret;
     }
   },
-  toObject: { 
+  toObject: {
     virtuals: true,
-    transform: function(doc, ret) {
+    transform: function (doc, ret) {
       delete ret.password;
       delete ret.resetToken;
       delete ret.resetTokenExpiration;
@@ -118,11 +137,11 @@ const userSchema = new Schema<IUser>({
 userSchema.index({ username: 'text', email: 'text' });
 userSchema.index({ inventory: 1 });
 
-userSchema.virtual('purchaseHistory').get(function() {
+userSchema.virtual('purchaseHistory').get(function () {
   if (!this.inventory) return [];
-  return this.inventory.map(invItem => 
-    skinsData.data.items.br.find(item => item.id === invItem.item.toString())
-  );
+  return this.inventory.map(invItemId =>
+    skinsData.data.items.br.find(item => item.id === invItemId)
+  ).filter(Boolean);
 });
 
 export async function getFriendsOfUser(userId: string): Promise<IUser[]> {
@@ -132,4 +151,3 @@ export async function getFriendsOfUser(userId: string): Promise<IUser[]> {
 
 const User: Model<IUser> = model<IUser>('User', userSchema);
 export default User;
-

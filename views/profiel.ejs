@@ -23,7 +23,7 @@
     </nav>
     <div class="overlay"></div>
     <i class="ri-menu-line"></i>
-    <h1 class="logo"><a href="/homePage">ICONS</a></h1>
+    <h1 class="logo"><a href="/home">ICONS</a></h1>
     <div class="nav-items-right">
       <div class="mode-toggle-right">
         <label class="switch">
@@ -65,39 +65,51 @@
         </button>
       </div>
       <div class="profile__info">
-        <h1 id="profileUsername" class="profile__username">Loading...</h1>
-        <p id="profileLevel" class="profile__level">Level --</p>
-        <p id="profileDescription" class="profile__description">Loading description...</p>
-        <button id="addFriendBtn" class="profile__add-friend-button">
-          <i class="ri-user-add-line"></i> Add Friend
-        </button>
+        <h1 id="profileUsername" class="profile__username">Laden...</h1>
       </div>
     </section>
 
     <section class="profile__body">
       <div class="profile__inventory">
         <h2 class="profile__section-title">Inventory</h2>
-        <div id="inventoryGrid" class="profile__inventory-grid">
+
+        <div class="profile__inventory-tabs">
+          <button class="inventory-tab active" data-tab="inventory">Inventory</button>
+          <button class="inventory-tab" data-tab="banned">Blacklist</button>
+          <button class="inventory-tab" data-tab="favorites">Favorieten</button>
         </div>
-      </div>
 
-      <div class="profile__stats">
-        <h2 class="profile__section-title">Stats</h2>
-        <ul id="profileStatsList" class="profile__stats-list">
-        </ul>
-      </div>
-
-      <div class="profile__achievements">
-        <h2 class="profile__section-title">Achievements</h2>
-        <ul id="achievementsList" class="profile__achievements-list">
-        </ul>
+        <div id="inventoryGrid" class="profile__inventory-grid inventory-tab-content active" data-tab-content="inventory"></div>
+        <div id="bannedGrid" class="profile__inventory-grid inventory-tab-content" data-tab-content="banned"></div>
+        <div id="favoritesGrid" class="profile__inventory-grid inventory-tab-content" data-tab-content="favorites"></div>
       </div>
     </section>
+    <div id="blockModal" class="modal hidden">
+      <div class="modal-content">
+        <h2 id="modalTitle">Blacklist karakter</h2>
+        <label for="banReason">Reden van blacklist:</label>
+        <input type="text" id="banReason" placeholder="Schrijf hier uw reden..." />
+
+        <div class="modal-actions">
+          <button id="confirmBlockBtn">Blacklist</button>
+          <button id="updateReasonBtn" class="btn hidden">Update reden</button>
+          <button id="confirmUnblockBtn" class="hidden">Unblacklist</button>
+          <button id="cancelBlockBtn">Annuleer</button>
+        </div>
+      </div>
+    </div>
   </main>
   <script>
     const userId = "<%= userId %>";
     const loggedInUserId = "<%= session.userId %>";
     const profileUserId = "<%= userId %>";
+    let fullBannedItems = [];
+    let favoriteIds = new Set();
+    let blockedIds = new Set();
+    let fullInventory = [];
+    const inventoryGrid = document.getElementById('inventoryGrid');
+    const bannedGrid = document.getElementById('bannedGrid');
+    const favoritesGrid = document.getElementById('favoritesGrid');
 
     document.addEventListener('DOMContentLoaded', () => {
       loadProfile();
@@ -123,8 +135,253 @@
       } catch (err) {
         console.error('Failed to load avatar for header:', err);
       }
+
+      document.querySelectorAll('.inventory-tab').forEach(button => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('.inventory-tab').forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+
+          const target = button.getAttribute('data-tab');
+          document.querySelectorAll('.inventory-tab-content').forEach(grid => {
+            if (grid.getAttribute('data-tab-content') === target) {
+              grid.classList.add('active');
+            } else {
+              grid.classList.remove('active');
+            }
+          });
+        });
+      });
     });
 
+    function showBlockModal(itemId) {
+      const modal = document.getElementById('blockModal');
+      const reasonInput = document.getElementById('banReason');
+      const confirmBtn = document.getElementById('confirmBlockBtn');
+      const unblockBtn = document.getElementById('confirmUnblockBtn');
+      const updateReasonBtn = document.getElementById('updateReasonBtn');
+      const cancelBtn = document.getElementById('cancelBlockBtn');
+
+      const isBlocked = blockedIds.has(itemId);
+      const bannedItem = fullBannedItems.find(i => i.id === itemId);
+      const existingBan = bannedItem?.reason || '';
+
+      reasonInput.value = isBlocked ? existingBan : '';
+      document.getElementById('modalTitle').textContent = isBlocked ? 'Blacklisten opties' : 'Blacklisten';
+
+      confirmBtn.classList.toggle('hidden', isBlocked);
+      unblockBtn.classList.toggle('hidden', !isBlocked);
+      updateReasonBtn.classList.toggle('hidden', !isBlocked);
+
+      modal.classList.remove('hidden');
+
+      cancelBtn.onclick = () => modal.classList.add('hidden');
+
+      confirmBtn.onclick = async () => {
+        blockedIds.add(itemId);
+        favoriteIds.delete(itemId);
+        await savePreferences(reasonInput.value, itemId);
+        modal.classList.add('hidden');
+        refreshGrids();
+      };
+
+      unblockBtn.onclick = async () => {
+        blockedIds.delete(itemId);
+        await savePreferences('', itemId);
+        modal.classList.add('hidden');
+        refreshGrids();
+      };
+
+      updateReasonBtn.onclick = async () => {
+        await savePreferences(reasonInput.value, itemId);
+
+        const existing = fullBannedItems.find(i => i.id === itemId);
+        if (existing) {
+          existing.reason = reasonInput.value;
+        }
+        modal.classList.add('hidden');
+        refreshGrids();
+      };
+    }
+
+    async function savePreferences(reason = '', singleItemId = null) {
+      const bannedWithReasons = Array.from(blockedIds).map(id => ({
+        itemId: id,
+        reason: id === singleItemId ? reason : (fullBannedItems.find(i => i.id === id)?.reason || ''),
+      }));
+
+      try {
+        const res = await fetch(`/api/profile/id/${userId}/inventory-updates`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            favoriteIds: Array.from(favoriteIds),
+            bannedItems: bannedWithReasons
+          })
+        });
+
+        if (!res.ok) {
+          console.error('Failed to save preferences');
+          return;
+        }
+        const updatedRes = await fetch(`/api/profile/id/${userId}`);
+        const updatedUser = await updatedRes.json();
+        fullBannedItems = updatedUser.fullBannedItems || [];
+
+      } catch (err) {
+        console.error('Error saving preferences:', err);
+      }
+    }
+
+    function refreshGrids() {
+      const favItems = fullInventory.filter(i => favoriteIds.has(i.id));
+      const blockedItems = fullInventory.filter(i => blockedIds.has(i.id));
+
+      inventoryGrid.innerHTML = "";
+      favoritesGrid.innerHTML = "";
+      bannedGrid.innerHTML = "";
+
+      renderInventoryItems(inventoryGrid, fullInventory);
+      renderFavoriteItems(favoritesGrid, favItems);
+      renderBannedItems(bannedGrid, blockedItems);
+    }
+
+    function renderInventoryItems(grid, items, totalSlots = 12) {
+      for (let i = 0; i < totalSlots; i++) {
+        const div = document.createElement('div');
+        div.className = 'profile__inventory-item';
+
+        if (items[i]) {
+          const item = items[i];
+          div.title = item.description || item.name || 'No description';
+
+          const imgSrc = item.images?.icon || item.images?.smallIcon;
+
+          if (imgSrc) {
+            div.innerHTML = `<img src="${imgSrc}" alt="${item.name || 'Item'}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" />`;
+          } else {
+            div.textContent = item.name || 'Unknown Item';
+          }
+
+          if (blockedIds.has(item.id)) {
+            div.style.filter = 'grayscale(100%)';
+            div.style.opacity = '0.6';
+          } else {
+            div.style.filter = 'none';
+            div.style.opacity = '1';
+          }
+
+          if (favoriteIds.has(item.id)) {
+            div.classList.add('fav-slot');
+          }
+
+          const buttons = createActionButtons(item.id);
+          div.appendChild(buttons);
+
+          div.style.position = 'relative';
+          div.style.border = 'none';
+        }
+
+        grid.appendChild(div);
+      }
+    }
+
+    function renderFavoriteItems(grid, items, totalSlots = 12) {
+      for (let i = 0; i < totalSlots; i++) {
+        const div = document.createElement('div');
+        div.className = 'profile__inventory-item';
+
+        if (items[i]) {
+          const item = items[i];
+          div.title = item.description || item.name || 'No description';
+
+          const imgSrc = item.images?.icon || item.images?.smallIcon;
+
+          if (imgSrc) {
+            div.innerHTML = `<img src="${imgSrc}" alt="${item.name || 'Item'}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" />`;
+          } else {
+            div.textContent = item.name || 'Unknown Item';
+          }
+
+          div.style.filter = 'none';
+          div.style.opacity = '1';
+
+          const buttons = createActionButtons(item.id);
+          div.appendChild(buttons);
+
+          div.style.border = 'none';
+        }
+
+        grid.appendChild(div);
+      }
+    }
+
+    function renderBannedItems(grid, items, totalSlots = 12) {
+      for (let i = 0; i < totalSlots; i++) {
+        const div = document.createElement('div');
+        div.className = 'profile__inventory-item';
+
+        if (items[i]) {
+          const item = items[i];
+          div.title = item.description || item.name || 'No description';
+
+          const imgSrc = item.images?.icon || item.images?.smallIcon;
+
+          if (imgSrc) {
+            div.innerHTML = `<img src="${imgSrc}" alt="${item.name || 'Item'}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" />`;
+          } else {
+            div.textContent = item.name || 'Unknown Item';
+          }
+
+          div.style.filter = 'none';
+          div.style.opacity = '1';
+
+          const buttons = createActionButtons(item.id);
+          div.appendChild(buttons);
+
+          div.style.border = 'none';
+        }
+
+        grid.appendChild(div);
+      }
+    }
+
+    function createActionButtons(itemId) {
+      if (loggedInUserId !== profileUserId) return document.createElement('div');
+
+      const container = document.createElement('div');
+      container.className = 'item-actions';
+
+      const favBtn = document.createElement('button');
+      favBtn.classList.add('fav-btn');
+      favBtn.title = favoriteIds.has(itemId) ? 'Unfavorite' : 'Favorite';
+      if (favoriteIds.has(itemId)) favBtn.classList.add('fav-active');
+      favBtn.innerHTML = `<i class="ri-star-line"></i><i class="ri-star-fill"></i>`;
+      favBtn.addEventListener('click', () => {
+        if (favoriteIds.has(itemId)) {
+          favoriteIds.delete(itemId);
+        } else {
+          favoriteIds.add(itemId);
+          blockedIds.delete(itemId);
+        }
+        refreshGrids();
+        savePreferences();
+      });
+      container.appendChild(favBtn);
+
+      const blockBtn = document.createElement('button');
+      blockBtn.classList.add('block-btn');
+      blockBtn.title = blockedIds.has(itemId) ? 'Unblock' : 'Block';
+      if (blockedIds.has(itemId)) blockBtn.classList.add('block-active');
+      blockBtn.innerHTML = `<i class="ri-spam-3-line"></i><i class="ri-spam-3-fill"></i>`;
+      blockBtn.addEventListener('click', () => {
+        showBlockModal(itemId);
+      });
+      container.appendChild(blockBtn);
+
+      return container;
+    }
 
     async function loadProfile() {
       try {
@@ -133,67 +390,28 @@
         const avatarUrl = user.avatarUrl || '/assets/images/default-avatar.png';
 
         document.getElementById('profileUsername').textContent = user.username;
-        document.getElementById('profileLevel').textContent = `Level ${user.level || 1}`;
-        document.getElementById('profileDescription').textContent = user.description || 'No description yet.';
-
         document.querySelectorAll('.profile__avatar:not(#profileAvatarHeader)').forEach(img => {
           img.src = avatarUrl;
         });
 
-        const inventoryGrid = document.getElementById('inventoryGrid');
+        fullInventory = user.fullInventory || [];
+        favoriteIds = new Set((user.fullFavoriteItems || []).map(i => i.id));
+        blockedIds = new Set((user.fullBannedItems || []).map(i => i.id));
+        fullBannedItems = user.fullBannedItems || [];
+
+
+
         inventoryGrid.innerHTML = "";
+        bannedGrid.innerHTML = "";
+        favoritesGrid.innerHTML = "";
 
-        const totalSlots = 12;
-        const items = user.inventory || [];
-
-        for (let i = 0; i < totalSlots; i++) {
-          const div = document.createElement('div');
-          div.className = 'profile__inventory-item';
-
-          if (items[i]?.item) {
-            const item = items[i].item;
-            div.title = item.description || item.name;
-            div.innerHTML = `<img src="${item.iconUrl}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;" />`;
-            div.style.border = 'none';
-          }
-
-          inventoryGrid.appendChild(div);
-        }
-
-        const statsList = document.getElementById('profileStatsList');
-        statsList.innerHTML = '';
-        const stats = user.stats || {
-          highScore: 0,
-          totalScore: 0,
-          gamesPlayed: 0
-        };
-        const statLabels = {
-          highScore: 'High Score',
-          totalScore: 'Total Score',
-          gamesPlayed: 'Games Played'
-        };
-
-        for (const key in stats) {
-          const li = document.createElement('li');
-          li.className = 'profile__stat';
-          li.innerHTML = `<span class="profile__stat-label">${statLabels[key] || key}:</span> ${stats[key]}`;
-          statsList.appendChild(li);
-        }
-
-        const achievementsList = document.getElementById('achievementsList');
-        achievementsList.innerHTML = '';
-        (user.achievements || []).forEach(ach => {
-          const li = document.createElement('li');
-          li.className = 'profile__achievement';
-          li.title = ach.description || ach.name;
-          li.innerHTML = `<img src="${ach.iconUrl}" alt="${ach.name}" class="achievement-image" />`;
-          achievementsList.appendChild(li);
-        });
+        refreshGrids();
 
       } catch (err) {
         console.error('Failed to load profile:', err);
       }
     }
+
 
     document.getElementById('avatarInput').addEventListener('change', async (e) => {
       const file = e.target.files[0];
@@ -227,7 +445,6 @@
       }
     });
   </script>
-
 </body>
 
 </html>

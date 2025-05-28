@@ -165,4 +165,19 @@ router.get('/logout', (req: Request, res: Response): void => {
   req.session.destroy(() => res.redirect('/login'));
 });
 
+router.post('/delete-account', isAuthenticated, async (req: Request, res: Response) => {
+  try {
+    const userId = req.session.userId;
+
+    await User.findByIdAndDelete(userId);
+
+    req.session.destroy(() => {
+      res.redirect('/login');
+    });
+  } catch (error) {
+    console.error('Account deletion error:', error);
+    res.status(500).send('Er is een fout opgetreden bij het verwijderen van uw account.');
+  }
+});
+
 export default router;

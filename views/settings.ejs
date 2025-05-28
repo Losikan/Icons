@@ -22,7 +22,7 @@
     </nav>
     <div class="overlay"></div>
     <i class="ri-menu-line"></i>
-    <h1 class="logo"><a href="/homePage">ICONS</a></h1>
+    <h1 class="logo"><a href="/home">ICONS</a></h1>
     <div class="nav-items-right">
       <div class="mode-toggle-right">
         <label class="switch">
@@ -54,106 +54,32 @@
   <main class="settings-container">
     <div class="settings">
       <h1 class="settings__title">Instellingen</h1>
-      <div class="tab-container">
-        <input type="radio" name="tab" id="tab1" class="tab tab--1" checked />
-        <label class="tab_label" for="tab1">General</label>
-        <input type="radio" name="tab" id="tab2" class="tab tab--2" />
-        <label class="tab_label" for="tab2">Audio</label>
 
-        <input type="radio" name="tab" id="tab3" class="tab tab--3" />
-        <label class="tab_label" for="tab3">Account</label>
+      <div class="settings__general settings-section" style="display: flex; flex-direction: column; gap: 1rem;">
 
-      </div>
-
-      <div class="settings__general settings-section">
-        <div class="setting">
-          <p>Fullscreen</p>
-          <div class="selector-container" data-options="Uitgeschakeld,Ingeschakeld">
-            <div class="option-display">Kies een optie</div>
-          </div>
-        </div>
-        <div class="separator"></div>
-        <div class="setting">
-          <p>FPS Counter</p>
-          <div class="selector-container" data-options="Uitgeschakeld,Ingeschakeld">
-            <div class="option-display">Kies een optie</div>
-          </div>
-        </div>
-
-        <div class="separator"></div>
-        <div class="setting">
-          <p>Auto Reload</p>
-          <div class="selector-container" data-options="Uitgeschakeld,Ingeschakeld">
-            <!-- <i class="ri-arrow-left-line arrow-btn prev-btn"></i> -->
-            <div class="option-display">Kies een optie</div>
-            <!-- <i class="ri-arrow-right-line arrow-btn next-btn"></i> -->
-          </div>
-        </div>
-
-      </div>
-
-      <div class="settings__audio settings-section">
-        <div class="setting">
-          <p>Master Volume</p>
-          <label class="volume-slider">
-            <input type="range" class="level">
-          </label>
-        </div>
-
-        <div class="separator"></div>
-        <div class="setting">
-          <p>Muziek Volume</p>
-          <label class="volume-slider">
-            <input type="range" class="level">
-          </label>
-        </div>
-
-        <div class="separator"></div>
-        <div class="setting">
-          <p>SFX Volume</p>
-          <label class="volume-slider">
-            <input type="range" class="level">
-          </label>
-        </div>
-      </div>
-
-      <div class="settings__account settings-section">
-        <div id="notification" class="notification">
-          <p>Er is een e-mail verstuurd naar uw huidige e-mailadres ter verificatie.</p>
-        </div>
-        <div class="setting" data-content="password">
-          <p>Wachtwoord aanpassen</p>
-        </div>
-        <div class="content" id="password">
-          <input type="password" placeholder="Huidig wachtwoord">
-          <input type="password" placeholder="Nieuw wachtwoord">
-          <input type="password" placeholder="Herhaal nieuw wachtwoord">
-          <button>Bevestigen</button>
-        </div>
-        <div class="separator"></div>
-
-        <div class="setting" data-content="email">
-          <p>E-mail aanpassen</p>
-        </div>
-        <div class="content" id="email">
-          <input type="email" placeholder="Nieuwe e-mail">
-          <button>Bevestigen</button>
-        </div>
         <div class="separator"></div>
 
         <div class="setting" data-content="delete">
           <p>Account verwijderen</p>
         </div>
-        <div class="content" id="delete">
-          <p>Weet u zeker dat u uw account wilt verwijderen?</p>
-          <button class="danger">Verwijderen</button>
-        </div>
+
         <div class="separator"></div>
       </div>
     </div>
-
-
   </main>
+
+  <div class="delete-account-modal hidden">
+    <div class="delete-account-modal__content">
+      <h2>Account verwijderen</h2>
+      <p><strong>Typ: verwijder account</strong></p>
+      <input type="text" class="delete-account-modal__input" placeholder="Typ hier om te bevestigen" />
+      <form method="POST" action="/delete-account">
+        <button type="submit" class="delete-account-modal__confirm danger" disabled>Verwijder mijn account</button>
+      </form>
+      <button class="delete-account-modal__cancel">Annuleren</button>
+    </div>
+  </div>
+
   <script>
     const loggedInUserId = "<%= session.userId %>";
 
@@ -170,8 +96,32 @@
         console.error('Failed to load avatar for header:', err);
       }
     });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const openBtn = document.querySelector(".setting[data-content='delete']");
+      const modal = document.querySelector(".delete-account-modal");
+      const cancelBtn = document.querySelector(".delete-account-modal__cancel");
+      const input = document.querySelector(".delete-account-modal__input");
+      const confirmBtn = document.querySelector(".delete-account-modal__confirm");
+
+      openBtn.addEventListener("click", () => {
+        modal.classList.remove("hidden");
+        input.value = "";
+        confirmBtn.disabled = true;
+      });
+
+      cancelBtn.addEventListener("click", () => {
+        modal.classList.add("hidden");
+      });
+
+      input.addEventListener("input", () => {
+        const requiredPhrase = "verwijder account";
+        confirmBtn.disabled = input.value.trim().toLowerCase() !== requiredPhrase;
+      });
+    });
   </script>
 </body>
 
 </html>
-<%- include("Partials/footer.ejs") %>
+
+<%- include("partials/footer.ejs") %>

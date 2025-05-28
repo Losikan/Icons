@@ -3,6 +3,7 @@ import User from '../models/User';
 import Item from '../models/Item'; 
 import mongoose from 'mongoose';
 import data from '../public/skins.json';
+import session from 'express-session';
 
 
 declare module 'express-session' {
@@ -20,7 +21,6 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
 
 router.get('/home', isAuthenticated, async (req, res) => {
     try {
-        // Haal gebruiker en items op
         const [user, items] = await Promise.all([
             User.findById(req.session.userId).select('inventory username').lean(),
             Item.find().lean()
@@ -43,7 +43,8 @@ router.get('/home', isAuthenticated, async (req, res) => {
                 ...user,
                 inventory: inventoryWithDetails
             },
-            purchasedItems: Array.from(purchasedItems)
+            purchasedItems: Array.from(purchasedItems),
+            session: req.session
         });
     } catch (error) {
         console.error('Home error:', error);
@@ -51,5 +52,4 @@ router.get('/home', isAuthenticated, async (req, res) => {
     }
 });
 
-// Exporteer de router
 export default router;

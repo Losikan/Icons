@@ -17,16 +17,16 @@
         <li><a href="/settings">Instellingen</a></li>
       </ul>
       <div class="sidebar-bottom">
-        <div class="user-circle"></div>
-        <span><%= user.username %></span>
-        <span><a href="/landingspage">Uitloggen</a></span>
+        <div class="user-circle">
+          <img class="user profileAvatarHeader" src="/assets/images/default-avatar.png" />
+        </div>
+        <span><%= session.username %></span>
+        <span><a href="/logout">Uitloggen</a></span>
       </div>
     </nav>
     <div class="overlay"></div>
-
     <i class="ri-menu-line"></i>
     <h1 class="logo"><a href="/home">ICONS</a></h1>
-
     <div class="nav-items-right">
       <div class="mode-toggle-right">
         <label class="switch">
@@ -37,13 +37,19 @@
           </span>
         </label>
       </div>
-      <i class="ri-account-circle-fill user"></i>
+      <img class="user profile__avatar profileAvatarHeader header-user-avatar" src="/assets/images/default-avatar.png" />
       <div class="account-card">
         <ul class="list">
-          <li class="element"><a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a></li>
-          <li class="element"><a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a></li>
+          <li class="element">
+            <a href="/profile" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
+          </li>
+          <li class="element">
+            <a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
+          </li>
           <div class="separator"></div>
-          <li class="element"><a href="/landingspage" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a></li>
+          <li class="element">
+            <a href="/logout" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -57,58 +63,58 @@
     </div>
 
     <div class="loadout-container">
-      
+
       <article class="loadout-box" data-type="character">
         <div class="box-header">
           <h3><span class="highlight">CHARACTER</span></h3>
           <div class="selection-indicator"></div>
         </div>
         <nav class="options" aria-label="Character selection">
-          
+
           <div class="option-item selected" data-value="0">
             <img src="gameAssets/characters/characterCard0.png" alt="Character 0">
             <div class="selection-badge">✔</div>
           </div>
-          
-          
+
+
           <div class="option-item <%= purchasedItems.includes('1') ? '' : 'locked' %>" data-value="1">
             <% if (purchasedItems.includes('1')) { %>
-              <img src="gameAssets/characters/characterCard1.png" alt="Character 1">
+            <img src="gameAssets/characters/characterCard1.png" alt="Character 1">
             <% } else { %>
-              <div class="locked">
-                <img src="gameAssets/characters/characterCard1.png" alt="Locked">
-                <i class="ri-lock-line"></i>
-              </div>
+            <div class="locked">
+              <img src="gameAssets/characters/characterCard1.png" alt="Locked">
+              <i class="ri-lock-line"></i>
+            </div>
             <% } %>
           </div>
 
-          
+
           <div class="option-item <%= purchasedItems.includes('2') ? '' : 'locked' %>" data-value="2">
             <% if (purchasedItems.includes('2')) { %>
-              <img src="gameAssets/characters/characterCard2.png" alt="Character 2">
+            <img src="gameAssets/characters/characterCard2.png" alt="Character 2">
             <% } else { %>
-              <div class="locked">
-                <img src="gameAssets/characters/characterCard2.png" alt="Locked">
-                <i class="ri-lock-line"></i>
-              </div>
+            <div class="locked">
+              <img src="gameAssets/characters/characterCard2.png" alt="Locked">
+              <i class="ri-lock-line"></i>
+            </div>
             <% } %>
           </div>
 
-          
+
           <div class="option-item <%= purchasedItems.includes('3') ? '' : 'locked' %>" data-value="3">
             <% if (purchasedItems.includes('3')) { %>
-              <img src="gameAssets/characters/characterCard3.png" alt="Character 3">
+            <img src="gameAssets/characters/characterCard3.png" alt="Character 3">
             <% } else { %>
-              <div class="locked">
-                <img src="gameAssets/characters/characterCard3.png" alt="Locked">
-                <i class="ri-lock-line"></i>
-              </div>
+            <div class="locked">
+              <img src="gameAssets/characters/characterCard3.png" alt="Locked">
+              <i class="ri-lock-line"></i>
+            </div>
             <% } %>
           </div>
         </nav>
       </article>
 
-      
+
       <article class="loadout-box" data-type="weapon">
         <div class="box-header">
           <h3><span class="highlight">WEAPON</span></h3>
@@ -130,7 +136,7 @@
         </nav>
       </article>
 
-      
+
       <article class="loadout-box" data-type="emote">
         <div class="box-header">
           <h3><span class="highlight">EMOTE</span></h3>
@@ -154,6 +160,23 @@
     </div>
     <p class="start-message" role="status">Druk op ENTER om te starten...</p>
   </main>
+  <script>
+    const loggedInUserId = "<%= session.userId %>";
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch(`/api/profile/id/${loggedInUserId}`);
+        const user = await res.json();
+        const avatarUrl = user.avatarUrl || '/assets/images/default-avatar.png';
+
+        document.querySelectorAll('.profileAvatarHeader').forEach(img => {
+          img.src = avatarUrl;
+        });
+      } catch (err) {
+        console.error('Failed to load avatar for header:', err);
+      }
+    });
+  </script>
 </body>
 <canvas id="gameCanvas"></canvas>
 
