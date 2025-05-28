@@ -5,9 +5,6 @@ import data from '../public/skins.json';
 
 const router = Router();
 
-// ---------------------------
-// Dynamische Pagina Routes
-// ---------------------------
 const protectedPages = ['profiel', 'settings'];
 
 const pages = [
@@ -32,14 +29,14 @@ pages.forEach(page => {
       
       const user = req.session.userId 
         ? await User.findById(req.session.userId)
-              .select('username email coins inventory') // 🔄 Updated
+              .select('username email coins inventory') 
               .lean()
         : null;
 
       res.render(page, { 
         user: {
           ...user,
-          inventory: user?.inventory || [] // 🔄 Updated
+          inventory: user?.inventory || [] 
         }
       });
     } catch (error) {
@@ -49,15 +46,13 @@ pages.forEach(page => {
   });
 });
 
-// ---------------------------
-// Shop Route
-// ---------------------------
+
 router.get('/shop', async (req: Request, res: Response) => {
   try {
     if (!req.session.userId) return res.redirect("/login");
 
     const user = await User.findById(req.session.userId)
-      .select('username coins inventory') // 🔄 Updated
+      .select('username coins inventory') 
       .lean();
 
     if (!user) {
@@ -68,7 +63,7 @@ router.get('/shop', async (req: Request, res: Response) => {
     res.render("shop", { 
       user: {
         ...user,
-        inventory: user.inventory || [] // 🔄 Updated
+        inventory: user.inventory || [] 
       },
       items: data.data.items.br
     });
@@ -78,14 +73,12 @@ router.get('/shop', async (req: Request, res: Response) => {
   }
 });
 
-// ---------------------------
-// Overige Routes
-// ---------------------------
+
 router.get('/', (req: Request, res: Response) => {
   res.render('landingspage', { 
     user: req.session.userId ? { 
       coins: req.session.coins,
-      inventory: [] // 🔄 Standaard lege array
+      inventory: [] 
     } : null 
   });
 });

@@ -40,7 +40,6 @@
                 <div class="login_area">
                     <form action="/register" method="POST" class="login_form">
                         <div class="login_content grid">
-                            <!-- Gebruikersnaam Input -->
                             <div class="login_box">
                                 <input type="text" id="username" name="username" 
                                     value="<%= typeof formData !== 'undefined' ? formData.username : '' %>"
@@ -48,7 +47,6 @@
                                 <label for="username" class="login_label">Gebruikersnaam</label>
                             </div>
                             
-                            <!-- Email Input -->
                             <div class="login_box">
                                 <input type="email" id="email" name="email" 
                                     value="<%= typeof formData !== 'undefined' ? formData.email : '' %>"
@@ -57,7 +55,6 @@
                                 <i class="ri-mail-fill login_icon login_password" id="loginMail"></i>
                             </div>
 
-                            <!-- Wachtwoord Input -->
                             <div class="login_box">
                                 <input type="password" id="password" name="password" 
                                     required placeholder=" " class="login_input">
@@ -65,7 +62,6 @@
                                 <i class="ri-eye-off-fill login_icon login_password" id="loginPassword"></i>
                             </div>
                             
-                            <!-- Bevestig Wachtwoord Input -->
                             <div class="login_box">
                                 <input type="password" id="confirmPassword" name="confirmPassword" 
                                     required placeholder=" " class="login_input">
@@ -74,7 +70,6 @@
                             </div>
                         </div>
 
-                        <!-- Checkbox Voorwaarden -->
                         <div class="login__remember-container">
                             <label class="login__remember-label">
                                 <input type="checkbox" class="login__remember-input" required>
@@ -83,7 +78,6 @@
                             </label>
                         </div>
 
-                        <!-- Submit Knop -->
                         <button type="submit" class="login_button">Registreren</button>
                     </form>
                 </div>
@@ -91,7 +85,6 @@
         </div>
     </main>
 
-    <!-- Scripts -->
     <script src="/js/script.js"></script>
 </body>
 </html>

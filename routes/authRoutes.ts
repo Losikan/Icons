@@ -11,9 +11,6 @@ declare module 'express-session' {
 
 const router = Router();
 
-// ======================
-// Authenticatie Middleware
-// ======================
 const isAuthenticated = (
   req: Request,
   res: Response,
@@ -23,9 +20,7 @@ const isAuthenticated = (
   res.redirect("/login");
 };
 
-// ======================
-// Login Functionaliteit
-// ======================
+
 router.get('/login', (req: Request, res: Response) => {
   res.render('login');
 });
@@ -48,9 +43,7 @@ router.post('/login', async (req: Request, res: Response) => {
   }
 });
 
-// ======================
-// Registratie Functionaliteit
-// ======================
+
 router.get('/register', (req: Request, res: Response) => {
   res.render('registreren');
 });
@@ -80,7 +73,7 @@ router.post('/register', async (req: Request, res: Response) => {
       email: req.body.email,
       password: await bcrypt.hash(req.body.password, 12),
       coins: 1000,
-      inventory: [] // 🔄 Changed from purchasedItems
+      inventory: [] 
     });
 
     req.session.userId = newUser._id.toString();
@@ -94,9 +87,7 @@ router.post('/register', async (req: Request, res: Response) => {
   }
 });
 
-// ======================
-// Winkel Functionaliteit
-// ======================
+
 router.get('/shop', isAuthenticated, async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await User.findById(req.session.userId)
@@ -126,13 +117,13 @@ router.post('/purchase', isAuthenticated, async (req: Request, res: Response): P
   try {
     const { itemId, price } = req.body;
     
-    // Validatie
+  
     if (!itemId || typeof price !== 'number' || price <= 0) {
       res.status(400).json({ error: 'Ongeldige aanvraag' });
       return;
     }
 
-    // Atomic update
+  
     const updatedUser = await User.findOneAndUpdate(
       { 
         _id: req.session.userId,
@@ -165,9 +156,7 @@ router.post('/purchase', isAuthenticated, async (req: Request, res: Response): P
   }
 });
 
-// ======================
-// Uitloggen
-// ======================
+
 router.get('/logout', (req: Request, res: Response): void => {
   req.session.destroy(() => res.redirect('/login'));
 });

@@ -115,11 +115,9 @@ const userSchema = new Schema<IUser>({
   }
 });
 
-// Indexes
 userSchema.index({ username: 'text', email: 'text' });
 userSchema.index({ inventory: 1 });
 
-// Virtuals
 userSchema.virtual('purchaseHistory').get(function() {
   if (!this.inventory) return [];
   return this.inventory.map(invItem => 
@@ -127,7 +125,6 @@ userSchema.virtual('purchaseHistory').get(function() {
   );
 });
 
-// Statics
 export async function getFriendsOfUser(userId: string): Promise<IUser[]> {
   const user = await User.findById(userId).populate('friends');
   return user?.friends as IUser[] || [];
@@ -135,3 +132,4 @@ export async function getFriendsOfUser(userId: string): Promise<IUser[]> {
 
 const User: Model<IUser> = model<IUser>('User', userSchema);
 export default User;
+

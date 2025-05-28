@@ -10,17 +10,29 @@ declare module 'express-session' {
 
 const router = Router();
 
-// ======================
-// Middlewares
-// ======================
+
 const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
   if (req.session.userId) return next();
   res.redirect("/login");
 };
 
-// ======================
-// Shop Routes
-// ======================
+router.get('/home', isAuthenticated, async (req, res) => {
+    try {
+        const user = await User.findById(req.session.userId)
+            .select('inventory')
+            .lean();
+
+        res.render('home', {
+            user: {
+                ...user,
+                inventory: user?.inventory || []
+            }
+        });
+    } catch (error) {
+        console.error('Home error:', error);
+        res.status(500).send('Server error');
+    }
+});
 router.get('/shop', isAuthenticated, async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await User.findById(req.session.userId)
@@ -50,16 +62,14 @@ router.post('/purchase', isAuthenticated, async (req: Request, res: Response): P
   try {
     const { itemId, price } = req.body;
     
-    // Verbeterde validatie
     if (!itemId || typeof price !== 'number' || price <= 0) {
       res.status(400).json({ error: 'Ongeldige aanvraag' });
       return;
     }
 
-    // Verwijder ObjectId conversie en gebruik direct de string ID
     const updateQuery = {
       $inc: { coins: -price },
-      $addToSet: { inventory: itemId } // Voorkom dubbele items
+      $addToSet: { inventory: itemId } 
     };
 
     const updatedUser = await User.findOneAndUpdate(
@@ -104,3 +114,5 @@ router.post('/purchase', isAuthenticated, async (req: Request, res: Response): P
 });
 
 export default router;
+
+

@@ -119,7 +119,7 @@
                 <div class="container-battlepas" id="shopcontainer">
                     <% items.slice(3, 8).forEach((item, index) => { %>
                         <div class="article-2">
-                            <p>Lv <%= (index + 1) * 5 %></p>
+
                             <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
                                 <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
                             </div>
@@ -144,9 +144,7 @@
                             <div id="char-<%= item.id %>" data-character-id="<%= item.id %>">
                                 <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
                             </div>
-                            <div class="star-rating">
-                                <p><div id="timer">00:00:00:00</div></p>
-                            </div>
+
                         </div>
                     <% }); %>
                     

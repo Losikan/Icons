@@ -27,8 +27,34 @@ class SelectionManager {
     });
   }
 }
+function selectItem(type, skinId) {
+    if (!user.inventory.includes(skinId)) {
+        showPurchasePrompt(skinId);
+        return;
+    }
+    
+    const preview = document.getElementById(`${type}Preview`);
+    preview.src = `assets/images/${type}${skinId}.webp`;
+    state.selected[type] = skinId;
+    updateContinueButton();
+}
 
-// Dark mode
+function showPurchasePrompt(skinId) {
+    // Haal skin data op uit je JSON
+    const skin = skinsData.data.items.br.find(i => i.id === skinId);
+    if (confirm(`Wil je ${skin.name} kopen voor ${skin.price} coins?`)) {
+        fetch('/shop/purchase', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                itemId: skinId, 
+                price: skin.price 
+            })
+        }).then(response => {
+            if (response.ok) location.reload();
+        });
+    }
+}
 function initializeDarkMode() {
   const modeSwitch = document.getElementById('modeSwitch');
   if (!modeSwitch && !document.body.classList.contains('dark-mode')) return;
@@ -45,7 +71,6 @@ function initializeDarkMode() {
   });
 }
 
-// Carousel
 class Carousel {
   constructor() {
     this.cards = Array.from(document.querySelectorAll('.card'));
@@ -116,7 +141,6 @@ class Carousel {
 
 }
 
-// Cookies
 function setupCookieConsent() {
   const cookieCard = document.querySelector('.cookies-card');
   if (!cookieCard) return;
@@ -148,7 +172,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   setupCookieConsent();
 
-  // Selection manager
   const managers = ['character', 'weapon', 'emote']
     .filter(type => document.querySelector(`.${type}-selection`) || document.querySelector(`.${type}-slot`))
     .map(t => new SelectionManager(t));
@@ -160,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
       option => manager.selectItem(option);
   });
 
-  // Search feature
   const searchIcon = document.getElementById('search-icon');
   const searchInput = document.querySelector('.search-input');
   if (searchIcon && searchInput) {
@@ -173,7 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('keypress', e => e.key === 'Enter' && console.log('Search:', searchInput.value));
   }
 
-  // User account
   const userIcon = document.querySelector('.user');
   const accountCard = document.querySelector('.account-card');
   if (userIcon && accountCard) {
@@ -184,7 +205,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', e => !accountCard.contains(e.target) && accountCard.classList.remove('show'));
   }
 
-  // Sidebar navigaiton
   const sidebar = document.querySelector('.sidebar');
   const overlay = document.querySelector('.overlay');
   if (sidebar && overlay) {
@@ -223,17 +243,15 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
    
   
-  // Koopfunctie
 const handlePurchase = async (itemId, price) => {
   try {
-    // Zorg dat price een number is
     const numericPrice = Number(price);
     
     const response = await fetch('/purchase', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
-        itemId: String(itemId), // Explicit string conversie
+        itemId: String(itemId), 
         price: numericPrice
       })
     });
@@ -243,7 +261,6 @@ const handlePurchase = async (itemId, price) => {
         if (result.error) {
             alert(result.error);
         } else {
-            // Update alle relevante UI elementen
             document.querySelectorAll(`[data-item-id="${itemId}"] .cart-icon`).forEach(icon => {
                 icon.outerHTML = `<div class="owned-badge"><i class="ri-checkbox-circle-fill"></i></div>`;
             });
@@ -265,7 +282,6 @@ const handlePurchase = async (itemId, price) => {
     }
 };
 
-// Event listeners
 document.querySelectorAll('.cart-icon, .price.clickable').forEach(element => {
     element.addEventListener('click', async (e) => {
         e.stopPropagation();
@@ -280,3 +296,5 @@ document.querySelectorAll('.cart-icon, .price.clickable').forEach(element => {
     });
 });
 });
+
+
