@@ -17,7 +17,19 @@
   position: relative;
   z-index: 1;
 }
+.option-item .locked {
+  position: relative;
+  filter: grayscale(100%);
+}
 
+.locked i.ri-lock-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: red;
+  font-size: 24px;
+}
 .header-glow {
   position: absolute;
   top: 50%;

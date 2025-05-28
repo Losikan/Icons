@@ -61,20 +61,49 @@
       <h3><span class="highlight">CHARACTER</span></h3>
       <div class="selection-indicator"></div>
     </div>
-    <nav class="options" aria-label="Character selection">
-      <div class="option-item" data-value="0">
-        <img src="gameAssets/characters/characterCard0.png"  alt="Character 0">
-        <div class="selection-badge">✔</div>
+<nav class="options" aria-label="Character selection">
+  <!-- Default Skin (altijd beschikbaar) -->
+  <div class="option-item" data-value="0">
+    <img src="gameAssets/characters/characterCard0.png" class="selected" alt="Character 0">
+    <div class="selection-badge">✔</div>
+  </div>
+  
+  <!-- Skin 1 -->
+  <div class="option-item" data-value="1">
+    <% if (purchasedItems.includes('char1')) { %>
+      <img src="assets/images/c1.jpg" alt="Character 1">
+    <% } else { %>
+      <div class="locked">
+        <img src="assets/images/locked.jpg" alt="Locked">
+        <i class="ri-lock-line"></i>
       </div>
-      <div class="option-item" data-value="1">
-        <img src="assets/images/c1.jpg" class="selected" alt="Character 1">
+    <% } %>
+  </div>
+
+  <!-- Skin 2 -->
+  <div class="option-item" data-value="2">
+    <% if (purchasedItems.includes('char2')) { %>
+      <img src="assets/images/c2.jpg" alt="Character 2">
+    <% } else { %>
+      <div class="locked">
+        <img src="assets/images/locked.jpg" alt="Locked">
+        <i class="ri-lock-line"></i>
       </div>
-      <div class="option-item" data-value="2">
-        <img src="assets/images/c2.jpg" alt="Character 2">
+    <% } %>
+  </div>
+
+  <!-- Skin 3 -->
+  <div class="option-item" data-value="3">
+    <% if (purchasedItems.includes('char3')) { %>
+      <img src="assets/images/c3.jpg" alt="Character 3">
+    <% } else { %>
+      <div class="locked">
+        <img src="assets/images/locked.jpg" alt="Locked">
+        <i class="ri-lock-line"></i>
       </div>
-      <div class="option-item" data-value="3">
-        <img src="assets/images/c3.jpg" alt="Character 3">
-      </div>
+    <% } %>
+  </div>
+</nav>
     </nav>
   </article>
 

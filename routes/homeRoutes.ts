@@ -1,40 +1,55 @@
+import { Router, Request, Response, NextFunction } from 'express';
+import User from '../models/User';
+import Item from '../models/Item'; 
+import mongoose from 'mongoose';
+import data from '../public/skins.json';
 
-// src/routes/homeRoutes.ts
-import express, { Request, Response, Router } from 'express';
 
-// Interface voor je item data
-interface Images {
-  icon: string;
-  large?: string;
+declare module 'express-session' {
+  interface Session {
+    userId: string;
+  }
 }
 
-interface Item {
-  id: number;
-  name: string;
-  images: Images;
-  description?: string;
-}
+const router = Router();
 
-const router: Router = express.Router();
-
-// Mock data - vervang dit met echte database calls
-const mockItem: Item = {
-  id: 1,
-  name: "Epische Schild",
-  images: {
-    icon: "/images/shield-icon.png",
-    large: "/images/shield-large.jpg"
-  },
-  description: "Een krachtig magisch schild voor thuisverdediging!"
+const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+  if (req.session.userId) return next();
+  res.redirect("/login");
 };
 
-// Homepagina route
-router.get('/', (req: Request, res: Response) => {
-  res.render('home', {
-    title: "Mijn Geweldige Homepagina",
-    item: mockItem,
-    featuredItems: [mockItem, mockItem, mockItem] // 3x hetzelfde item als voorbeeld
-  });
+router.get('/home', isAuthenticated, async (req, res) => {
+    try {
+        // Haal gebruiker en items op
+        const [user, items] = await Promise.all([
+            User.findById(req.session.userId).select('inventory username').lean(),
+            Item.find().lean()
+        ]);
+
+        if (!user) {
+            req.session.destroy(() => {});
+            return res.redirect('/login');
+        }
+
+        const purchasedItems = new Set(user.inventory || []);
+
+        const inventoryWithDetails = (user.inventory || []).map(itemId => {
+            const item = items.find(i => i._id.toString() === itemId.toString());
+            return item ? {...item, purchased: true} : null;
+        }).filter(Boolean);
+
+        res.render('home', {
+            user: {
+                ...user,
+                inventory: inventoryWithDetails
+            },
+            purchasedItems: Array.from(purchasedItems)
+        });
+    } catch (error) {
+        console.error('Home error:', error);
+        res.status(500).send('Server error');
+    }
 });
 
+// Exporteer de router
 export default router;

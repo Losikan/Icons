@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 import User from '../models/User';
+import data from '../public/skins.json';
 
 
 declare module 'express-session' {
