@@ -1,5 +1,8 @@
 <%- include("partials/header.ejs") %>
+<link rel="stylesheet" href="/gameCSS/game.css">
+<link rel="stylesheet" href="css/test.css">
 
+<script src="/js/script.js" defer></script>
 
 <body>
   <header class="top-header">
@@ -15,15 +18,13 @@
       </ul>
       <div class="sidebar-bottom">
         <div class="user-circle"></div>
-        <span>Naam</span>
-        <span><a href="/index">Uitloggen</a></span>
+        <span><%= user.username %></span>
+        <span><a href="/landingspage">Uitloggen</a></span>
       </div>
     </nav>
     <div class="overlay"></div>
 
-
     <i class="ri-menu-line"></i>
-
     <h1 class="logo"><a href="/home">ICONS</a></h1>
 
     <div class="nav-items-right">
@@ -36,158 +37,71 @@
           </span>
         </label>
       </div>
-
-
-
       <i class="ri-account-circle-fill user"></i>
-
       <div class="account-card">
         <ul class="list">
-          <li class="element">
-            <a href="/profile" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a>
-          </li>
-          <li class="element">
-            <a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a>
-          </li>
+          <li class="element"><a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a></li>
+          <li class="element"><a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a></li>
           <div class="separator"></div>
-          <li class="element">
-            <a href="/index" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a>
-          </li>
+          <li class="element"><a href="/landingspage" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a></li>
         </ul>
       </div>
     </div>
   </header>
-
-   
-    <main class="selection-container">
-        <div class="selection-grid">
-            <!-- Character Selectie -->
-<div class="selection-options" id="characterOptions">
-    <% const availableSkins = ['1', '2', '3', '4', '5']; %>
-    <% availableSkins.forEach(skinId => { %>
-        <% if (user.inventory.includes(skinId)) { %>
-            <div class="option-item" 
-                 onclick="selectItem('character', '<%= skinId %>')"
-                 data-skin-id="<%= skinId %>">
-                <img src="assets/images/skin<%= skinId %>.webp" 
-                     alt="Character Skin <%= skinId %>">
-            </div>
-        <% } else { %>
-            <div class="option-item locked">
-                <img src="assets/images/skin<%= skinId %>.webp" 
-                     alt="Locked Skin <%= skinId %>"
-                     class="grayscale">
-                <div class="lock-overlay">
-                    <i class="ri-lock-line"></i>
-                </div>
-            </div>
-        <% } %>
-    <% }); %>
+    <main id="loadoutScreen">
+        
+<div class="loadout-header">
+  <h2>MAAK HIER UW LOADOUT</h2>
+  <div class="header-glow"></div>
 </div>
 
-            <!-- Weapon Selectie -->
-            <div class="selection-card">
-                <h2 class="selection-title"><i class="ri-sword-fill"></i> Select Weapon</h2>
-                <div class="selection-main" onclick="toggleSelection('weapon')">
-                    <img src="assets/images/placeholder.png" alt="Weapon" id="weaponPreview">
-                </div>
-                <div class="selection-options" id="weaponOptions">
-                    <% for(let i=1; i<=5; i++) { %>
-                        <div class="option-item" onclick="selectItem('weapon', <%=i %>)">
-                            <img src="assets/images/weapon<%=i %>.webp" alt="Weapon <%=i %>">
-                        </div>
-                    <% } %>
-                </div>
-            </div>
+<div class="loadout-container">
+  <article class="loadout-box" data-type="character">
+    <div class="box-header">
+      <h3><span class="highlight">CHARACTER</span></h3>
+      <div class="selection-indicator"></div>
+    </div>
+    <nav class="options" aria-label="Character selection">
+      <div class="option-item" data-value="0">
+        <img src="gameAssets/characters/characterCard0.png"  alt="Character 0">
+        <div class="selection-badge">✔</div>
+      </div>
+      <div class="option-item" data-value="1">
+        <img src="assets/images/c1.jpg" class="selected" alt="Character 1">
+      </div>
+      <div class="option-item" data-value="2">
+        <img src="assets/images/c2.jpg" alt="Character 2">
+      </div>
+      <div class="option-item" data-value="3">
+        <img src="assets/images/c3.jpg" alt="Character 3">
+      </div>
+    </nav>
+  </article>
 
-            <!-- Emote Selectie -->
-            <div class="selection-card">
-                <h2 class="selection-title"><i class="ri-emotion-happy-fill"></i> Select Emote</h2>
-                <div class="selection-main" onclick="toggleSelection('emote')">
-                    <img src="assets/images/placeholder.png" alt="Emote" id="emotePreview">
-                </div>
-                <div class="selection-options" id="emoteOptions">
-                    <% for(let i=1; i<=5; i++) { %>
-                        <div class="option-item" onclick="selectItem('emote', <%=i %>)">
-                            <img src="assets/images/emote<%=i %>.png" alt="Emote <%=i %>">
-                        </div>
-                    <% } %>
-                </div>
-            </div>
-        </div>
+            <article class="loadout-box" data-type="weapon">
+                <h3>Weapon</h3>
+                <nav class="options" aria-label="Weapon selection">
+                    <img src="gameAssets/objects/gun0.png" data-value="0" class="selected" alt="Weapon 0">
+                    <img src="gameAssets/objects/gun1.png" data-value="1" alt="Weapon 1">
+                    <img src="gameAssets/objects/gun2.png" data-value="2" alt="Weapon 2">
+                    <img src="gameAssets/objects/gun3.png" data-value="3" alt="Weapon 3">
+                </nav>
+            </article>
 
-        <!-- Continue Sectie -->
-        <div class="continue-section hidden" id="continueSection">
-            <button class="continue-button" id="continueButton">
-                Continue to Battle
-                <i class="ri-arrow-right-double-line"></i>
-            </button>
-        </div>
+            <article class="loadout-box" data-type="emote">
+                <h3>Emote</h3>
+                <nav class="options" aria-label="Emote selection">
+                    <img src="gameAssets/emotes/emote0.png" data-value="0" class="selected" alt="Emote 0">
+                    <img src="gameAssets/emotes/emote1.png" data-value="1" alt="Emote 1">
+                    <img src="gameAssets/emotes/emote2.png" data-value="2" alt="Emote 2">
+                    <img src="gameAssets/emotes/emote3.png" data-value="3" alt="Emote 3">
+                </nav>
+            </article>
+        </section>
+        <p class="start-message" role="status">Press ENTER to continue...</p>
+  </main>
 
-        <!-- Empty Frame -->
-        <div id="battleFrame" class="battle-frame hidden"></div>
-    </main>
-
-    <script>
-        const state = {
-            selected: {
-                character: null,
-                weapon: null,
-                emote: null
-            },
-            optionsVisible: null
-        };
-
-        function toggleSelection(type) {
-            const options = document.getElementById(`${type}Options`);
-            if(state.optionsVisible === type) {
-                options.classList.remove('active');
-                state.optionsVisible = null;
-            } else {
-                document.querySelectorAll('.selection-options').forEach(opt => opt.classList.remove('active'));
-                options.classList.add('active');
-                state.optionsVisible = type;
-            }
-            updateContinueButton();
-        }
-
-        function selectItem(type, id) {
-            const preview = document.getElementById(`${type}Preview`);
-            preview.src = `assets/images/${type}${id}.${type === 'emote' ? 'png' : 'webp'}`;
-            preview.alt = `${type} ${id}`;
-            state.selected[type] = id;
-            
-            document.getElementById(`${type}Options`).classList.remove('active');
-            state.optionsVisible = null;
-            updateContinueButton();
-        }
-
-        function updateContinueButton() {
-            const allSelected = Object.values(state.selected).every(Boolean);
-            const continueSection = document.getElementById('continueSection');
-            
-            if(allSelected) {
-                continueSection.classList.remove('hidden');
-                continueSection.classList.add('fade-in');
-            } else {
-                continueSection.classList.add('hidden');
-            }
-        }
-
-        document.getElementById('continueButton').addEventListener('click', () => {
-            document.querySelector('.selection-grid').classList.add('hidden');
-            document.getElementById('continueSection').classList.add('hidden');
-            document.getElementById('battleFrame').classList.remove('hidden');
-            
-            // Battle frame animation
-            const frame = document.getElementById('battleFrame');
-            frame.style.transform = 'scale(0.9)';
-            setTimeout(() => {
-                frame.style.transform = 'scale(1)';
-                frame.style.opacity = '1';
-            }, 50);
-        });
-    </script>
 </body>
+<canvas id="gameCanvas"></canvas>
 
 <%- include("partials/footer.ejs") %>
