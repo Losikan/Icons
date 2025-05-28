@@ -8,7 +8,6 @@ const router = Router();
 const protectedPages = ['profiel', 'settings'];
 
 const pages = [
-  'homePage',
   'landingspage',
   'login',
   'registreren',

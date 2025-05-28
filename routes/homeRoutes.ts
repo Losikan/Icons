@@ -38,7 +38,7 @@ router.get('/home', isAuthenticated, async (req, res) => {
             return item ? {...item, purchased: true} : null;
         }).filter(Boolean);
 
-        res.render('home', {
+        res.render('homePage', {
             user: {
                 ...user,
                 inventory: inventoryWithDetails

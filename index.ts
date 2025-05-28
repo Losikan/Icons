@@ -15,6 +15,7 @@ import authRoutes from './routes/authRoutes';
 import pageRoutes from './routes/pageRoutes';
 import friendRoutes from './routes/friendRoutes';
 import userRoutes from './routes/userRoutes';
+import homeRoutes from './routes/homeRoutes';
 import chatRoutes from './routes/chatRoutes';
 import './models/User';
 import profileRoutes from './routes/profileRoutes';
@@ -151,6 +152,7 @@ io.on('connection', async (socket) => {
 });
 
 app.use('/', pageRoutes);
+app.use('/', homeRoutes);
 app.use('/', authRoutes);
 app.use('/', friendRoutes);
 app.use('/api', userRoutes);
