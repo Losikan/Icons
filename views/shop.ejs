@@ -2,116 +2,110 @@
 <script src="/js/script.js" defer></script>
 
 <body>
-    <header class="top-header">
-        <nav class="sidebar">
-            <div class="sidebar-header">
-                <i class="ri-arrow-left-line sidebar-close"></i>
-            </div>
-            <ul class="sidebar-nav">
-                <li><a href="/home">Home</a></li>
-                <li><a href="/shop">Winkel</a></li>
-                <li><a href="/friendslist">Vriendenlijst</a></li>
-                <li><a href="/settings">Instellingen</a></li>
-            </ul>
-            <div class="sidebar-bottom">
-                <div class="user-circle"></div>
-                <span><%= user.username %></span>
-                <span><a href="/landingspage">Uitloggen</a></span>
-            </div>
-        </nav>
-        <div class="overlay"></div>
+  <header class="top-header">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <i class="ri-arrow-left-line sidebar-close"></i>
+      </div>
+      <ul class="sidebar-nav">
+        <li><a href="/home">Home</a></li>
+        <li><a href="/shop">Winkel</a></li>
+        <li><a href="/friendslist">Vriendenlijst</a></li>
+        <li><a href="/settings">Instellingen</a></li>
+      </ul>
+      <div class="sidebar-bottom">
+        <div class="user-circle"></div>
+        <span><%= user.username %></span>
+        <span><a href="/landingspage">Uitloggen</a></span>
+      </div>
+    </nav>
+    <div class="overlay"></div>
 
-        <i class="ri-menu-line"></i>
-        <h1 class="logo"><a href="/home">ICONS</a></h1>
+    <i class="ri-menu-line"></i>
+    <h1 class="logo"><a href="/home">ICONS</a></h1>
 
-        <div class="nav-items-right">
-            <div class="mode-toggle-right">
-                <label class="switch">
-                    <input type="checkbox" id="modeSwitch">
-                    <span class="slider round">
-                        <i class="ri-sun-line sun-icon"></i>
-                        <i class="ri-moon-line moon-icon"></i>
-                    </span>
-                </label>
-            </div>
-            <i class="ri-account-circle-fill user"></i>
-            <div class="account-card">
-                <ul class="list">
-                    <li class="element"><a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a></li>
-                    <li class="element"><a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a></li>
-                    <div class="separator"></div>
-                    <li class="element"><a href="/landingspage" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a></li>
-                </ul>
-            </div>
-        </div>
-    </header>
-    
-    <main>
-        <div class="container-filter">
-            <div class="wrapper">
-                <div class="price-input">
-                    <div class="price">
-                        <i class="ri-copper-diamond-line"></i> 
-                        <span id="coins-display"><%= user.coins %></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row1">
-            <div class="block1">
-                <h2 class="shoptitel">Populair <i class="ri-fire-line"></i></h2>
-                <br>
-<div class="container-populaire-wrapper">
-    <div class="container-populaire" id="shopcontainer">
-        <% items.slice(0, 3).forEach(item => { %>
-            <div class="flip-container" data-item-id="<%= item.id %>">
-                <div class="article">
-                    <div class="front">
-                        <div class="item-header">
-                            <% if (user.inventory.includes(item.id)) { %>
-                                <div class="owned-badge">
-                                    <i class="ri-checkbox-circle-fill"></i>
-                                </div>
-                            <% } %>
-                            <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
-                        </div>
-                        <div class="star-rating">
-                            <% for(let i = 0; i < 5; i++) { %>
-                                <i class="ri-star-fill"></i>
-                            <% } %>
-                        </div>
-                        <div class="price <% if (!user.inventory.includes(item.id)) { %>clickable<% } %>" 
-                             data-item-id="<%= item.id %>"
-                             data-item-price="<%= item.price %>"
-                             data-item-name="<%= item.name %>">
-                            <i class="ri-copper-diamond-line"></i> 
-                            <% if (user.inventory.includes(item.id)) { %>
-                                <span class="owned-text">Gekocht</span>
-                            <% } else { %>
-                                <span class="price-amount"><%= item.price %></span>
-                            <% } %>
-                        </div>
-                    </div>
-                    <div class="back">
-                        <p><%= item.description %></p>
-                        <% if (!user.inventory.includes(item.id)) { %>
-                            <div class="cart-icon" 
-                                 data-item-id="<%= item.id %>"
-                                 data-item-price="<%= item.price %>"
-                                 data-item-name="<%= item.name %>">
-                                <i class="ri-shopping-cart-2-line"></i>
-                            </div>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-        <% }); %>
+    <div class="nav-items-right">
+      <div class="mode-toggle-right">
+        <label class="switch">
+          <input type="checkbox" id="modeSwitch">
+          <span class="slider round">
+            <i class="ri-sun-line sun-icon"></i>
+            <i class="ri-moon-line moon-icon"></i>
+          </span>
+        </label>
+      </div>
+      <i class="ri-account-circle-fill user"></i>
+      <div class="account-card">
+        <ul class="list">
+          <li class="element"><a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a></li>
+          <li class="element"><a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a></li>
+          <div class="separator"></div>
+          <li class="element"><a href="/landingspage" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a></li>
+        </ul>
+      </div>
     </div>
-    <button class="arrow prev"><i class="ri-arrow-left-line"></i></button>
-    <button class="arrow next"><i class="ri-arrow-right-line"></i></button>
-</div>
+  </header>
+
+  <main>
+    <div class="container-filter">
+      <div class="wrapper">
+        <div class="price-input">
+          <div class="price">
+            <i class="ri-copper-diamond-line"></i>
+            <span id="coins-display"><%= user.coins %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row1">
+      <div class="block1">
+        <h2 class="shoptitel">Populair <i class="ri-fire-line"></i></h2>
+        <br>
+        <div class="container-populaire-wrapper">
+          <div class="container-populaire" id="shopcontainer">
+            <% items.slice(0, 3).forEach(item => { %>
+            <div class="flip-container" data-item-id="<%= item.id %>">
+              <div class="article">
+                <div class="front">
+                  <div class="item-header">
+                    <% if (user.inventory.includes(item.id)) { %>
+                    <div class="owned-badge">
+                      <i class="ri-checkbox-circle-fill"></i>
+                    </div>
+                    <% } %>
+                    <img src="<%= item.images.icon %>" alt="<%= item.name %>" class="character-image">
+                  </div>
+                  <div class="star-rating">
+                    <% for(let i = 0; i < 5; i++) { %>
+                    <i class="ri-star-fill"></i>
+                    <% } %>
+                  </div>
+                  <div class="price <% if (!user.inventory.includes(item.id)) { %>clickable<% } %>" data-item-id="<%= item.id %>" data-item-price="<%= item.price %>" data-item-name="<%= item.name %>">
+                    <i class="ri-copper-diamond-line"></i>
+                    <% if (user.inventory.includes(item.id)) { %>
+                    <span class="owned-text">Gekocht</span>
+                    <% } else { %>
+                    <span class="price-amount"><%= item.price %></span>
+                    <% } %>
+                  </div>
+                </div>
+                <div class="back">
+                  <p><%= item.description %></p>
+                  <% if (!user.inventory.includes(item.id)) { %>
+                  <div class="cart-icon" data-item-id="<%= item.id %>" data-item-price="<%= item.price %>" data-item-name="<%= item.name %>">
+                    <i class="ri-shopping-cart-2-line"></i>
+                  </div>
+                  <% } %>
+                </div>
+              </div>
             </div>
+            <% }); %>
+          </div>
+          <button class="arrow prev"><i class="ri-arrow-left-line"></i></button>
+          <button class="arrow next"><i class="ri-arrow-right-line"></i></button>
+        </div>
+      </div>
 
             <div class="block2">
                 <h2 class="shoptitel">Battlepass <i class="ri-shield-star-line"></i></h2>
@@ -158,4 +152,5 @@
     </main>
     <%- include("partials/footer.ejs") %>
 </body>
+
 </html>

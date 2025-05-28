@@ -36,6 +36,9 @@ router.post('/login', async (req: Request, res: Response) => {
       return res.redirect('/login?error=password');
 
     req.session.userId = user._id.toString();
+    /* (req.session as any).userId = user._id; */
+      (req.session as any).username = user.username;
+      (req.session as any).avatarUrl = user.avatarUrl || '/assets/images/default-avatar.png';
     return res.redirect('/home');
   } catch (error) {
     console.error('Login error:', error);

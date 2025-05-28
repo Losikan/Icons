@@ -1386,7 +1386,7 @@ li.selected {
         top: calc(57px + 1rem);
         left: 1rem;
         height: 100vh;
-        width: 250px;
+        width: calc(100% - 2rem);
         background: #fff;
         border-bottom: 1px solid #ddd;
         z-index: 1000;
@@ -1930,6 +1930,7 @@ body.dark-mode .message-received {
     font-weight: 700;
     margin-bottom: 0.3rem;
     color: var(--text-color);
+    user-select: text;
 }
 
 .profile__level {
@@ -2128,4 +2129,10 @@ body.dark-mode .profile__inventory-item {
 .profile__level,
 .profile__description {
     font-size: 0.9rem;
+}
+
+.user.profile__avatar {
+    width: 32px;
+    height: 32px;
+    border-width: 1px;
 }

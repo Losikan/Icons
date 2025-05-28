@@ -13,9 +13,7 @@ const pages = [
   'login',
   'registreren',
   'resetpassword',
-  'settings',
-  'profiel'
-  
+  'settings'
 ];
 
 pages.forEach(page => {
@@ -117,6 +115,37 @@ router.get('/friendslist', async (req: Request, res: Response) => {
     userId: user._id.toString()
   });
 });
+
+router.get('/profile', (req, res) => {
+  if (!req.session?.username) {
+    return res.redirect('/login');
+  }
+
+  res.redirect(`/profile/${req.session.username}`);
+});
+
+router.get('/profile/:username', async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const user = await User.findOne({ username }).select('_id username').lean();
+    if (!user) {
+      res.status(404).send('User not found');
+      return;
+    } 
+
+    res.render('profiel', {
+      username: user.username,
+      userId: user._id.toString(),
+      session: req.session
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
+router.get('/', (req, res) => res.render('landingspage'));
 
 
 export default router;

@@ -31,6 +31,7 @@
     "@types/nodemailer": "^6.4.17",
     "multer": "^2.0.0",
     "nodemon": "^3.1.10",
+    "readdirp": "^4.1.2",
     "socket.io": "^4.8.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"

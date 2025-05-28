@@ -1,49 +1,49 @@
 <%- include("partials/header.ejs") %>
 
 <body>
-    <header class="top-header">
-        <nav class="sidebar">
-            <div class="sidebar-header">
-                <i class="ri-arrow-left-line sidebar-close"></i>
-            </div>
-            <ul class="sidebar-nav">
-                <li><a href="/home">Home</a></li>
-                <li><a href="/shop">Winkel</a></li>
-                <li><a href="/friendslist">Vriendenlijst</a></li>
-                <li><a href="/settings">Instellingen</a></li>
-            </ul>
-            <div class="sidebar-bottom">
-                <div class="user-circle"></div>
-                <span><%= user.username %></span>
-                <span><a href="/index">Uitloggen</a></span>
-            </div>
-        </nav>
-        <div class="overlay"></div>
+  <header class="top-header">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <i class="ri-arrow-left-line sidebar-close"></i>
+      </div>
+      <ul class="sidebar-nav">
+        <li><a href="/home">Home</a></li>
+        <li><a href="/shop">Winkel</a></li>
+        <li><a href="/friendslist">Vriendenlijst</a></li>
+        <li><a href="/settings">Instellingen</a></li>
+      </ul>
+      <div class="sidebar-bottom">
+        <div class="user-circle"></div>
+        <span><%= user.username %></span>
+        <span><a href="/index">Uitloggen</a></span>
+      </div>
+    </nav>
+    <div class="overlay"></div>
 
-        <i class="ri-menu-line"></i>
-        <h1 class="logo"><a href="/home">ICONS</a></h1>
+    <i class="ri-menu-line"></i>
+    <h1 class="logo"><a href="/home">ICONS</a></h1>
 
-        <div class="nav-items-right">
-            <div class="mode-toggle-right">
-                <label class="switch">
-                    <input type="checkbox" id="modeSwitch">
-                    <span class="slider round">
-                        <i class="ri-sun-line sun-icon"></i>
-                        <i class="ri-moon-line moon-icon"></i>
-                    </span>
-                </label>
-            </div>
-            <i class="ri-account-circle-fill user"></i>
-            <div class="account-card">
-                <ul class="list">
-                    <li class="element"><a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a></li>
-                    <li class="element"><a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a></li>
-                    <div class="separator"></div>
-                    <li class="element"><a href="/landingspage" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a></li>
-                </ul>
-            </div>
-        </div>
-    </header>
+    <div class="nav-items-right">
+      <div class="mode-toggle-right">
+        <label class="switch">
+          <input type="checkbox" id="modeSwitch">
+          <span class="slider round">
+            <i class="ri-sun-line sun-icon"></i>
+            <i class="ri-moon-line moon-icon"></i>
+          </span>
+        </label>
+      </div>
+      <i class="ri-account-circle-fill user"></i>
+      <div class="account-card">
+        <ul class="list">
+          <li class="element"><a href="/profiel" class="label"><i class="ri-account-box-2-fill"></i>Profiel</a></li>
+          <li class="element"><a href="/settings" class="label"><i class="ri-settings-5-fill"></i>Instellingen</a></li>
+          <div class="separator"></div>
+          <li class="element"><a href="/landingspage" class="label"><i class="ri-logout-box-r-fill"></i>Uitloggen</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
 
   <main class="settings-container">
     <div class="settings">
@@ -148,85 +148,7 @@
 
 
   </main>
-  <script>
-    document.querySelectorAll(".selector-container").forEach((container) => {
-      const options = container.dataset.options.split(",");
-      const display = container.querySelector(".option-display");
-      let currentIndex = 0;
-
-      function updateDisplay() {
-        display.textContent = options[currentIndex];
-        display.classList.add("option-change");
-        setTimeout(() => display.classList.remove("option-change"), 300);
-      }
-
-      container.setIndex = function(index) {
-        currentIndex = index;
-        updateDisplay();
-      };
-
-      display.addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % options.length;
-        updateDisplay();
-      });
-
-      updateDisplay();
-    });
-
-    document.querySelectorAll('.tab-container input[type="radio"]').forEach((radio) => {
-      radio.addEventListener("change", () => {
-        document.querySelectorAll('.tab-container input[type="radio"]').forEach((r) => r.removeAttribute("checked"));
-        radio.setAttribute("checked", "");
-      });
-    });
-
-    document.querySelectorAll(".tab").forEach((tab) => {
-      tab.addEventListener("change", () => {
-        document.querySelectorAll(".settings-section").forEach((section) => {
-          section.style.display = "none";
-        });
-        const targetId = tab.id.replace("tab", "");
-        const targetSection = document.querySelector(
-          `.settings__${targetId === "1" ? "general" : targetId === "2" ? "audio" : "account"}`
-        );
-        if (targetSection) {
-          targetSection.style.display = "flex";
-          targetSection.style.animation = "fadeIn 0.5s ease";
-        }
-      });
-    });
-
-    document.querySelector(".tab--1").checked = true;
-    document.querySelector(".settings__general").style.display = "flex";
-
-    document.querySelectorAll(".setting").forEach(setting => {
-      setting.addEventListener("click", function() {
-        const targetId = this.getAttribute("data-content");
-        const targetContent = document.getElementById(targetId);
-
-        document.querySelectorAll(".content").forEach(content => {
-          if (content !== targetContent) {
-            content.classList.remove("open");
-          }
-        });
-
-        targetContent.classList.toggle("open");
-      });
-    });
-
-    document.querySelectorAll(".content button").forEach(button => {
-      button.addEventListener("click", function() {
-        const notification = document.getElementById("notification");
-
-        notification.classList.add("show");
-
-        setTimeout(() => {
-          notification.classList.remove("show");
-        }, 3000);
-      });
-    });
-  </script>
 </body>
 
 </html>
-<%- include("partials/footer.ejs") %>
+<%- include("Partials/footer.ejs") %>
