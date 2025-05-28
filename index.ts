@@ -19,8 +19,11 @@ import homeRoutes from './routes/homeRoutes';
 import chatRoutes from './routes/chatRoutes';
 import './models/User';
 import profileRoutes from './routes/profileRoutes';
+import Achievement from './models/Achievement';
+import { IAchievement } from './models/Achievement';
 import './models/User';
 import './models/Item';
+import './models/Achievement';
 
 const app = express();
 const httpServer = createServer(app);
@@ -40,7 +43,7 @@ declare module 'express-session' {
     username?: string;
     coins?: number;
     avatarUrl?: string;
-    inventory?: any[];
+    inventory?: any[]; // Adjust type as needed
   }
 }
 

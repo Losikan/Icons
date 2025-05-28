@@ -1,4 +1,3 @@
-/* Verbeterde CSS */
 .loadout-header {
   text-align: center;
   margin: 2rem 0;
@@ -143,10 +142,8 @@
   100% { box-shadow: 0 0 0 0 rgba(78, 205, 196, 0); }
 }
 #loadoutScreen {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  overflow: hidden;
+  height: 100vh;
   z-index: 1000;
 }
 
@@ -166,16 +163,127 @@
 }
 
 #gameCanvas {
-  width: 1200px;
-  height: 600px;
-  border: 3px solid var(--first-color);
-  border-radius: 15px;
-  box-shadow: 0 0 50px rgba(78, 205, 196, 0.2);
-      display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
-    max-width: 1200px;
+    width: 1000px;
+    height: 600px;
+    display: none; 
     margin: 0 auto;
-    margin-top: 150px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 900;
+    background: #0d1b26;
+}
+
+
+.option-item.locked {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.option-item .locked {
+    position: relative;
+    filter: grayscale(100%);
+}
+
+.locked i.ri-lock-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: red;
+    font-size: 24px;
+    z-index: 2;
+}
+
+.option-item.selected {
+    position: relative;
+    border: 2px solid var(--first-color);
+    box-shadow: 0 0 25px var(--first-color);
+    animation: pulse 1.5s infinite;
+}
+
+.option-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.selector-display {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border: 2px solid var(--first-color);
+    box-shadow: 0 0 15px var(--first-color);
+    animation: pulse 1.5s infinite;
+}
+
+.selector-display img{
+  width: 100%;
+}
+
+.selector-display .locked {
+    display: none; 
+}
+
+.selector-display .selection-badge {
+    display: none; 
+}
+
+.selector-dropdown {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    position: absolute;
+    background: var(--color-second);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 10;
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 5px;
+    top: 0;
+}
+
+.selector-dropdown .option-item {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3/4;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.loadout-box {
+    position: relative;
+    min-height: 250px; 
+}
+
+.options {
+    display: none;
+}
+
+.option-item.locked {
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.option-item.locked img {
+  filter: grayscale(100%);
+}
+
+.start-message{
+  text-align: center;
+  font-size: medium;
+  font-weight: bold;
 }

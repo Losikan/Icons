@@ -156,23 +156,6 @@
       </div>
     </div>
   </main>
-  <script>
-    const loggedInUserId = "<%= session.userId %>";
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      try {
-        const res = await fetch(`/api/profile/id/${loggedInUserId}`);
-        const user = await res.json();
-        const avatarUrl = user.avatarUrl || '/assets/images/default-avatar.png';
-
-        document.querySelectorAll('.profileAvatarHeader').forEach(img => {
-          img.src = avatarUrl;
-        });
-      } catch (err) {
-        console.error('Failed to load avatar for header:', err);
-      }
-    });
-  </script>
   <%- include("partials/footer.ejs") %>
 </body>
 

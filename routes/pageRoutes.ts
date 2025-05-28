@@ -2,7 +2,6 @@ import { Router } from 'express';
 import { Request, Response } from "express";
 import User from "../models/User";
 import data from '../public/skins.json';
-import skinsData from '../public/skins.json';
 
 const router = Router();
 
@@ -132,9 +131,7 @@ router.get('/profile/:username', async (req, res) => {
   const { username } = req.params;
 
   try {
-    const user = await User.findOne({ username })
-  .select('username email inventory favoriteItems coins avatarUrl level stats bannedItems')
-  .lean();
+    const user = await User.findOne({ username }).select('_id username').lean();
     if (!user) {
       res.status(404).send('User not found');
       return;
@@ -143,9 +140,7 @@ router.get('/profile/:username', async (req, res) => {
     res.render('profiel', {
       username: user.username,
       userId: user._id.toString(),
-      session: req.session,
-      user,
-      skinsData
+      session: req.session
     });
   } catch (err) {
     console.error(err);

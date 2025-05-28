@@ -252,17 +252,45 @@ class Game {
         }
     }
 
-    initLoadout() {
-        document.querySelectorAll('.options img').forEach(img => {
-            img.addEventListener('click', (e) => {
-                const type = e.target.parentElement.parentElement.dataset.type;
-                const value = e.target.dataset.value;
-                this.loadout[type] = parseInt(value);
-                
-                e.target.parentElement.querySelectorAll('img').forEach(i => 
-                    i.classList.remove('selected'));
-                e.target.classList.add('selected');
+        initLoadout() {
+        
+        document.querySelectorAll('.loadout-box').forEach(box => {
+            const type = box.dataset.type;
+            const initialValue = this.loadout[type];
+            
+           
+            const selectedOption = box.querySelector(`.option-item[data-value="${initialValue}"]`);
+            
+            
+            const selectorDisplay = document.createElement('div');
+            selectorDisplay.className = 'selector-display';
+            selectorDisplay.innerHTML = selectedOption.innerHTML;
+            
+            
+            const dropdown = document.createElement('div');
+            dropdown.className = 'selector-dropdown hidden';
+            
+            
+            box.querySelectorAll('.option-item').forEach(item => {
+                const clone = item.cloneNode(true);
+                clone.addEventListener('click', (e) => {
+                    this.handleOptionSelect(e.target.closest('.option-item'), box);
+                });
+                dropdown.appendChild(clone);
             });
+            
+            
+            selectorDisplay.addEventListener('click', () => {
+                dropdown.classList.toggle('hidden');
+                box.querySelector('.options').classList.add('hidden'); // Hide the original options
+            });
+            
+            
+            box.appendChild(selectorDisplay);
+            box.appendChild(dropdown);
+            
+            
+            box.querySelector('.options').classList.add('hidden');
         });
 
         document.addEventListener('keypress', (e) => {
@@ -274,6 +302,31 @@ class Game {
         });
     }
 
+    handleOptionSelect(item, box) {
+          if (item.classList.contains('locked')) {
+            console.log("Character is locked!");
+            return;
+            }
+        
+            const type = box.dataset.type;
+            const value = item.dataset.value;
+            this.loadout[type] = parseInt(value);
+        
+        
+        const selectorDisplay = box.querySelector('.selector-display');
+        selectorDisplay.innerHTML = item.innerHTML;
+        
+        
+        box.querySelector('.selector-dropdown').classList.add('hidden');
+        
+       
+        box.querySelectorAll('.option-item').forEach(i => 
+            i.classList.remove('selected'));
+        
+       
+        item.classList.add('selected');
+    }
+
     async startGame() {
         try {
             await this.loadAssets();
@@ -281,6 +334,12 @@ class Game {
             this.setupEventListeners();
             this.spawnEnemies();
             this.health = this.getMaxHealth();
+
+            this.canvas.style.display = 'block';
+            this.canvas.style.border = '3px solid #4ecdc4';
+            this.canvas.style.borderRadius = '15px';
+            this.canvas.style.boxShadow = '0 0 50px rgba(78, 205, 196, 0.2)';
+
             this.gameLoop();
         } catch (error) {
             console.error('Initialization error:', error);
@@ -290,6 +349,7 @@ class Game {
     setupCanvas() {
         this.canvas.width = CONFIG.canvas.width;
         this.canvas.height = CONFIG.canvas.height;
+        this.canvas.style.display = 'none';
     }
 
     setupEventListeners() {
@@ -524,26 +584,9 @@ class Game {
 
         document.addEventListener('keypress', (e) => {
             if (e.code === 'Enter') {
-                this.resetGame();
+                location.reload(); 
             }
         }, { once: true });
-    }
-
-    resetGame() {
-        this.gameOver = false;
-        this.enemies = [];
-        this.bullets = [];
-        this.emotes = [];
-        this.score = 0;
-        this.health = this.getMaxHealth();
-        this.lastHitTime = 0;
-        
-        document.getElementById('loadoutScreen').style.display = 'flex';
-        this.canvas.style.display = 'none';
-        
-        if (this.character) {
-            this.character.reset();
-        }
     }
 
     gameLoop() {
