@@ -386,7 +386,23 @@
     }
 
     async function openChat(friendId, friendName) {
-      if ([friendId, loggedInUserId].sort().join('-') === currentRoom) return;
+
+      if (currentRoom) {
+        const roomFriendId = currentRoom.split('-').find(id => id !== loggedInUserId);
+        if (roomFriendId === friendId) {
+          chatSection.style.display = 'none';
+          currentRoom = '';
+          document.querySelectorAll('.friendschat-sidebar__friend.active').forEach(el => {
+            el.classList.remove('active');
+          });
+
+          if (window.innerWidth <= 768) {
+            sidebar.classList.remove('hidden');
+            backBtn.style.display = 'none';
+          }
+          return;
+        }
+      }
 
       document.querySelectorAll('.friendschat-sidebar__friend.active').forEach(el => {
         el.classList.remove('active');
@@ -396,6 +412,7 @@
       if (activeFriendEl) {
         activeFriendEl.classList.add('active');
       }
+
       chatSection.style.display = 'flex';
       appendedMessages.clear();
       currentRoom = [friendId, loggedInUserId].sort().join('-');
@@ -427,12 +444,10 @@
         await fetch(`/api/messages/${currentRoom}/read`, {
           method: 'POST'
         });
-
         const res = await fetch(`/api/messages/${currentRoom}`);
         const messages = await res.json();
 
         chatWindow.innerHTML = '';
-
         messages.forEach(({
           sender,
           message,
@@ -446,10 +461,16 @@
       }
     }
 
+
     backBtn.addEventListener('click', () => {
       chatSection.style.display = 'none';
       sidebar.classList.remove('hidden');
       backBtn.style.display = 'none';
+
+      document.querySelectorAll('.friendschat-sidebar__friend.active').forEach(el => {
+        el.classList.remove('active');
+      });
+      currentRoom = '';
     });
     window.onload = () => {
       if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
@@ -735,6 +756,21 @@
       } else {
         sidebar.classList.remove('hidden');
         backBtn.style.display = 'none';
+
+        if (currentRoom) {
+          const friendId = currentRoom.split('-').find(id => id !== loggedInUserId);
+          document.querySelectorAll('.friendschat-sidebar__friend.active').forEach(el => {
+            el.classList.remove('active');
+          });
+          const activeFriendEl = document.querySelector(`.friendschat-sidebar__friend[data-friend-id="${friendId}"]`);
+          if (activeFriendEl) {
+            activeFriendEl.classList.add('active');
+          }
+        } else {
+          document.querySelectorAll('.friendschat-sidebar__friend.active').forEach(el => {
+            el.classList.remove('active');
+          });
+        }
       }
     });
   </script>
